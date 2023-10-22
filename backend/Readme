@@ -1,0 +1,37 @@
+Step 1 - First time and every time when a change in Dockerfile
+===============================================================
+Build a image using the below command . The image gets built based on the recipe in the Dockerfile
+    cd backend
+    docker build -t bat_backend .
+
+    In the above command -t is provided to add a tag name to the docker image created which can be used later
+
+Step 2 - Run the docker container using the image
+==================================================
+    docker run -d bat_backend
+
+    The above command spins a docker container in back ground
+
+Step 3
+=======
+    Start a shell in a running container
+
+    In a separate command terminal run the below command
+
+    docker ps  -a
+
+    Find your container based on the above command , copy the container ID
+
+    docker exec -it <CONTAINER ID copied from teh previous step> bash
+
+    python test_docker.py
+
+        you should see the below message
+
+    Welcome to BAT development environment  
+
+
+
+
+cheat sheet :
+    https://dockerlabs.collabnix.com/docker/cheatsheet/
