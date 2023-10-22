@@ -8,7 +8,7 @@ Build a image using the below command . The image gets built based on the recipe
 
 Step 2 - Run the docker container using the image
 ==================================================
-    docker run -d bat_backend
+    docker run -it bat_backend bash
 
     The above command spins a docker container in back ground
 
