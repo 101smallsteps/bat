@@ -19,6 +19,9 @@ const SingleAnalysis = (props: Props) => {
           <div className="box box2">
             <ChartBox {...props.deratio} />
           </div>
+          <div className="box box2">
+            <ChartBox {...props.currentratio} />
+          </div>
         </div>
       );
 };

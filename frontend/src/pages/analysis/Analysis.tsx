@@ -271,10 +271,30 @@ const Analysis = () => {
     fetchDERatioData();
   }, []);
 
+                const dummy_data=[
+                    {
+                        color: "teal",
+                        icon: "/revenueIcon.svg",
+                        title: "Current ratio",
+                        number: "$56.432",
+                        dataKey: "currentratio",
+                        percentage: -12,
+                        chartData: [
+                            { name: "Sun", currentratio: 400 },
+                            { name: "Mon", currentratio: 600 },
+                            { name: "Tue", currentratio: 500 },
+                            { name: "Wed", currentratio: 700 },
+                            { name: "Thu", currentratio: 400 },
+                            { name: "Fri", currentratio: 500 },
+                            { name: "Sat", currentratio: 450 },
+                        ],
+                    }
+                ];
+
   //Fetch data and send to Single Component
   return (
     <div className="product">
-       <SingleAnalysis overall={overallAnalysisData} revenue={totalRevenueData} deratio={dERatioData} />
+       <SingleAnalysis overall={overallAnalysisData} revenue={totalRevenueData} deratio={dERatioData} currentratio={dummy_data}/>
     </div>
   );
 };

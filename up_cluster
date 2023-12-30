@@ -1,6 +1,54 @@
 docker-compose down -v
+
+Up steps
+--------
 docker-compose up -d --build bat_backend
 docker-compose exec bat_backend python manage.py makemigrations
 docker-compose exec bat_backend python manage.py migrate --noinput
 docker-compose exec bat_backend python manage.py migrate
 docker-compose exec bat_backend python manage.py createsuperuser
+
+kill ports
+----------
+sudo lsof -i tcp:5432
+sudo kill <PID>
+
+sudo lsof -i tcp:8080
+sudo kill <PID>
+
+
+Admin access
+-------------
+http://localhost:8080/admin
+
+
+frontend
+----------
+    developer setup (first time)
+    ---------------
+        nodejs install
+            https://www.geeksforgeeks.org/installation-of-node-js-on-linux/
+                sudo apt install nodejs
+                sudo apt install npm
+
+        cd frontend
+        npm install
+
+    after first time
+    ----------------
+        cd frontend
+        npm run dev
+
+
+How to add a component in portfoloioanalysis
+----------------------------------------------
+    SingleAnalysis.tsx
+    Analysis.tsx
+
+Git Commands
+---------------
+git diff main
+git add
+git commit -m ""
+git push
+
