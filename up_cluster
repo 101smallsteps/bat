@@ -49,6 +49,6 @@ Git Commands
 ---------------
 git diff main
 git add
-git commit -m ""
+git commit -a -m ""
 git push
 
