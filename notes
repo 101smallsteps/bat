@@ -1,0 +1,10 @@
+
+port listners
+    Windows
+        netstat -ano | findstr :5432
+        taskkill /PID 17244  /F
+
+
+docker-compose exec movies python manage.py flush
+docker-compose exec movies python manage.py loaddata dataseed.json
+ http --json http://localhost:8080/api/symanalysis/

@@ -1,0 +1,42 @@
+[
+  {
+    "model": "financials.Symbol",
+    "pk": 1,
+    "fields": {
+      "symbol": "AAPL",
+      "companyName": "Aaple",
+      "created_date": "2021-01-07T14:07:13.540Z",
+      "updated_date": "2021-01-07T14:07:13.540Z"
+    }
+  },
+  {
+    "model": "financials.Symbol",
+    "pk": 1,
+    "fields": {
+      "symbol": "AAPL",
+      "companyName": "Aaple",
+      "created_date": "2021-01-07T14:07:13.540Z",
+      "updated_date": "2021-01-07T14:07:13.540Z"
+    }
+  },
+  {
+    "model": "financials.Symbol",
+    "pk": 2,
+    "fields": {
+      "symbol": "GOOG",
+      "companyName": "Google",
+      "created_date": "2021-01-07T14:07:13.540Z",
+      "updated_date": "2021-01-07T14:07:13.540Z"
+    }
+  },
+  {
+    "model": "financials.Symbol",
+    "pk": 3,
+    "fields": {
+      "symbol": "CDNS",
+      "companyName": "Cadence",
+      "created_date": "2021-01-07T14:07:13.540Z",
+      "updated_date": "2021-01-07T14:07:13.540Z"
+    }
+  }
+]

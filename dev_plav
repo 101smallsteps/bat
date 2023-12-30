@@ -1,0 +1,42 @@
+auth
+    https://testdriven.io/blog/django-rest-auth/
+
+ polls scalable
+    https://www.digitalocean.com/community/tutorials/how-to-scale-and-secure-a-django-application-with-docker-nginx-and-let-s-encrypt
+
+django + auth + react
+    https://www.youtube.com/watch?v=HAxV6-969ZM
+
+django serialization
+    https://testdriven.io/blog/drf-serializers/
+
+front end secure
+    https://www.digitalocean.com/community/tutorials/how-to-secure-a-containerized-node-js-application-with-nginx-let-s-encrypt-and-docker-compose#step-6-%E2%80%94-renewing-certificates%5D(https:/www.digitalocean.com/community/tutorials/how-to-secure-a-containerized-node-js-application-with-nginx-let-s-encrypt-and-docker-compose#step-6-%E2%80%94-renewing-certificates)
+
+    https://www.digitalocean.com/community/tutorials/build-a-to-do-application-using-django-and-react
+
+
+django channels
+    https://blog.logrocket.com/django-channels-and-websockets/
+
+Quiz
+https://simpleisbetterthancomplex.com/tutorial/2018/01/18/how-to-implement-multiple-user-types-with-django.html
+
+CSRF react
+https://www.techiediaries.com/django-react-forms-csrf-axios/
+
+task manager
+https://www.youtube.com/watch?v=F5OUT3ijk8M
+
+https://simpleisbetterthancomplex.com/tutorial/2018/01/18/how-to-implement-multiple-user-types-with-django.html
+
+react learn
+https://www.digitalocean.com/community/tutorials?q=%5Breact%5D&hits_per_page=12
+
+#django API
+https://www.youtube.com/watch?v=hJ2fyM6g93w
+#django rest framework
+https://github.com/wsvincent/rest-framework-tutorial/tree/master
+
+POST API - works
+    https://blog.logrocket.com/django-rest-framework-create-api/
