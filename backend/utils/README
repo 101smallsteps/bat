@@ -1,0 +1,10 @@
+log in to docker container
+bash
+cd /usr/src/app
+python processCSV.py quarterly_balance_AAPL_2023-09-30.csv quarterly_balance_AAPL_2023-09-30_nsp.csv
+python processCSV.py quarterly_cash_AAPL_2023-09-30.csv quarterly_cash_AAPL_2023-09-30_nsp.csv
+python processCSV.py quarterly_incomestmt_AAPL_2023-09-30.csv quarterly_incomestmt_AAPL_2023-09-30_nsp.csv
+
+python listFields.py quarterly_incomestmt_AAPL_2023-09-30_nsp.csv income_fields.csv
+python listFields.py quarterly_cash_AAPL_2023-09-30_nsp.csv cashflow_fields.csv
+python listFields.py quarterly_balance_AAPL_2023-09-30_nsp.csv balancesheet_fields.csv

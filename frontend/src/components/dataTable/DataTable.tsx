@@ -58,6 +58,7 @@ const DataTable = (props: Props) => {
                 }
             );
             console.log(response);
+            window.location.reload();
             return {response,isError:false};
         }
         catch (error){

@@ -6,6 +6,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useEffect,useState } from "react";
 import axios from "axios";
+import { useHistory } from 'react-router-dom';
 
 const getToken = ()=> {
    var auth_token =window.localStorage.getItem("bat.auth");
@@ -47,7 +48,7 @@ const Card = (props: Props) => {
 
                 }
             );
-            console.log(response);
+            window.location.reload();
             return {response,isError:false};
         }
         catch (error){

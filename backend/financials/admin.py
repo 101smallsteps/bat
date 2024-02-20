@@ -27,10 +27,10 @@ class PortfolioAdmin(admin.ModelAdmin):
 @admin.register(Symbol)
 class SymbolAdmin(admin.ModelAdmin):
     fields = (
-        "symbolName", "companyName", "created_date", "updated_date",
+        "symbolName", "companyName","sector", "created_date", "updated_date",
     )
     list_display = (
-        "id","symbolName", "companyName", "created_date", "updated_date",
+        "id","symbolName", "companyName","sector", "created_date", "updated_date",
     )
     readonly_fields = (
         "created_date", "updated_date",
@@ -51,19 +51,19 @@ class SymbolAnalysisAdmin(admin.ModelAdmin):
 @admin.register(IncomeStatement)
 class IncomeStatementAdmin(admin.ModelAdmin):
     fields = (
-        "financeInfo", "totalRevenue", "totalRevenue_operatingRevenue"
+        "financeInfo", "TotalRevenue", "OperatingRevenue"
     )
     list_display = (
-        "financeInfo", "totalRevenue", "totalRevenue_operatingRevenue"
+        "financeInfo", "TotalRevenue", "OperatingRevenue"
     )
 
 @admin.register(Ratio)
-class IncomeStatementAdmin(admin.ModelAdmin):
+class RatioAdmin(admin.ModelAdmin):
     fields = (
-        "financeInfo", "DEratio"
+        "financeInfo","GrossMargin", "DEratio"
     )
     list_display = (
-        "financeInfo", "DEratio"
+        "financeInfo","GrossMargin", "DEratio"
     )
 
 @admin.register(FinanceData)
