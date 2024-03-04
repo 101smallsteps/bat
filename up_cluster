@@ -18,6 +18,12 @@ docker-compose -f docker-compose.prod.yml exec bat_backend python manage.py migr
 docker-compose -f docker-compose.prod.yml exec bat_backend python manage.py collectstatic --no-input --clear
 http://localhost:1337/
 
+staging
+---------
+sudo /usr/bin/docker-compose -f docker-compose.staging.yml  up -d --build bat_backend
+sudo /usr/bin/docker-compose -f docker-compose.staging.yml exec bat_backend python manage.py migrate --noinput
+sudo /usr/bin/docker-compose -f docker-compose.staging.yml exec bat_backend python manage.py collectstatic --no-input --clear
+
 kill ports
 ----------
 sudo lsof -i tcp:5432
