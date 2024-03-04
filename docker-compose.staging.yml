@@ -1,0 +1,51 @@
+version: "3"
+services:
+  bat_backend:
+    restart: always
+#    network_mode: "host"
+    command: gunicorn core.wsgi:application --bind 0.0.0.0:8000
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.prod
+    env_file:
+      - ./.env.dev
+    expose:
+      - 8000
+#    ports:
+#      - 8080:8000
+    volumes:
+    - static_volume:/home/app/web/staticfiles
+    - media_volume:/home/app/web/mediafiles
+    depends_on:
+      - fin_db_server
+
+  fin_db_server:
+    restart: always
+    build: ./postgres
+#    image: postgres:15
+    volumes:
+      - postgresql_data:/var/lib/postgresql/data
+    env_file:
+      - ./.env.db.prod
+    ports:
+      - 5432:5432
+
+  pgadmin:
+    image: dpage/pgadmin4
+    ports:
+      - "5050:5050"
+
+  nginx:
+    build: ./nginx
+    volumes:
+      - static_volume:/home/app/web/staticfiles
+      - media_volume:/home/app/web/mediafiles
+    ports:
+      - 1337:80
+    depends_on:
+      - bat_backend
+
+volumes:
+  static_volume:
+  postgresql_data:
+  media_volume:
