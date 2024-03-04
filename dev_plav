@@ -16,6 +16,38 @@ front end secure
     https://www.digitalocean.com/community/tutorials/build-a-to-do-application-using-django-and-react
 
 
+Try 1
+------
+(Just info - no details)    https://medium.com/codebyte/design-and-deploy-your-django-react-web-application-on-aws-2882f3c9f456
+    https://testdriven.io/blog/migrating-from-heroku-to-aws/  (React on aws with docker)
+    https://testdriven.io/blog/storing-django-static-and-media-files-on-amazon-s3/ (django aws and static storage)
+
+Try -current
+==============
+    https://testdriven.io/blog/dockerizing-django-with-postgres-gunicorn-and-nginx/ (django , aws, docekr container)
+    https://testdriven.io/blog/django-lets-encrypt/
+    https://testdriven.io/blog/django-docker-https-aws/
+
+Try2
+========
+    https://realpython.com/deploying-a-django-app-and-postgresql-to-aws-elastic-beanstalk/
+
+
+Try3
+=====
+    https://testdriven.io/courses/aws-flask-react/
+    https://testdriven.io/blog/deploying-django-to-ecs-with-terraform/
+    https://betterprogramming.pub/design-an-auto-scalable-architecture-for-your-django-apps-in-aws-850ca5ec63a1
+
+
+Try 4
+-----------
+    https://dev.to/mdrhmn/deploying-react-django-app-using-heroku-2gfa
+
+Try 5
+-------
+    https://testdriven.io/blog/dockerizing-django-with-postgres-gunicorn-and-nginx/
+
 django channels
     https://blog.logrocket.com/django-channels-and-websockets/
 

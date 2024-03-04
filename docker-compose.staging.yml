@@ -8,7 +8,7 @@ services:
       context: ./backend
       dockerfile: Dockerfile.prod
     env_file:
-      - ./.env.dev
+      - ./.env.staging
     expose:
       - 8000
 #    ports:
@@ -26,7 +26,7 @@ services:
     volumes:
       - postgresql_data:/var/lib/postgresql/data
     env_file:
-      - ./.env.db.prod
+      - ./.env.db.staging
     ports:
       - 5432:5432
 
@@ -35,17 +35,45 @@ services:
     ports:
       - "5050:5050"
 
-  nginx:
-    build: ./nginx
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    container_name: nginx-proxy
+    restart: always
+    ports:
+      - 443:443
+#      - 80:80
+      - 8080:80
     volumes:
       - static_volume:/home/app/web/staticfiles
       - media_volume:/home/app/web/mediafiles
-    ports:
-      - 1337:80
+      - certs:/etc/nginx/certs
+      - html:/usr/share/nginx/html
+      - vhost:/etc/nginx/vhost.d
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./custom.conf:/etc/nginx/conf.d/custom.conf
+    labels:
+      com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy: "true"
     depends_on:
       - bat_backend
+
+  acme-companion:
+    image: nginxproxy/acme-companion
+    env_file:
+      - ./.env.staging.proxy-companion
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - certs:/etc/nginx/certs
+      - html:/usr/share/nginx/html
+      - vhost:/etc/nginx/vhost.d
+      - acme:/etc/acme.sh
+    depends_on:
+      - nginx-proxy
 
 volumes:
   static_volume:
   postgresql_data:
   media_volume:
+  certs:
+  html:
+  vhost:
+  acme:

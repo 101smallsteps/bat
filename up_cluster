@@ -8,6 +8,16 @@ docker-compose exec bat_backend python manage.py migrate --noinput
 docker-compose exec bat_backend python manage.py migrate
 docker-compose exec bat_backend python manage.py createsuperuser
 
+docker volume inspect postgresql_data
+
+Up steps - productions
+------------------------
+docker-compose -f docker-compose.prod.yml down -v
+docker-compose -f docker-compose.prod.yml up -d --build
+docker-compose -f docker-compose.prod.yml exec bat_backend python manage.py migrate --noinput
+docker-compose -f docker-compose.prod.yml exec bat_backend python manage.py collectstatic --no-input --clear
+http://localhost:1337/
+
 kill ports
 ----------
 sudo lsof -i tcp:5432
