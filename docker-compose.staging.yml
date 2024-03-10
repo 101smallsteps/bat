@@ -73,7 +73,7 @@ services:
     restart: always
     ports:
       - 443:443
-      - 81:80
+      - 80:80
     volumes:
       - static_volume:/home/app/web/staticfiles
       - media_volume:/home/app/web/mediafiles
@@ -82,17 +82,6 @@ services:
     depends_on:
       - bat_backend_1
       - bat_backend_2
-
-  certbot:
-    container_name: certbot
-#    command: certonly --standalone --staging -d bat4all.com
-    build: ./certbot
-    restart: always
-    ports:
-      - 81:80
-    volumes:
-      - /etc/letsencrypt:/etc/letsencrypt
-      - /var/lib/letsencrypt:/var/lib/letsencrypt
 
 volumes:
   static_volume:
