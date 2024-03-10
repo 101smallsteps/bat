@@ -58,7 +58,8 @@ INSTALLED_APPS = [
     "dj_rest_auth.registration",
     "corsheaders",
     "authentication.apps.AuthenticationConfig",
-    "financials.apps.FinancialsConfig"
+    "financials.apps.FinancialsConfig",
+    "storages"
 ]
 
 MIDDLEWARE = [
@@ -211,15 +212,34 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
+################ DEV START
+#STATIC_URL = 'static/'
+#STATIC_ROOT = BASE_DIR /'staticfiles'
+################ DEV END
 
-STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR /'staticfiles'
+AWS_ACCESS_KEY_ID = 'your_spaces_access_key'
+AWS_SECRET_ACCESS_KEY = 'your_spaces_secret_key'
+
+AWS_STORAGE_BUCKET_NAME = 'bat4all1'
+AWS_S3_ENDPOINT_URL = 'https://bat4all1.nyc3.digitaloceanspaces.com'
+AWS_S3_CUSTOM_DOMAIN = 'bat4all1.nyc3.digitaloceanspaces.com'
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+AWS_LOCATION = 'static'
+AWS_DEFAULT_ACL = 'public-read'
+
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+STATIC_URL = '{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+STATIC_ROOT = 'static/'
+
 STATICFILES_DIRS = [
     'core/static'
 ]
 
 MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "mediafiles"
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

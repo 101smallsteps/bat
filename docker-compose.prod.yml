@@ -36,7 +36,7 @@ services:
       - "5050:5050"
 
   nginx:
-    build: ./nginx
+    build: ./nginx_dev
     volumes:
       - static_volume:/home/app/web/staticfiles
       - media_volume:/home/app/web/mediafiles

@@ -24,6 +24,8 @@ sudo /usr/bin/docker-compose -f docker-compose.staging.yml  up -d --build bat_ba
 sudo /usr/bin/docker-compose -f docker-compose.staging.yml exec bat_backend python manage.py migrate --noinput
 sudo /usr/bin/docker-compose -f docker-compose.staging.yml exec bat_backend python manage.py collectstatic --no-input --clear
 
+docker run -it --rm -p 80:80 --name certbot -v "/etc/letsencrypt:/etc/letsencrypt" -v "/var/lib/letsencrypt:/var/lib/letsencrypt" certbot/certbot certonly --standalone --staging -d bat4all.com
+
 kill ports
 ----------
 sudo lsof -i tcp:5432
