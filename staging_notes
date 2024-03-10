@@ -1,0 +1,25 @@
+
+setup machine
+    https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-22-04
+
+    root - ubuntu
+
+    create user with sudo access
+    adduser aarth
+    ufw allow https
+    ufw allow http
+
+     UFW
+        https://www.digitalocean.com/community/tutorials/ufw-essentials-common-firewall-rules-and-commands
+setup machine 1
+    loing to machine 1
+    sudo login aarth
+    aarth123
+
+    git clone https://github.com/101smallsteps/bat.git
+
+    docker-compose -f docker-compose.staging.yml up -d --build bat_backend_1
+
+    note the ip :
+
+setup machine 2
