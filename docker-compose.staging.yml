@@ -4,7 +4,7 @@ services:
     restart: always
 #    network_mode: "host"
 #    command: gunicorn core.wsgi:application --bind 64.23.200.34:8000
-    command: python manage.py runserver 64.23.200.34:8000
+    command: python manage.py runserver 0.0.0.0:8000
     build:
       context: ./backend
       dockerfile: Dockerfile.prod
@@ -13,8 +13,8 @@ services:
       - ./.env.staging.1
     expose:
       - 8000
-#    ports:
-#      - 8080:8000
+    ports:
+      - 8000:8000
     volumes:
     - static_volume:/home/app/web/staticfiles
     - media_volume:/home/app/web/mediafiles
