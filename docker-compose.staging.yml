@@ -31,10 +31,10 @@ services:
     env_file:
       - ./.env.staging
       - ./.env.staging.2
-    expose:
-      - 8000
-#    ports:
-#      - 8080:8000
+#    expose:
+#      - 8000
+    ports:
+      - 8000:8000
     volumes:
     - static_volume:/home/app/web/staticfiles
     - media_volume:/home/app/web/mediafiles
