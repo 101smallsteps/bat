@@ -240,8 +240,7 @@ else:
     STATIC_URL = 'static/'
     STATIC_ROOT = BASE_DIR /'static'
     STATICFILES_DIRS = [
-        'core/static',
-        BASE_DIR / 'static',
+        'core/static'
     ]
     STORAGES = {
         "staticfiles": {
