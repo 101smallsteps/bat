@@ -232,16 +232,26 @@ if USE_SPACES:
 
     STATIC_URL = '{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
     STATIC_ROOT = 'static/'
-
+    STATICFILES_DIRS = [
+        'core/static'
+    ]
 else:
 ################ DEV START
     STATIC_URL = 'static/'
     STATIC_ROOT = BASE_DIR /'staticfiles'
+    STATICFILES_DIRS = [
+        'core/static',
+        BASE_DIR / 'static',
+    ]
+    STORAGES = {
+        "staticfiles": {
+            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        },
+    }
+
 ################ DEV END
 
-STATICFILES_DIRS = [
-    'core/static'
-]
+
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/')
