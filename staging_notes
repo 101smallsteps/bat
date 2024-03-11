@@ -1,5 +1,6 @@
 
 setup machine
+    https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04
     https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-22-04
     https://www.digitalocean.com/community/tutorials/how-to-set-up-django-with-postgres-nginx-and-gunicorn-on-ubuntu
 
@@ -12,6 +13,15 @@ setup machine
 
      UFW
         https://www.digitalocean.com/community/tutorials/ufw-essentials-common-firewall-rules-and-commands
+
+     docker setup
+        systemctl status docker
+        sudo systemctl restart docker
+        docker network ls
+        docker network inspect bridge
+        sudo systemctl restart docker.service
+        journalctl -u docker.service
+
 setup machine 1
     loing to machine 1
     sudo login aarth
@@ -24,3 +34,6 @@ setup machine 1
     note the ip :
 
 setup machine 2
+    docker-compose -f docker-compose.staging.yml up -d --build bat_backend_2
+    docker-compose -f docker-compose.staging.yml exec bat_backend_2 python manage.py migrate --noinput
+    docker-compose -f docker-compose.staging.yml exec bat_backend_2 python manage.py collectstatic --no-input --clear
