@@ -238,9 +238,9 @@ if USE_SPACES:
 else:
 ################ DEV START
     STATIC_URL = 'static/'
-    STATIC_ROOT = BASE_DIR /'static'
+    
     STATICFILES_DIRS = [
-        'core/static'
+        BASE_DIR /'static',
     ]
     STORAGES = {
         "staticfiles": {
