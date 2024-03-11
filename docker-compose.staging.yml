@@ -3,16 +3,16 @@ services:
   bat_backend_1:
     restart: always
 #    network_mode: "host"
-#    command: gunicorn core.wsgi:application --bind 64.23.200.34:8000
-    command: python manage.py runserver 0.0.0.0:8000
+    command: gunicorn core.wsgi:application --bind 0.0.0.0:8000
+#    command: python manage.py runserver 0.0.0.0:8000
     build:
       context: ./backend
       dockerfile: Dockerfile.prod
     env_file:
       - ./.env.staging
       - ./.env.staging.1
-    expose:
-      - 8000
+#    expose:
+#      - 8000
     ports:
       - 8000:8000
     volumes:
