@@ -79,6 +79,8 @@ services:
       - static_volume:/home/app/web/staticfiles
       - media_volume:/home/app/web/mediafiles
       - ./nginx/conf/nginx.conf:/etc/nginx/conf.d/nginx.conf:ro
+      - /etc/letsencrypt:/etc/letsencrypt
+      - /var/lib/letsencrypt:/var/lib/letsencrypt
       - /var/www/html:/var/www/html
 #    depends_on:
 #      - bat_backend_1
