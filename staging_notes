@@ -37,3 +37,6 @@ setup machine 2
     docker-compose -f docker-compose.staging.yml up -d --build bat_backend_2
     docker-compose -f docker-compose.staging.yml exec bat_backend_2 python manage.py migrate --noinput
     docker-compose -f docker-compose.staging.yml exec bat_backend_2 python manage.py collectstatic --no-input --clear
+
+nginx-proxy setup
+    docker-compose -f docker-compose.staging.yml up -d nginx

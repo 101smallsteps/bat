@@ -80,9 +80,9 @@ services:
       - media_volume:/home/app/web/mediafiles
       - ./nginx/conf/nginx.conf:/etc/nginx/conf.d/nginx.conf:ro
       - /var/www/html:/var/www/html
-    depends_on:
-      - bat_backend_1
-      - bat_backend_2
+#    depends_on:
+#      - bat_backend_1
+#      - bat_backend_2
 
 volumes:
   static_volume:
