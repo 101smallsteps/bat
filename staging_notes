@@ -69,7 +69,11 @@ front end
     git clone https://github.com/101smallsteps/bat.git
     cd bat/frontend
     npm install
-    check npm run dev
-
+    check -- npm run dev
+    npm run build
+    mkdir /var/www/build/
+    scp -r ./dist/* /var/www/build/
+    service nginx stop
+    service nginx start
 
     https://www.theappliedarchitect.com/deploying-react-in-production/
