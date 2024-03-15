@@ -57,3 +57,19 @@ docker run -it --rm -p 80:80 --name certbot \
 
     docker-compose -f docker-compose.staging.yml up -d nginx
 
+front end
+    sudo apt update
+    sudo apt install curl gnupg2
+    curl -fsSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | sudo gpg --dearmor -o /usr/share/keyrings/nodesource.gpg
+    echo "deb [signed-by=/usr/share/keyrings/nodesource.gpg] https://deb.nodesource.com/node_16.x $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/nodesource.list
+    sudo apt update
+    sudo apt install nodejs
+    npm install -g create-vite
+
+    git clone https://github.com/101smallsteps/bat.git
+    cd bat/frontend
+    npm install
+    check npm run dev
+
+
+    https://www.theappliedarchitect.com/deploying-react-in-production/
