@@ -68,10 +68,11 @@ const getToken = ()=> {
 const retrieveAnalysis = async () => {
     try {
         var tok="Token "+getToken();
+        const backend_server = process.env.BACKEND_SERVER;
         //let tok_str='Token a8a31d16b64a1fa1e02de3401d2a78a1738977cd';
         console.log("token->"+tok);
         const response = await axios.get(
-            "http://localhost:8080/api/fin/api/symanalysis/",
+            "http://${backend_server}/api/fin/api/symanalysis/",
             {
                 'headers':{
                     "Content-Type": "application/json",

@@ -36,8 +36,9 @@ const retrieveSymbols = async () => {
         var tok="Token "+getToken();
         //let tok_str='Token a8a31d16b64a1fa1e02de3401d2a78a1738977cd';
         console.log("token->"+tok);
+        const backend_server = process.env.BACKEND_SERVER;
         const response = await axios.get(
-            "http://localhost:8080/api/fin/api/symbols/",
+            "http://${backend_server}/api/fin/api/symbols/",
             {
                 'headers':{
                     "Content-Type": "application/json",
@@ -58,8 +59,9 @@ const retrievePortfolio = async () => {
         var tok="Token "+getToken();
         //let tok_str='Token a8a31d16b64a1fa1e02de3401d2a78a1738977cd';
         console.log("token->"+tok);
+        const backend_server = process.env.BACKEND_SERVER;
         const response = await axios.get(
-            "http://localhost:8080/api/fin/api/portfolio/",
+            "http://${backend_server}/api/fin/api/portfolio/",
             {
                 'headers':{
                     "Content-Type": "application/json",

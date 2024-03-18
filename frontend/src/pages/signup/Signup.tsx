@@ -12,7 +12,8 @@ const Signup = (props) => {
   const [isSubmitted, setSubmitted] = useState(false);
 
   const onSubmit = async (values, actions) => {
-      const url = 'http://localhost:8080/api/auth/register/';
+      const backend_server = process.env.BACKEND_SERVER;
+      const url = 'http://${backend_server}/api/auth/register/';
       const formData = new FormData();
       formData.append('username', values.username);
       formData.append('first_name', values.firstName);
