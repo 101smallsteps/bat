@@ -18,8 +18,8 @@ services:
     volumes:
     - static_volume:/home/app/web/staticfiles
     - media_volume:/home/app/web/mediafiles
-    depends_on:
-      - fin_db_server_1
+#    depends_on:
+#      - fin_db_server_1
 
   bat_backend_2:
     restart: always
@@ -38,8 +38,8 @@ services:
     volumes:
     - static_volume:/home/app/web/staticfiles
     - media_volume:/home/app/web/mediafiles
-    depends_on:
-      - fin_db_server_2
+#    depends_on:
+#      - fin_db_server_2
 
   fin_db_server_1:
     restart: always

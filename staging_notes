@@ -3,6 +3,7 @@ setup machine
     https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04
     https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-22-04
     https://www.digitalocean.com/community/tutorials/how-to-set-up-django-with-postgres-nginx-and-gunicorn-on-ubuntu
+    https://www.digitalocean.com/community/tutorials/how-to-set-up-a-scalable-django-app-with-digitalocean-managed-databases-and-spaces
 
     root - ubuntu
 
@@ -64,10 +65,12 @@ front end
     echo "deb [signed-by=/usr/share/keyrings/nodesource.gpg] https://deb.nodesource.com/node_16.x $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/nodesource.list
     sudo apt update
     sudo apt install nodejs
+    sudo apt install nginx
     npm install -g create-vite
 
     git clone https://github.com/101smallsteps/bat.git
     cd bat/frontend
+    export  BACKEND_SERVER=64.23.200.34:8000
     npm install
     check -- npm run dev
     npm run build
@@ -77,3 +80,21 @@ front end
     service nginx start
 
     https://www.theappliedarchitect.com/deploying-react-in-production/
+
+DB
+----
+
+sudo apt update
+sudo apt install python3-pip python3-dev libpq-dev curl postgresql-client
+
+psql -U doadmin -h fin-db-do-user-16002418-0.c.db.ondigitalocean.com -p 25060 -d defaultdb -c "sslmode=require"
+
+psql -U doadmin -h fin-db-do-user-16002418-0.c.db.ondigitalocean.com -p 25060 -d defaultdb
+
+CREATE DATABASE fin_db;
+ \c fin_db;
+CREATE USER admin WITH PASSWORD 'admin';
+ALTER ROLE admin SET client_encoding TO 'utf8';
+ALTER ROLE admin SET default_transaction_isolation TO 'read committed';
+ALTER ROLE admin SET timezone TO 'UTC';
+GRANT ALL PRIVILEGES ON DATABASE fin_db TO admin;
