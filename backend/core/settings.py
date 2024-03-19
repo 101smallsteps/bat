@@ -102,7 +102,11 @@ SITE_ID = 1
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+USE_SSL  = os.getenv('USE_SSL ') == 'TRUE'
 
+if USE_SSL:
+    SECURE_SSL_REDIRECT = True
+    
 USE_OCEAN_DB = os.getenv('USE_OCEAN_DB ') == 'TRUE'
 
 if USE_OCEAN_DB :

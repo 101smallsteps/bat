@@ -76,6 +76,7 @@ front end
     npm run build
     mkdir /var/www/build/
     scp -r ./dist/* /var/www/build/
+    update the root location to ( /var/www/build/) in /etc/nginx/sites-enabled/
     service nginx stop
     service nginx start
 
