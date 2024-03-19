@@ -3,7 +3,7 @@ services:
   bat_backend_1:
     restart: always
 #    network_mode: "host"
-    command: gunicorn core.wsgi:application --bind 0.0.0.0:8000 --certfile /home/aarth/bat/credit/fullchain.pem --keyfile /home/aarth/bat/credit/privkey.pem
+    command: gunicorn core.wsgi:application --bind 0.0.0.0:8000 --certfile /home/app/web/credit/fullchain.pem --keyfile /home/app/web/credit/privkey.pem
 #    command: python manage.py runserver 0.0.0.0:8000
     build:
       context: ./backend
@@ -18,13 +18,14 @@ services:
     volumes:
     - static_volume:/home/app/web/staticfiles
     - media_volume:/home/app/web/mediafiles
+    - /home/aarth/bat/credit:/home/app/web/credit
 #    depends_on:
 #      - fin_db_server_1
 
   bat_backend_2:
     restart: always
 #    network_mode: "host"
-    command: gunicorn core.wsgi:application --bind 0.0.0.0:8000  --certfile /home/aarth/bat/credit/fullchain.pem --keyfile /home/aarth/bat/credit/privkey.pem
+    command: gunicorn core.wsgi:application --bind 0.0.0.0:8000  --certfile /home/app/web/credit/fullchain.pem --keyfile /home/app/web/credit/privkey.pem
     build:
       context: ./backend
       dockerfile: Dockerfile.prod
@@ -38,6 +39,7 @@ services:
     volumes:
     - static_volume:/home/app/web/staticfiles
     - media_volume:/home/app/web/mediafiles
+    - /home/aarth/bat/credit:/home/app/web/credit
 #    depends_on:
 #      - fin_db_server_2
 
