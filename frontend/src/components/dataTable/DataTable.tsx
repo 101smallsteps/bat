@@ -47,7 +47,7 @@ const DataTable = (props: Props) => {
             var tok="Token "+getToken();
             //let tok_str='Token a8a31d16b64a1fa1e02de3401d2a78a1738977cd';
             console.log("token->"+tok);
-            const backend_server = `${process.env.BACKEND_SERVER}`;
+            const backend_server = `${process.env.REACT_APP_BACKEND_SERVER}`;
             const response = await axios.delete(
                 `${backend_server}/api/fin/api/portfolio/${id}/`,
                 {
