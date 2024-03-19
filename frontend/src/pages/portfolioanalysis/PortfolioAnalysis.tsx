@@ -72,7 +72,7 @@ const retrieveAnalysis = async () => {
         //let tok_str='Token a8a31d16b64a1fa1e02de3401d2a78a1738977cd';
         console.log("token->"+tok);
         const response = await axios.get(
-            "http://${backend_server}/api/fin/api/symanalysis/",
+            "${backend_server}/api/fin/api/symanalysis/",
             {
                 'headers':{
                     "Content-Type": "application/json",

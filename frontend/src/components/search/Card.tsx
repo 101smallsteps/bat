@@ -39,7 +39,7 @@ const Card = (props: Props) => {
             console.log("token->"+tok);
             const backend_server = process.env.BACKEND_SERVER;
             const response = await axios.post(
-                "http://${backend_server}/api/fin/api/portfolio/",
+                "${backend_server}/api/fin/api/portfolio/",
                 post_data,
                 {
                     'headers':{

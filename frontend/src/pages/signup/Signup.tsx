@@ -13,7 +13,7 @@ const Signup = (props) => {
 
   const onSubmit = async (values, actions) => {
       const backend_server = process.env.BACKEND_SERVER;
-      const url = 'http://${backend_server}/api/auth/register/';
+      const url = '${backend_server}/api/auth/register/';
       const formData = new FormData();
       formData.append('username', values.username);
       formData.append('first_name', values.firstName);

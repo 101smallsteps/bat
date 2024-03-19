@@ -31,7 +31,7 @@ const retrieveOverallAnalysis = async (id:number) => {
                 console.log("token->"+tok);
                 const backend_server = process.env.BACKEND_SERVER;
                 const response = await axios.get(
-                    `http://${backend_server}/api/fin/api/overall/${id}/`,
+                    `${backend_server}/api/fin/api/overall/${id}/`,
                     {
                         'headers':{
                             "Content-Type": "application/json",
@@ -56,7 +56,7 @@ const retrieveIncomeStatementTotalRevenue = async (id:number) => {
                 console.log("token->"+tok);
                 const backend_server = process.env.BACKEND_SERVER;
                 const response = await axios.get(
-                    `http://${backend_server}/api/fin/api/incstmt/totalRevenue/${id}/10/`,
+                    `${backend_server}/api/fin/api/incstmt/totalRevenue/${id}/10/`,
                     {
                         'headers':{
                             "Content-Type": "application/json",
@@ -81,7 +81,7 @@ const retrieveRatioDERatio = async (id:number) => {
                 console.log("token->"+tok);
                 const backend_server = process.env.BACKEND_SERVER;
                 const response = await axios.get(
-                    `http://${backend_server}/api/fin/api/ratio/DEratio/${id}/10/`,
+                    `${backend_server}/api/fin/api/ratio/DEratio/${id}/10/`,
                     {
                         'headers':{
                             "Content-Type": "application/json",

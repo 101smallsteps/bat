@@ -70,7 +70,8 @@ front end
 
     git clone https://github.com/101smallsteps/bat.git
     cd bat/frontend
-    export  BACKEND_SERVER=64.23.200.34:8000
+    export  BACKEND_SERVER=https://64.23.200.34:8000   (web1)
+    export  BACKEND_SERVER=https://137.184.190.169:8000 (web2)
     npm install
     check -- npm run dev
     npm run build

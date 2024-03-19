@@ -59,7 +59,7 @@ function App() {
         try {
             const backend_server = process.env.BACKEND_SERVER;
             const response = await axios.get(
-                "http://${backend_server}/api/auth/user/",
+                "${backend_server}/api/auth/user/",
                 {
                     'headers':{
                         "Content-Type": "application/json",
@@ -81,7 +81,7 @@ function App() {
     // changed
     const logIn = async (username, password) => {
       const backend_server = process.env.BACKEND_SERVER;
-      const url = 'http://${backend_server}/api/auth/login/';
+      const url = '${backend_server}/api/auth/login/';
       try {
         const response = await axios.post(url, { username, password });
         console.log(response);
@@ -101,7 +101,7 @@ function App() {
 
     const logout = async () => {
       const backend_server = process.env.BACKEND_SERVER;
-      const url = 'http://${backend_server}/api/auth/logout/';
+      const url = '${backend_server}/api/auth/logout/';
       try {
         const response = await axios.post(url);
 

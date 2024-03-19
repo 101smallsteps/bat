@@ -38,7 +38,7 @@ const retrieveSymbols = async () => {
         console.log("token->"+tok);
         const backend_server = process.env.BACKEND_SERVER;
         const response = await axios.get(
-            "http://${backend_server}/api/fin/api/symbols/",
+            "${backend_server}/api/fin/api/symbols/",
             {
                 'headers':{
                     "Content-Type": "application/json",
@@ -61,7 +61,7 @@ const retrievePortfolio = async () => {
         console.log("token->"+tok);
         const backend_server = process.env.BACKEND_SERVER;
         const response = await axios.get(
-            "http://${backend_server}/api/fin/api/portfolio/",
+            "${backend_server}/api/fin/api/portfolio/",
             {
                 'headers':{
                     "Content-Type": "application/json",

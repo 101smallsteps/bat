@@ -28,7 +28,7 @@ const retrieveSymbols = async () => {
         console.log("token->"+tok);
         const backend_server = process.env.BACKEND_SERVER;
         const response = await axios.get(
-            "http://${backend_server}/api/fin/api/symbols/",
+            "${backend_server}/api/fin/api/symbols/",
             {
                 'headers':{
                     "Content-Type": "application/json",
@@ -93,7 +93,7 @@ const [myOptions, setMyOptions] = useState([]);
 
   // const mutation = useMutation({
   //   mutationFn: () => {
-  //     return fetch(`http://localhost:8800/api/${props.slug}s`, {
+  //     return fetch(`localhost:8800/api/${props.slug}s`, {
   //       method: "post",
   //       headers: {
   //         Accept: "application/json",

@@ -30,7 +30,7 @@ const DataTable = (props: Props) => {
   // const queryClient = useQueryClient();
   // // const mutation = useMutation({
   // //   mutationFn: (id: number) => {
-  // //     return fetch(`http://localhost:8800/api/${props.slug}/${id}`, {
+  // //     return fetch(`localhost:8800/api/${props.slug}/${id}`, {
   // //       method: "delete",
   // //     });
   // //   },
@@ -49,7 +49,7 @@ const DataTable = (props: Props) => {
             console.log("token->"+tok);
             const backend_server = process.env.BACKEND_SERVER;
             const response = await axios.delete(
-                `http://${backend_server}/api/fin/api/portfolio/${id}/`,
+                `${backend_server}/api/fin/api/portfolio/${id}/`,
                 {
                     'headers':{
                         "Content-Type": "application/json",

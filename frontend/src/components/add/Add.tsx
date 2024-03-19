@@ -16,7 +16,7 @@ const Add = (props: Props) => {
 
   // const mutation = useMutation({
   //   mutationFn: () => {
-  //     return fetch(`http://localhost:8800/api/${props.slug}s`, {
+  //     return fetch(`localhost:8800/api/${props.slug}s`, {
   //       method: "post",
   //       headers: {
   //         Accept: "application/json",
