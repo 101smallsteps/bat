@@ -1,6 +1,6 @@
 // config.ts
 const config = {
-    backend_server: 'http://localhost:8000/api' // Set your default API URL here
+    backend_server: 'https://core.bat4all.com' // Set your default API URL here
 };
 
 export default config;
