@@ -7,12 +7,13 @@ import {
 } from 'react-bootstrap'; // changed
 import { Link, Navigate } from 'react-router-dom';
 import axios from 'axios';
+import config from '../../config';
 
 const Signup = (props) => {
   const [isSubmitted, setSubmitted] = useState(false);
 
   const onSubmit = async (values, actions) => {
-      const backend_server = `${process.env.REACT_APP_BACKEND_SERVER}`;
+      const backend_server = config.backend_server;
       console.log(backend_server);
       const url =`${backend_server}/api/auth/register/`;
       const formData = new FormData();

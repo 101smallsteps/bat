@@ -6,7 +6,7 @@ import Search from "../../components/search/Search";
 import { GridColDef } from "@mui/x-data-grid";
 import { portfolio } from "../../data_bat";
 import { products } from "../../data";
-
+import config from '../../config';
 import axios from "axios";
 
 const columns: GridColDef[] = [
@@ -36,7 +36,7 @@ const retrieveSymbols = async () => {
         var tok="Token "+getToken();
         //let tok_str='Token a8a31d16b64a1fa1e02de3401d2a78a1738977cd';
         console.log("token->"+tok);
-        const backend_server = `${process.env.REACT_APP_BACKEND_SERVER}`;
+        const backend_server = config.backend_server;
         const response = await axios.get(
             `${backend_server}/api/fin/api/symbols/`,
             {
@@ -59,7 +59,7 @@ const retrievePortfolio = async () => {
         var tok="Token "+getToken();
         //let tok_str='Token a8a31d16b64a1fa1e02de3401d2a78a1738977cd';
         console.log("token->"+tok);
-        const backend_server = `${process.env.REACT_APP_BACKEND_SERVER}`;
+        const backend_server = config.backend_server;
         const response = await axios.get(
             `${backend_server}/api/fin/api/portfolio/`,
             {

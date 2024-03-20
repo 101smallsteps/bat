@@ -5,7 +5,7 @@ import React, { useEffect,useState } from "react";
 
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
-
+import config from '../../config';
 import axios from "axios";
 
 type Props = {
@@ -26,7 +26,7 @@ const retrieveSymbols = async () => {
         var tok="Token "+getToken();
         //let tok_str='Token a8a31d16b64a1fa1e02de3401d2a78a1738977cd';
         console.log("token->"+tok);
-        const backend_server = `${process.env.REACT_APP_BACKEND_SERVER}`;
+        const backend_server = config.backend_server;
         const response = await axios.get(
             `${backend_server}/api/fin/api/symbols/`,
             {

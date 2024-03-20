@@ -24,8 +24,8 @@ import {
 import { LinkContainer } from 'react-router-bootstrap';
 import ReactDOM from "react-dom";
 import { Navigate } from 'react-router-dom';
-import dotenv from 'dotenv';
-dotenv.config();
+import config from './config';
+
 ReactDOM.render(
   <React.StrictMode>
     <App />
@@ -58,7 +58,7 @@ function App() {
         var tok="Token "+getToken();
         //let tok_str='Token a8a31d16b64a1fa1e02de3401d2a78a1738977cd';
         try {
-            const backend_server = `${process.env.REACT_APP_BACKEND_SERVER}`;
+            const backend_server = config.backend_server;
             const response = await axios.get(
                 `${backend_server}/api/auth/user/`,
                 {
@@ -81,7 +81,7 @@ function App() {
 
     // changed
     const logIn = async (username, password) => {
-      const backend_server = `${process.env.REACT_APP_BACKEND_SERVER}`;
+      const backend_server = config.backend_server;
       const url = `${backend_server}/api/auth/login/`;
       try {
         const response = await axios.post(url, { username, password });
@@ -101,7 +101,7 @@ function App() {
     };
 
     const logout = async () => {
-      const backend_server = `${process.env.REACT_APP_BACKEND_SERVER}`;
+      const backend_server = config.backend_server;
       const url = `${backend_server}/api/auth/logout/`;
       try {
         const response = await axios.post(url);

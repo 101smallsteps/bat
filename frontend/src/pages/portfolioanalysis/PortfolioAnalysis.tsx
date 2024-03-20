@@ -5,6 +5,7 @@ import Add from "../../components/add/Add";
 import { GridColDef } from "@mui/x-data-grid";
 import { symbolAnalysis } from "../../data_bat";
 import axios from "axios";
+import config from '../../config';
 
 //axios.interceptors.response.use(
  // response => response,
@@ -68,7 +69,7 @@ const getToken = ()=> {
 const retrieveAnalysis = async () => {
     try {
         var tok="Token "+getToken();
-        const backend_server = `${process.env.REACT_APP_BACKEND_SERVER}`;
+        const backend_server = config.backend_server;
         //let tok_str='Token a8a31d16b64a1fa1e02de3401d2a78a1738977cd';
         console.log("token->"+tok);
         const response = await axios.get(
