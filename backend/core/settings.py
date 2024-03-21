@@ -32,18 +32,18 @@ ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 CORS_ORIGIN_ALLOW_ALL = False
 #CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOWED_ORIGINS = [
+#CORS_ALLOWED_ORIGINS = [
 # for react app
-    "http://localhost:5173",
-    'https://bat4all.com',
-    'https://core.bat4all.com',
-]
-
-# CORS_ALLOWED_ORIGINS and CORS_ORIGIN_WHITELIST both serves same purpose , which ever works
-#CORS_ORIGIN_WHITELIST = (
+#    "http://localhost:5173",
 #    'https://bat4all.com',
 #    'https://core.bat4all.com',
-#)
+#]
+
+# CORS_ALLOWED_ORIGINS and CORS_ORIGIN_WHITELIST both serves same purpose , which ever works
+CORS_ORIGIN_WHITELIST = (
+    'https://bat4all.com',
+    'https://core.bat4all.com',
+)
 
 #CSRF_TRUSTED_ORIGINS = ["http://localhost:1337"]
 CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_TRUSTED_ORIGINS").split(" ")
