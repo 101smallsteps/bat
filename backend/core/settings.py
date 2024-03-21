@@ -36,9 +36,10 @@ CORS_ALLOWED_ORIGINS = [
 # for react app
     "http://localhost:5173",
     'https://bat4all.com',
+    'https://core.bat4all.com',
 ]
 
-# CORS_ALLOWED_ORIGINS and CORS_ORIGIN_WHITELIST both serves same purpose , which ever works  
+# CORS_ALLOWED_ORIGINS and CORS_ORIGIN_WHITELIST both serves same purpose , which ever works
 #CORS_ORIGIN_WHITELIST = (
 #    'https://bat4all.com',
 #)
