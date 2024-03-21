@@ -40,9 +40,10 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 # CORS_ALLOWED_ORIGINS and CORS_ORIGIN_WHITELIST both serves same purpose , which ever works
-#CORS_ORIGIN_WHITELIST = (
-#    'https://bat4all.com',
-#)
+CORS_ORIGIN_WHITELIST = (
+    'https://bat4all.com',
+    'https://core.bat4all.com',
+)
 
 #CSRF_TRUSTED_ORIGINS = ["http://localhost:1337"]
 CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_TRUSTED_ORIGINS").split(" ")
