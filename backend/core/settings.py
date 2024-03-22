@@ -42,6 +42,11 @@ CORS_ORIGIN_ALLOW_ALL = False
 # CORS_ALLOWED_ORIGINS and CORS_ORIGIN_WHITELIST both serves same purpose , which ever works
 CORS_ORIGIN_WHITELIST = (
     'https://bat4all.com',
+    'https://bat4all.com/',
+    'bat4all.com',
+    'core.bat4all.com',
+    'https://core.bat4all.com'
+    'https://core.bat4all.com/'
 )
 
 #CSRF_TRUSTED_ORIGINS = ["http://localhost:1337"]
