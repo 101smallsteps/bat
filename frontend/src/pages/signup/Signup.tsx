@@ -8,15 +8,14 @@ import {
 import { Link, Navigate } from 'react-router-dom';
 import axios from 'axios';
 import config from '../../config';
-import instance from '../../api';
 
 const Signup = (props) => {
   const [isSubmitted, setSubmitted] = useState(false);
 
   const onSubmit = async (values, actions) => {
-//      const backend_server = 'bat4all.com';
-//      console.log(backend_server);
-      const url =`/auth/register/`;
+      const backend_server = config.backend_server;
+      console.log(backend_server);
+      const url =`${backend_server}/api/auth/register/`;
       const formData = new FormData();
       formData.append('username', values.username);
       formData.append('first_name', values.firstName);
@@ -27,7 +26,7 @@ const Signup = (props) => {
       formData.append('group', values.group);
       formData.append('photo', values.photo);
       try {
-        await instance.post(url, formData);
+        await axios.post(url, formData);
         setSubmitted(true);
       } catch (response) {
         const data = response.response.data;
