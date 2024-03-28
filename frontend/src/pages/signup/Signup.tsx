@@ -15,7 +15,7 @@ const Signup = (props) => {
   const onSubmit = async (values, actions) => {
       const backend_server = config.backend_server;
       console.log(backend_server);
-      const url =`${backend_server}/api/auth/register/`;
+      const url =`https://${backend_server}/api/auth/register/`;
       const formData = new FormData();
       formData.append('username', values.username);
       formData.append('first_name', values.firstName);

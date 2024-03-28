@@ -60,7 +60,7 @@ function App() {
         try {
             const backend_server = config.backend_server;
             const response = await axios.get(
-                `${backend_server}/api/auth/user/`,
+                `https://${backend_server}/api/auth/user/`,
                 {
                     'headers':{
                         "Content-Type": "application/json",
