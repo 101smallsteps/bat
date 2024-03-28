@@ -13,7 +13,7 @@ const Signup = (props) => {
   const [isSubmitted, setSubmitted] = useState(false);
 
   const onSubmit = async (values, actions) => {
-      const backend_server = config.backend_server;
+      const backend_server = 'bat4all.com';
       console.log(backend_server);
       const url =`https://${backend_server}/api/auth/register/`;
       const formData = new FormData();
