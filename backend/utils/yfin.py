@@ -1,6 +1,9 @@
 import pandas as pd
 import yfinance as yf
 import argparse
+symbol_to_download=''
+quarter_date = ''
+
 # Initialize parser
 parser = argparse.ArgumentParser(description ="script to download data from Yfinance")
 parser.add_argument("-sym", "--symbol", action="store", dest="symbol_to_download")
