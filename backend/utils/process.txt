@@ -1,0 +1,4 @@
+Download company data
+---------------------
+    login to bat4all-web-1
+    cd docker-compose -f docker-compose.staging.yml exec bat_backend_1 python manage.py createsuperuser

@@ -1,9 +1,15 @@
 import pandas as pd
 import yfinance as yf
+import argparse
+# Initialize parser
+parser = argparse.ArgumentParser(description ="script to download data from Yfinance")
+parser.add_argument("-sym", "--symbol", action="store", dest="symbol_to_download")
+parser.add_argument("-d", "--date", action="store", dest="quarter_date")
+parser.parse_args()
 
 # Specify the stock you want to analyze (e.g., AAPL)
-symbol_to_download='AAPL'
-quarter_date = '2023-09-30'
+#symbol_to_download='AAPL'
+#quarter_date = '2023-09-30'
 
 
 down_obj_income = yf.Ticker(symbol_to_download).quarterly_incomestmt
