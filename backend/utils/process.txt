@@ -1,4 +1,23 @@
 Download company data
 ---------------------
     login to bat4all-web-1
-    cd docker-compose -f docker-compose.staging.yml exec bat_backend_1 python manage.py createsuperuser
+    cd 
+    python3 ../../yfin.py  -sym AAPL -d 2023-09-30
+
+Process csv
+-----------
+    python3 ../../processCSV.py quarterly_balance_AAPL_2023-03-31.csv ./processed/quarterly_balance_AAPL_2023-03-31.csv
+    quarterly_balance_AAPL_2023-06-30.csv ./processed/quarterly_balance_AAPL_2023-06-30.csv
+    quarterly_balance_AAPL_2023-09-30.csv ./processed/quarterly_balance_AAPL_2023-09-30.csv
+    quarterly_balance_AAPL_2023-12-31.csv ./processed/quarterly_balance_AAPL_2023-12-31.csv
+    quarterly_cash_AAPL_2023-03-31.csv ./processed/quarterly_cash_AAPL_2023-03-31.csv
+    quarterly_cash_AAPL_2023-06-30.csv ./processed/quarterly_cash_AAPL_2023-06-30.csv
+    quarterly_cash_AAPL_2023-09-30.csv ./processed/quarterly_cash_AAPL_2023-09-30.csv
+    quarterly_cash_AAPL_2023-12-31.csv ./processed/quarterly_cash_AAPL_2023-12-31.csv
+    quarterly_incomestmt_AAPL_2023-03-31.csv ./processed/quarterly_incomestmt_AAPL_2023-03-31.csv
+    quarterly_incomestmt_AAPL_2023-06-30.csv ./processed/quarterly_incomestmt_AAPL_2023-06-30.csv
+    quarterly_incomestmt_AAPL_2023-09-30.csv ./processed/quarterly_incomestmt_AAPL_2023-09-30.csv
+    quarterly_incomestmt_AAPL_2023-12-31.csv ./processed/quarterly_incomestmt_AAPL_2023-12-31.csv
+
+Update DB
+----------
