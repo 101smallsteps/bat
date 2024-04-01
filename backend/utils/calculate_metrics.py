@@ -4,6 +4,7 @@ import django
 from django.apps import apps
 from django.utils import timezone
 import sys
+import argparse
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 # Get the directory path of the Django project (one level up from the script directory)
