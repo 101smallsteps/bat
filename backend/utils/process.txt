@@ -6,18 +6,36 @@ Download company data
 
 Process csv
 -----------
+    cd  /home/aarth/bat/backend/utils/data/aapl
     python3 ../../processCSV.py quarterly_balance_AAPL_2023-03-31.csv ./processed/quarterly_balance_AAPL_2023-03-31.csv
     quarterly_balance_AAPL_2023-06-30.csv ./processed/quarterly_balance_AAPL_2023-06-30.csv
     quarterly_balance_AAPL_2023-09-30.csv ./processed/quarterly_balance_AAPL_2023-09-30.csv
     quarterly_balance_AAPL_2023-12-31.csv ./processed/quarterly_balance_AAPL_2023-12-31.csv
-    quarterly_cash_AAPL_2023-03-31.csv ./processed/quarterly_cash_AAPL_2023-03-31.csv
+    python3 ../../processCSV.py quarterly_cash_AAPL_2023-03-31.csv ./processed/quarterly_cash_AAPL_2023-03-31.csv
     quarterly_cash_AAPL_2023-06-30.csv ./processed/quarterly_cash_AAPL_2023-06-30.csv
     quarterly_cash_AAPL_2023-09-30.csv ./processed/quarterly_cash_AAPL_2023-09-30.csv
     quarterly_cash_AAPL_2023-12-31.csv ./processed/quarterly_cash_AAPL_2023-12-31.csv
-    quarterly_incomestmt_AAPL_2023-03-31.csv ./processed/quarterly_incomestmt_AAPL_2023-03-31.csv
+    python3 ../../processCSV.py quarterly_incomestmt_AAPL_2023-03-31.csv ./processed/quarterly_incomestmt_AAPL_2023-03-31.csv
     quarterly_incomestmt_AAPL_2023-06-30.csv ./processed/quarterly_incomestmt_AAPL_2023-06-30.csv
     quarterly_incomestmt_AAPL_2023-09-30.csv ./processed/quarterly_incomestmt_AAPL_2023-09-30.csv
     quarterly_incomestmt_AAPL_2023-12-31.csv ./processed/quarterly_incomestmt_AAPL_2023-12-31.csv
 
 Update DB
 ----------
+    cd /home/aarth/bat/backend/utils
+    . .env
+    python3 update_db.py -s IncomeStatement  -dt Q -ds CREATE -sym AAPL -df Q_1 -dy 2023 -ip ./data/aapl/processed/quarterly_incomestmt_AAPL_2023-03-31.csv
+    python3 update_db.py -s BalanceSheet  -dt Q -ds CREATE -sym AAPL -df Q_1 -dy 2023 -ip ./data/aapl/processed/quarterly_balance_AAPL_2023-03-31.csv
+    python3 update_db.py -s CashFlow  -dt Q -ds CREATE -sym AAPL -df Q_1 -dy 2023 -ip ./data/aapl/processed/quarterly_cash_AAPL_2023-03-31.csv
+
+Perform analysis
+-----------------
+    cd /home/aarth/bat/backend/utils
+    . .env
+    python3 perform_analysis.py
+
+ calculate_metrics.py
+ ---------------------
+    cd /home/aarth/bat/backend/utils
+    . .env
+    python3 calculate_metrics.py -s IncomeStatement  -dt Q -ds CREATE -sym AAPL -df Q_1 -dy 2023 -ip ./data/aapl/processed/quarterly_incomestmt_AAPL_2023-03-31.csv
