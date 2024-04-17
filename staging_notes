@@ -31,6 +31,9 @@ setup machine 1
     git clone https://github.com/101smallsteps/bat.git
 
     docker-compose -f docker-compose.staging.yml up -d --build bat_backend_1
+    docker-compose -f docker-compose.staging.yml exec bat_backend_1 python manage.py migrate --noinput
+    docker-compose -f docker-compose.staging.yml exec bat_backend_1 python manage.py collectstatic --no-input --clear
+    docker-compose -f docker-compose.staging.yml exec bat_backend_1 python manage.py createsuperuser
 
     note the ip :
 
