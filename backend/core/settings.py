@@ -130,7 +130,8 @@ USE_SSL  = os.getenv('USE_SSL ') == 'TRUE'
 if USE_SSL:
     SECURE_SSL_REDIRECT = True
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
 USE_OCEAN_DB = os.getenv('USE_OCEAN_DB ') == 'TRUE'
 
 if USE_OCEAN_DB :
