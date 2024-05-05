@@ -39,10 +39,14 @@ CORS_ALLOWED_ORIGINS = [
     'https://core.bat4all.com',
 ]
 
-CORS_ALLOW_HEADERS = [
-    'Content-Type',
-    'Authorization',  # If applicable
-]
+CORS_ALLOW_HEADERS = (
+    "accept",
+    "authorization",
+    "content-type",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+)
 
 CORS_ALLOW_CREDENTIALS = True
 
