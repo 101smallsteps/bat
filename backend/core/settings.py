@@ -32,7 +32,7 @@ ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 
 #CORS_ORIGIN_ALLOW_ALL = False
 #CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOW_ORIGIN = [
+CORS_ALLOWED_ORIGINS = [
 # for react app
     "http://localhost:5173",
     'https://bat4all.com',
