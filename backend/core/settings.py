@@ -127,6 +127,11 @@ SITE_ID = 1
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 USE_SSL  = os.getenv('USE_SSL ') == 'TRUE'
 
+SECURE_SSL_REDIRECT = True
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
 if USE_SSL:
     SECURE_SSL_REDIRECT = True
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
