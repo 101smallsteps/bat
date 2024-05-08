@@ -38,32 +38,32 @@ CORS_ORIGIN_ALLOW_ALL = True
 #    'https://core.bat4all.com',
 #]
 
-CORS_ALLOW_METHODS = (
-    'GET',
-    'POST',
-    'PUT',
-    'PATCH',
-    'DELETE',
-    'OPTIONS',
-)
+#CORS_ALLOW_METHODS = (
+#    'GET',
+#    'POST',
+#    'PUT',
+#    'PATCH',
+#    'DELETE',
+#    'OPTIONS',
+#)
 
-CORS_EXPOSE_HEADERS = ['Content-Type', 'X-CSRFToken']
-CORS_ALLOW_CREDENTIALS = True
+#CORS_EXPOSE_HEADERS = ['Content-Type', 'X-CSRFToken']
+#CORS_ALLOW_CREDENTIALS = True
 
-CSRF_COOKIE_NAME = 'csrftoken'
-CSRF_COOKIE_DOMAIN = '.bat4all.com'
+#CSRF_COOKIE_NAME = 'csrftoken'
+#CSRF_COOKIE_DOMAIN = '.bat4all.com'
 
-SESSION_COOKIE_NAME = 'sessionid'
-SESSION_COOKIE_DOMAIN = '.bat4all.com'
+#SESSION_COOKIE_NAME = 'sessionid'
+#SESSION_COOKIE_DOMAIN = '.bat4all.com'
 
-LANGUAGE_COOKIE_NAME = 'language'
-LANGUAGE_COOKIE_DOMAIN = '.bat4all.com'
+#LANGUAGE_COOKIE_NAME = 'language'
+#LANGUAGE_COOKIE_DOMAIN = '.bat4all.com'
 
 
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-CSRF_COOKIE_HTTPONLY = False
-SESSION_COOKIE_HTTPONLY = False
+#SESSION_COOKIE_SECURE = True
+#CSRF_COOKIE_SECURE = True
+#CSRF_COOKIE_HTTPONLY = False
+#SESSION_COOKIE_HTTPONLY = False
 
 
 # CORS_ALLOWED_ORIGINS and CORS_ORIGIN_WHITELIST both serves same purpose , which ever works
@@ -139,10 +139,6 @@ SITE_ID = 1
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 USE_SSL  = os.getenv('USE_SSL ') == 'TRUE'
 
-SECURE_SSL_REDIRECT = True
-SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
 
 if USE_SSL:
     SECURE_SSL_REDIRECT = True
