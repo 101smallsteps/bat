@@ -29,7 +29,7 @@ DOMAIN_NAME = 'bat4all.com'
 #ALLOWED_HOSTS = ['localhost','http://localhost/','localhost:5173','http://localhost:5173/','http://127.0.0.1:5173/','127.0.0.1:5173']
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_ALLOW_ALL = False
 #CORS_ORIGIN_ALLOW_ALL_ORIGINS = True
 #CORS_ALLOWED_ORIGINS = [
 # for react app
@@ -67,10 +67,10 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 
 # CORS_ALLOWED_ORIGINS and CORS_ORIGIN_WHITELIST both serves same purpose , which ever works
-#CORS_ORIGIN_WHITELIST = [
-#    'https://bat4all.com',
-#    'https://core.bat4all.com'
-#]
+CORS_ORIGIN_WHITELIST = [
+    'https://bat4all.com',
+    'https://core.bat4all.com'
+]
 
 #CSRF_TRUSTED_ORIGINS = ["http://localhost:1337"]
 CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_TRUSTED_ORIGINS").split(" ")
