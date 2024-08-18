@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Symbol, SymbolAnalysis, Portfolio, overallAnalysis, IncomeStatement, FinanceData, Ratio,\
+from .models import Symbol, SymbolAnalysis, Portfolio, overallAnalysis, IncomeStatement, BalanceSheet, CashFlow, FinanceData, Ratio,\
 DividendCompanies,GrowthCompanies,ValueCompanies
 from django.contrib.auth.models import User
 
