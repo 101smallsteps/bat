@@ -1,0 +1,106 @@
+Ref: https://www.digitalocean.com/community/tutorials/how-to-scale-and-secure-a-django-application-with-docker-nginx-and-let-s-encrypt
+
+setup machine
+    https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04
+    https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-22-04
+    https://www.digitalocean.com/community/tutorials/how-to-set-up-django-with-postgres-nginx-and-gunicorn-on-ubuntu
+    https://www.digitalocean.com/community/tutorials/how-to-set-up-a-scalable-django-app-with-digitalocean-managed-databases-and-spaces
+
+    root - ubuntu
+
+    create user with sudo access
+    adduser aarth
+    ufw allow https
+    ufw allow http
+
+     UFW
+        https://www.digitalocean.com/community/tutorials/ufw-essentials-common-firewall-rules-and-commands
+
+     docker setup
+        systemctl status docker
+        sudo systemctl restart docker
+        docker network ls
+        docker network inspect bridge
+        sudo systemctl restart docker.service
+        journalctl -u docker.service
+
+setup machine 1
+    loing to machine 1
+    sudo login aarth
+    aarth123
+
+    git clone https://github.com/101smallsteps/bat.git
+
+    docker-compose -f docker-compose.staging.yml up -d --build bat_backend_1
+    docker-compose -f docker-compose.staging.yml exec bat_backend_1 python manage.py migrate --noinput
+    docker-compose -f docker-compose.staging.yml exec bat_backend_1 python manage.py collectstatic --no-input --clear
+    docker-compose -f docker-compose.staging.yml exec bat_backend_1 python manage.py createsuperuser
+
+    note the ip :
+
+setup machine 2
+    docker-compose -f docker-compose.staging.yml up -d --build bat_backend_2
+    docker-compose -f docker-compose.staging.yml exec bat_backend_2 python manage.py migrate --noinput
+    docker-compose -f docker-compose.staging.yml exec bat_backend_2 python manage.py collectstatic --no-input --clear
+
+nginx-proxy setup
+docker run -it --rm -p 80:80 --name certbot \
+         -v "/etc/letsencrypt:/etc/letsencrypt" \
+         -v "/var/lib/letsencrypt:/var/lib/letsencrypt" \
+         certbot/certbot certonly --standalone --staging -d bat4all.com
+
+    Requesting a certificate for bat4all.com
+
+    Successfully received certificate.
+    Certificate is saved at: /etc/letsencrypt/live/bat4all.com/fullchain.pem
+    Key is saved at:         /etc/letsencrypt/live/bat4all.com/privkey.pem
+    This certificate expires on 2024-06-10.
+    These files will be updated when the certificate renews.
+
+    NEXT STEPS:
+    - The certificate will need to be renewed before it expires. Certbot can automatically renew the certificate in the background, but you may need to take steps to enable that functionality. See https://certbot.org/renewal-setup for instructions.
+
+    docker-compose -f docker-compose.staging.yml up -d nginx
+
+front end
+    sudo apt update
+    sudo apt install curl gnupg2
+    curl -fsSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | sudo gpg --dearmor -o /usr/share/keyrings/nodesource.gpg
+    echo "deb [signed-by=/usr/share/keyrings/nodesource.gpg] https://deb.nodesource.com/node_16.x $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/nodesource.list
+    sudo apt update
+    sudo apt install nodejs
+    sudo apt install nginx
+    npm install -g create-vite
+
+    git clone https://github.com/101smallsteps/bat.git
+    cd bat/frontend
+    export  BACKEND_SERVER=https://64.23.200.34:8000   (web1)
+    export  BACKEND_SERVER=https://137.184.190.169:8000 (web2)
+    npm install
+    check -- npm run dev
+    npm run build
+    mkdir /var/www/build/
+    scp -r ./dist/* /var/www/build/
+    update the root location to ( /var/www/build/) in /etc/nginx/sites-enabled/
+    service nginx stop
+    service nginx start
+
+    https://www.theappliedarchitect.com/deploying-react-in-production/
+
+DB
+----
+
+sudo apt update
+sudo apt install python3-pip python3-dev libpq-dev curl postgresql-client
+
+psql -U doadmin -h fin-db-do-user-16002418-0.c.db.ondigitalocean.com -p 25060 -d defaultdb -c "sslmode=require"
+
+psql -U doadmin -h fin-db-do-user-16002418-0.c.db.ondigitalocean.com -p 25060 -d defaultdb
+
+CREATE DATABASE fin_db;
+ \c fin_db;
+CREATE USER admin WITH PASSWORD 'admin';
+ALTER ROLE admin SET client_encoding TO 'utf8';
+ALTER ROLE admin SET default_transaction_isolation TO 'read committed';
+ALTER ROLE admin SET timezone TO 'UTC';
+GRANT ALL PRIVILEGES ON DATABASE fin_db TO admin;
