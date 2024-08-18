@@ -1,3 +1,4 @@
+Ref: https://www.digitalocean.com/community/tutorials/how-to-scale-and-secure-a-django-application-with-docker-nginx-and-let-s-encrypt
 
 setup machine
     https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04
@@ -46,7 +47,7 @@ nginx-proxy setup
 docker run -it --rm -p 80:80 --name certbot \
          -v "/etc/letsencrypt:/etc/letsencrypt" \
          -v "/var/lib/letsencrypt:/var/lib/letsencrypt" \
-         certbot/certbot certonly --standalone --staging -d bat4all.com -d core.bat4all.com
+         certbot/certbot certonly --standalone --staging -d bat4all.com
 
     Requesting a certificate for bat4all.com
 
@@ -103,3 +104,4 @@ ALTER ROLE admin SET client_encoding TO 'utf8';
 ALTER ROLE admin SET default_transaction_isolation TO 'read committed';
 ALTER ROLE admin SET timezone TO 'UTC';
 GRANT ALL PRIVILEGES ON DATABASE fin_db TO admin;
+

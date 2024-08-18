@@ -57,6 +57,24 @@ class IncomeStatementAdmin(admin.ModelAdmin):
         "financeInfo", "TotalRevenue", "OperatingRevenue"
     )
 
+@admin.register(BalanceSheet)
+class BalanceSheetAdmin(admin.ModelAdmin):
+    fields = (
+        "financeInfo", "TotalDebt", "LongTermDebt"
+    )
+    list_display = (
+        "financeInfo", "TotalDebt", "LongTermDebt"
+    )
+
+@admin.register(CashFlow)
+class CashFlowtAdmin(admin.ModelAdmin):
+    fields = (
+        "financeInfo", "FreeCashFlow", "InvestingCashFlow"
+    )
+    list_display = (
+        "financeInfo", "FreeCashFlow", "InvestingCashFlow"
+    )
+
 @admin.register(Ratio)
 class RatioAdmin(admin.ModelAdmin):
     fields = (

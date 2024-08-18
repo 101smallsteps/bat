@@ -41,15 +41,11 @@ class FinanceData(models.Model):
     ("VERIFY", "Work Verification In Progress"),
     ("APPR", "Work APPROVED"),
   ]
-  DATA_TAG = [
-    ("Q","Quarterly"),
-    ("A", "Annual"),
-  ]
   DATA_FREQUENCY=[
-    ("Q_1", "Quarterly_1"),
-    ("Q_2", "Quarterly_2"),
-    ("Q_3", "Quarterly_3"),
-    ("Q_4", "Quarterly_4"),
+    ("Q_1", "Q_1"),
+    ("Q_2", "Q_2"),
+    ("Q_3", "Q_3"),
+    ("Q_4", "Q_4"),
     ("A","Annual")
   ]
 
@@ -109,48 +105,85 @@ class IncomeStatement(models.Model):
   OperatingRevenue = models.FloatField(default=0,null=True)
 
 class BalanceSheet(models.Model):
+  class Meta:
+    app_label = 'financials'
+
   financeInfo=models.ForeignKey(FinanceData,related_name='balancesheet_financeInfo',on_delete=models.CASCADE)
-  TaxEffectOfUnusualItems = models.FloatField(default=0,null=True)
-  TaxRateForCalcs = models.FloatField(default=0,null=True)
-  NormalizedEBITDA = models.FloatField(default=0,null=True)
-  NetIncomeFromContinuingOperationNetMinorityInterest = models.FloatField(default=0,null=True)
-  ReconciledDepreciation = models.FloatField(default=0,null=True)
-  ReconciledCostOfRevenue = models.FloatField(default=0,null=True)
-  EBITDA = models.FloatField(default=0,null=True)
-  EBIT = models.FloatField(default=0,null=True)
-  NetInterestIncome = models.FloatField(default=0,null=True)
-  InterestExpense = models.FloatField(default=0,null=True)
-  InterestIncome = models.FloatField(default=0,null=True)
-  NormalizedIncome = models.FloatField(default=0,null=True)
-  NetIncomeFromContinuingAndDiscontinuedOperation = models.FloatField(default=0,null=True)
-  TotalExpenses = models.FloatField(default=0,null=True)
-  TotalOperatingIncomeAsReported = models.FloatField(default=0,null=True)
-  DilutedAverageShares = models.FloatField(default=0,null=True)
-  BasicAverageShares = models.FloatField(default=0,null=True)
-  DilutedEPS = models.FloatField(default=0,null=True)
-  BasicEPS = models.FloatField(default=0,null=True)
-  DilutedNIAvailtoComStockholders = models.FloatField(default=0,null=True)
-  NetIncomeCommonStockholders = models.FloatField(default=0,null=True)
-  NetIncome = models.FloatField(default=0,null=True)
-  NetIncomeIncludingNoncontrollingInterests = models.FloatField(default=0,null=True)
-  NetIncomeContinuousOperations = models.FloatField(default=0,null=True)
-  TaxProvision = models.FloatField(default=0,null=True)
-  PretaxIncome = models.FloatField(default=0,null=True)
-  OtherIncomeExpense = models.FloatField(default=0,null=True)
-  OtherNonOperatingIncomeExpenses = models.FloatField(default=0,null=True)
-  NetNonOperatingInterestIncomeExpense = models.FloatField(default=0,null=True)
-  InterestExpenseNonOperating = models.FloatField(default=0,null=True)
-  InterestIncomeNonOperating = models.FloatField(default=0,null=True)
-  OperatingIncome = models.FloatField(default=0,null=True)
-  OperatingExpense = models.FloatField(default=0,null=True)
-  ResearchAndDevelopment = models.FloatField(default=0,null=True)
-  SellingGeneralAndAdministration = models.FloatField(default=0,null=True)
-  GrossProfit = models.FloatField(default=0,null=True)
-  CostOfRevenue = models.FloatField(default=0,null=True)
-  TotalRevenue = models.FloatField(default=0,null=True)
-  OperatingRevenue = models.FloatField(default=0,null=True)
+  TreasurySharesNumber = models.FloatField(default=0, null=True)
+  OrdinarySharesNumber = models.FloatField(default=0, null=True)
+  ShareIssued = models.FloatField(default=0, null=True)
+  NetDebt = models.FloatField(default=0, null=True)
+  TotalDebt = models.FloatField(default=0, null=True)
+  TangibleBookValue = models.FloatField(default=0, null=True)
+  InvestedCapital = models.FloatField(default=0, null=True)
+  WorkingCapital = models.FloatField(default=0, null=True)
+  NetTangibleAssets = models.FloatField(default=0, null=True)
+  CapitalLeaseObligations = models.FloatField(default=0, null=True)
+  CommonStockEquity = models.FloatField(default=0, null=True)
+  TotalCapitalization = models.FloatField(default=0, null=True)
+  TotalEquityGrossMinorityInterest = models.FloatField(default=0, null=True)
+  StockholdersEquity = models.FloatField(default=0, null=True)
+  GainsLossesNotAffectingRetainedEarnings = models.FloatField(default=0, null=True)
+  OtherEquityAdjustments = models.FloatField(default=0, null=True)
+  RetainedEarnings = models.FloatField(default=0, null=True)
+  CapitalStock = models.FloatField(default=0, null=True)
+  CommonStock = models.FloatField(default=0, null=True)
+  TotalLiabilitiesNetMinorityInterest = models.FloatField(default=0, null=True)
+  TotalNonCurrentLiabilitiesNetMinorityInterest = models.FloatField(default=0, null=True)
+  OtherNonCurrentLiabilities = models.FloatField(default=0, null=True)
+  TradeandOtherPayablesNonCurrent = models.FloatField(default=0, null=True)
+  LongTermDebtAndCapitalLeaseObligation = models.FloatField(default=0, null=True)
+  LongTermCapitalLeaseObligation = models.FloatField(default=0, null=True)
+  LongTermDebt = models.FloatField(default=0, null=True)
+  CurrentLiabilities = models.FloatField(default=0, null=True)
+  OtherCurrentLiabilities = models.FloatField(default=0, null=True)
+  CurrentDeferredLiabilities = models.FloatField(default=0, null=True)
+  CurrentDeferredRevenue = models.FloatField(default=0, null=True)
+  CurrentDebtAndCapitalLeaseObligation = models.FloatField(default=0, null=True)
+  CurrentCapitalLeaseObligation = models.FloatField(default=0, null=True)
+  CurrentDebt = models.FloatField(default=0, null=True)
+  OtherCurrentBorrowings = models.FloatField(default=0, null=True)
+  CommercialPaper = models.FloatField(default=0, null=True)
+  PayablesAndAccruedExpenses = models.FloatField(default=0, null=True)
+  Payables = models.FloatField(default=0, null=True)
+  TotalTaxPayable = models.FloatField(default=0, null=True)
+  IncomeTaxPayable = models.FloatField(default=0, null=True)
+  AccountsPayable = models.FloatField(default=0, null=True)
+  TotalAssets = models.FloatField(default=0, null=True)
+  TotalNonCurrentAssets = models.FloatField(default=0, null=True)
+  OtherNonCurrentAssets = models.FloatField(default=0, null=True)
+  NonCurrentDeferredAssets = models.FloatField(default=0, null=True)
+  NonCurrentDeferredTaxesAssets = models.FloatField(default=0, null=True)
+  InvestmentsAndAdvances = models.FloatField(default=0, null=True)
+  OtherInvestments = models.FloatField(default=0, null=True)
+  InvestmentinFinancialAssets = models.FloatField(default=0, null=True)
+  AvailableForSaleSecurities = models.FloatField(default=0, null=True)
+  NetPPE = models.FloatField(default=0, null=True)
+  AccumulatedDepreciation = models.FloatField(default=0, null=True)
+  GrossPPE = models.FloatField(default=0, null=True)
+  Leases = models.FloatField(default=0, null=True)
+  OtherProperties = models.FloatField(default=0, null=True)
+  MachineryFurnitureEquipment = models.FloatField(default=0, null=True)
+  LandAndImprovements = models.FloatField(default=0, null=True)
+  Properties = models.FloatField(default=0, null=True)
+  CurrentAssets = models.FloatField(default=0, null=True)
+  OtherCurrentAssets = models.FloatField(default=0, null=True)
+  Inventory = models.FloatField(default=0, null=True)
+  FinishedGoods = models.FloatField(default=0, null=True)
+  RawMaterials = models.FloatField(default=0, null=True)
+  Receivables = models.FloatField(default=0, null=True)
+  OtherReceivables = models.FloatField(default=0, null=True)
+  AccountsReceivable = models.FloatField(default=0, null=True)
+  CashCashEquivalentsAndShortTermInvestments = models.FloatField(default=0, null=True)
+  OtherShortTermInvestments = models.FloatField(default=0, null=True)
+  CashAndCashEquivalents = models.FloatField(default=0, null=True)
+  CashEquivalents = models.FloatField(default=0, null=True)
+  CashFinancial = models.FloatField(default=0, null=True)
 
 class CashFlow(models.Model):
+  class Meta:
+    app_label = 'financials'
+
   financeInfo=models.ForeignKey(FinanceData,related_name='cashflow_financeInfo',on_delete=models.CASCADE)
   FreeCashFlow = models.FloatField(default=0,null=True)
   RepurchaseOfCapitalStock = models.FloatField(default=0,null=True)

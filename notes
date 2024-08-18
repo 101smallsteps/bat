@@ -8,3 +8,8 @@ port listners
 docker-compose exec movies python manage.py flush
 docker-compose exec movies python manage.py loaddata dataseed.json
  http --json http://localhost:8080/api/symanalysis/
+
+
+ Update metrics
+ --------------
+ https://docs.google.com/document/d/1hvuyO62s3U0gHgpCUKhd440Q0jTRl3G7vsRZeLNgpNs/edit?usp=sharing
