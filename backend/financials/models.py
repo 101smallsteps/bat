@@ -51,6 +51,7 @@ class FinanceData(models.Model):
 
   class Meta:
     app_label = 'financials'
+    unique_together = ('dataType', 'dataStatus','symbol','dataFrequency','dataYear')  # Prevents duplicates based on date and description
 
   dataType = models.CharField(max_length=1, choices=DATA_TAG)
   dataStatus = models.CharField(max_length=6, choices=DATA_WORK_STATUS)
