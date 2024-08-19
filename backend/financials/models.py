@@ -57,7 +57,7 @@ class FinanceData(models.Model):
   symbol = models.ForeignKey(Symbol, related_name='findata_symbol',on_delete=models.CASCADE)
   dataFrequency = models.CharField(max_length=6, choices=DATA_FREQUENCY)
   dataYear = models.IntegerField(_('year'), choices=year_choices(), default=current_year())
-  datePub = models.DateField()
+  datePub = models.DateField(null=True)
 
 class IncomeStatement(models.Model):
   class Meta:
