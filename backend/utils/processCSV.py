@@ -6,6 +6,15 @@ def remove_spaces(input_file, output_file):
     with open(input_file, 'r', newline='') as infile, open(output_file, 'w', newline='') as outfile:
         reader = csv.reader(infile)
         writer = csv.writer(outfile)
+        # Read the first row
+        first_row = next(reader)
+        # Update the first cell
+        first_row[0] = "Field"
+        first_row[1] = "Value"
+        
+        # Write the updated row back to the file
+        writer.writerow(first_row)      
+
         for row in reader:
             # Remove spaces from each field in the row
             modified_row = [field.replace(' ', '') for field in row]

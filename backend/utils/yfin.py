@@ -37,7 +37,7 @@ matching_columns = [col for col in down_obj_balance.columns if quarter_date in s
 columns_to_include = [empty_header_column] + matching_columns
 down_obj_balance_filtered=down_obj_balance[columns_to_include]
 print(down_obj_balance_filtered[[quarter_date]].to_string(index=True))
-down_obj_income_filtered[[quarter_date]].to_csv(f'quarterly_balance_{symbol_to_download}_{quarter_date}.csv', index=True)
+down_obj_balance_filtered[[quarter_date]].to_csv(f'quarterly_balance_{symbol_to_download}_{quarter_date}.csv', index=True)
 
 down_obj_cash = yf.Ticker(symbol_to_download).quarterly_cashflow
 # Identify the first column with an empty header

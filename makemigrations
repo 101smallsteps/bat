@@ -1,0 +1,1 @@
+docker-compose -f docker-compose.staging.yml exec bat_backend_1 python manage.py makemigrations 

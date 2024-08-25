@@ -1,0 +1,4 @@
+docker-compose -f docker-compose.staging.yml down -v
+docker rmi bat_bat_backend_1
+docker-compose -f docker-compose.staging.yml build  bat_backend_1
+docker-compose -f docker-compose.staging.yml up -d  bat_backend_1

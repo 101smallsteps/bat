@@ -82,6 +82,12 @@ def calculate_metric_from_income_stmt(fin_obj, csv_file_path):
     csv_data=read_csv(csv_file_path)
     update_gross_margin(fin_obj, csv_data)
 
+def calculate_metric_from_cash_flow_stmt(fin_obj, csv_file_path):
+    pass
+
+def calculate_metric_from_balancesheet_stmt(fin_obj, csv_file_path):
+    pass
+
 
 
 if __name__ == "__main__":
@@ -110,3 +116,8 @@ if __name__ == "__main__":
     fin_obj=get_financial_data(arg_dataType,arg_dataStatus,arg_symbol,arg_dataFrequency,arg_dataYear)
     if (arg_model_name == "IncomeStatement"):
         calculate_metric_from_income_stmt(fin_obj,input_file)
+    elif(arg_model_name == "CashFlow"):
+        calculate_metric_from_cash_flow_stmt(fin_obj,input_file)
+    elif(arg_model_name == "BalanceSheet"):
+        calculate_metric_from_balancesheet_stmt(fin_obj,input_file)
+
