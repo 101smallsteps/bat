@@ -42,51 +42,177 @@ def read_csv(filename):
             data[key] = row
     return data
 
-def get_financial_data(a_dataType,a_dataStatus,a_symbol,a_dataFrequency,a_dataYear):
-    sym = Symbol.objects.get(pk=1)
-    try:
-        obj = FinanceData.objects.create(
-            dataType=a_dataType,
-            dataStatus=a_dataStatus,
-            symbol=sym,
-            dataFrequency=a_dataFrequency,
-            dataYear=a_dataYear,
-            datePub=timezone.now().date()
-        )
-        return obj
+def get_financial_data(a_dataType,a_dataStatus,a_dataFrequency,a_dataYear):
+    #sym = Symbol.objects.get(pk=1)
+    obj = FinanceData.objects.get(
+        dataType=a_dataType,
+        dataStatus=a_dataStatus,
+        dataFrequency=a_dataFrequency,
+        dataYear=a_dataYear,
+    )
+    return obj
 
-    except FinanceData.DoesNotExist:
-        print("Problem in workflow , this script needs to be used after DB update ")
-    return None
-
-def update_gross_margin(fin_obj,csv_data):
+def update_gross_profit_margin(fin_obj,symbol_obj,csv_data):
     print(csv_data['GrossProfit']['Value'])
-    l_GrossMargin = (float(csv_data['GrossProfit']['Value']) / float(csv_data['OperatingRevenue']['Value'])) * 100
+    l_GrossMargin = round((float(csv_data['GrossProfit']['Value']) / float(csv_data['OperatingRevenue']['Value'])) * 100,2)
     print(l_GrossMargin)
     try:
         ratio_obj = Ratio.objects.get(
             financeInfo=fin_obj,
+            symbol=symbol_obj,
         )
         #FOR AAPL  GrossProfit/OperatingRevenue * 100
-        ratio_obj.GrossMargin = l_GrossMargin
+        ratio_obj.GrossProfitMargin = l_GrossMargin
         ratio_obj.save()
     except Ratio.DoesNotExist:
         ratio_obj = Ratio.objects.create(
             financeInfo=fin_obj,
-            GrossMargin=l_GrossMargin
+            symbol=symbol_obj,
+            GrossProfitMargin=l_GrossMargin
+        )
+
+def update_net_profit_margin(fin_obj,symbol_obj,csv_data):
+    print(csv_data['NetIncome']['Value'])
+    l_NetProfitMargin = round((float(csv_data['NetIncome']['Value']) / float(csv_data['OperatingRevenue']['Value'])) * 100,2)
+    print(l_NetProfitMargin)
+    try:
+        ratio_obj = Ratio.objects.get(
+            financeInfo=fin_obj,
+            symbol=symbol_obj,
+        )
+        #FOR AAPL  GrossProfit/OperatingRevenue * 100
+        ratio_obj.NetProfitMargin = l_NetProfitMargin
+        ratio_obj.save()
+    except Ratio.DoesNotExist:
+        ratio_obj = Ratio.objects.create(
+            financeInfo=fin_obj,
+            symbol=symbol_obj,
+            NetProfitMargin=l_NetProfitMargin
+        )
+
+def update_DE_ratio(fin_obj,symbol_obj,csv_data):
+    TotalShareholdersEquity = float(csv_data['TotalAssets']['Value']) - float(csv_data['TotalLiabilitiesNetMinorityInterest']['Value'])
+    l_DEratio = round(float(csv_data['TotalDebt']['Value'])/TotalShareholdersEquity,2)
+    print(f"TotalAssets -> {csv_data['TotalAssets']['Value']}")
+    print(f"TotalShareholdersEquity -> {TotalShareholdersEquity}")
+    print(f"DEratio->{l_DEratio}")
+    try:
+        ratio_obj = Ratio.objects.get(
+            financeInfo=fin_obj,
+            symbol=symbol_obj,
+        )
+        #FOR AAPL  GrossProfit/OperatingRevenue * 100
+        ratio_obj.DEratio = l_DEratio
+        ratio_obj.save()
+    except Ratio.DoesNotExist:
+        ratio_obj = Ratio.objects.create(
+            financeInfo=fin_obj,
+            symbol=symbol_obj,
+            DEratio=l_DEratio
         )
 
 
+def update_TD_TA_ratio(fin_obj,symbol_obj,csv_data):
+    print(csv_data['TotalAssets']['Value'])
+    l_TDTAratio = round(float(csv_data['TotalLiabilitiesNetMinorityInterest']['Value'])/float(csv_data['TotalAssets']['Value']),2)
+    print(l_TDTAratio)
+    try:
+        ratio_obj = Ratio.objects.get(
+            financeInfo=fin_obj,
+            symbol=symbol_obj
+        )
+        #FOR AAPL  GrossProfit/OperatingRevenue * 100
+        ratio_obj.TDTAratio = l_TDTAratio
+        ratio_obj.save()
+    except Ratio.DoesNotExist:
+        ratio_obj = Ratio.objects.create(
+            financeInfo=fin_obj,
+            symbol=symbol_obj,
+            TDTAratio=l_TDTAratio
+        )
 
-def calculate_metric_from_income_stmt(fin_obj, csv_file_path):
+def update_Currentratio(fin_obj,symbol_obj,csv_data):
+    # CurrentRatio = CurrentAssets/CurrentLiabilities
+    print(csv_data['CurrentAssets']['Value'])
+    l_Currentratio = round(float(csv_data['CurrentAssets']['Value'])/float(csv_data['CurrentLiabilities']['Value']),2)
+    print(l_Currentratio)
+    try:
+        ratio_obj = Ratio.objects.get(
+            financeInfo=fin_obj,
+            symbol=symbol_obj
+        )
+        #FOR AAPL  GrossProfit/OperatingRevenue * 100
+        ratio_obj.Currentratio = l_Currentratio
+        ratio_obj.save()
+    except Ratio.DoesNotExist:
+        ratio_obj = Ratio.objects.create(
+            financeInfo=fin_obj,
+            symbol=symbol_obj,
+            Currentratio=l_Currentratio
+        )
+def update_Quickratio(fin_obj,symbol_obj,csv_data):
+    #Quickratio = CashAndCashEquivalents + AccountsReceivable / CurrentLiabilities
+    print(csv_data['CashAndCashEquivalents']['Value'])
+    l_Quickratio = round((float(csv_data['CashAndCashEquivalents']['Value']) + float(csv_data['AccountsReceivable']['Value']) )/float(csv_data['CurrentLiabilities']['Value']),2)
+    print(l_Quickratio)
+    try:
+        ratio_obj = Ratio.objects.get(
+            financeInfo=fin_obj,
+            symbol=symbol_obj
+        )
+        #FOR AAPL  GrossProfit/OperatingRevenue * 100
+        ratio_obj.Quickratio = l_Quickratio
+        ratio_obj.save()
+    except Ratio.DoesNotExist:
+        ratio_obj = Ratio.objects.create(
+            financeInfo=fin_obj,
+            symbol=symbol_obj,
+            Quickratio=l_Quickratio
+        )
+
+def update_Cashratio(fin_obj,symbol_obj,csv_data):
+    #Cashratio = CashAndCashEquivalents / CurrentLiabilities
+    print(csv_data['CashAndCashEquivalents']['Value'])
+    l_Cashratio = round(float(csv_data['CashAndCashEquivalents']['Value'])/float(csv_data['CurrentLiabilities']['Value']),2)
+    print(l_Cashratio)
+    try:
+        ratio_obj = Ratio.objects.get(
+            financeInfo=fin_obj,
+            symbol=symbol_obj
+        )
+        #FOR AAPL  GrossProfit/OperatingRevenue * 100
+        ratio_obj.Cashratio = l_Cashratio
+        ratio_obj.save()
+    except Ratio.DoesNotExist:
+        ratio_obj = Ratio.objects.create(
+            financeInfo=fin_obj,
+            symbol=symbol_obj,
+            Cashratio=l_Cashratio
+        )
+def calculate_metric_from_income_stmt(fin_obj, symbol_obj,csv_file_path):
     csv_data=read_csv(csv_file_path)
-    update_gross_margin(fin_obj, csv_data)
+    # GrossProfit/Total revenue
+    update_gross_profit_margin(fin_obj, symbol_obj, csv_data)
+    # NetProfit/Total revenue
+    update_net_profit_margin(fin_obj, symbol_obj, csv_data)
 
-def calculate_metric_from_cash_flow_stmt(fin_obj, csv_file_path):
+def calculate_metric_from_cash_flow_stmt(fin_obj, symbol_obj, csv_file_path):
     pass
 
-def calculate_metric_from_balancesheet_stmt(fin_obj, csv_file_path):
-    pass
+def calculate_metric_from_balancesheet_stmt(fin_obj, symbol_obj, csv_file_path):
+    csv_data = read_csv(csv_file_path)
+    #D/E ratio
+        #TotalShareholdersEquity =TotalAssets – TotalLiabilitiesNetMinorityInterest
+        #D/E ratio = TotalDebt/TotalShareholdersEquity
+    update_DE_ratio(fin_obj, symbol_obj, csv_data)
+    #TD / TA  Ratio = TotalLiabilitiesNetMinorityInterest/TotalAssets
+    update_TD_TA_ratio(fin_obj, symbol_obj, csv_data)
+    #CurrentRatio = CurrentAssets/CurrentLiabilities
+    update_Currentratio(fin_obj, symbol_obj, csv_data)
+    #Quickratio = CashAndCashEquivalents + AccountsReceivable / CurrentLiabilities
+    update_Quickratio(fin_obj, symbol_obj, csv_data)
+    # Cashratio = CashAndCashEquivalents / CurrentLiabilities
+    update_Cashratio(fin_obj, symbol_obj, csv_data)
 
 
 
@@ -113,11 +239,12 @@ if __name__ == "__main__":
     arg_dataYear = args.data_year
     input_file = args.input
 
-    fin_obj=get_financial_data(arg_dataType,arg_dataStatus,arg_symbol,arg_dataFrequency,arg_dataYear)
+    fin_obj=get_financial_data(arg_dataType,arg_dataStatus,arg_dataFrequency,arg_dataYear)
+    symbol_obj = Symbol.objects.get(symbolName=arg_symbol)
     if (arg_model_name == "IncomeStatement"):
-        calculate_metric_from_income_stmt(fin_obj,input_file)
+        calculate_metric_from_income_stmt(fin_obj,symbol_obj,input_file)
     elif(arg_model_name == "CashFlow"):
-        calculate_metric_from_cash_flow_stmt(fin_obj,input_file)
+        calculate_metric_from_cash_flow_stmt(fin_obj,symbol_obj,input_file)
     elif(arg_model_name == "BalanceSheet"):
-        calculate_metric_from_balancesheet_stmt(fin_obj,input_file)
+        calculate_metric_from_balancesheet_stmt(fin_obj,symbol_obj,input_file)
 

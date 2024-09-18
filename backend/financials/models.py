@@ -51,11 +51,11 @@ class FinanceData(models.Model):
 
   class Meta:
     app_label = 'financials'
-    unique_together = ('dataType', 'dataStatus','symbol','dataFrequency','dataYear')  # Prevents duplicates based on date and description
+    #unique_together = ('dataType', 'dataStatus','symbol','dataFrequency','dataYear')  # Prevents duplicates based on date and description
 
   dataType = models.CharField(max_length=1, choices=DATA_TAG)
   dataStatus = models.CharField(max_length=6, choices=DATA_WORK_STATUS)
-  symbol = models.ForeignKey(Symbol, related_name='findata_symbol',on_delete=models.CASCADE)
+  #symbol = models.ForeignKey(Symbol, related_name='findata_symbol',on_delete=models.CASCADE)
   dataFrequency = models.CharField(max_length=6, choices=DATA_FREQUENCY)
   dataYear = models.IntegerField(_('year'), choices=year_choices(), default=current_year())
   datePub = models.DateField(null=True)
@@ -64,7 +64,9 @@ class IncomeStatement(models.Model):
   class Meta:
     app_label = 'financials'
 
-  financeInfo=models.ForeignKey(FinanceData,related_name='income_financeInfo',on_delete=models.CASCADE)
+  #financeInfo = models.ForeignKey(FinanceData, related_name='income_financeInfo', on_delete=models.CASCADE)
+  financeInfo=models.ForeignKey(FinanceData,on_delete=models.CASCADE)
+  symbol = models.ForeignKey(Symbol,null=True,on_delete=models.CASCADE)
   TaxEffectOfUnusualItems = models.FloatField(default=0.0,null=True)
   TaxRateForCalcs = models.FloatField(default=0.0,null=True)
   NormalizedEBITDA = models.FloatField(default=0.0,null=True)
@@ -109,7 +111,9 @@ class BalanceSheet(models.Model):
   class Meta:
     app_label = 'financials'
 
-  financeInfo=models.ForeignKey(FinanceData,related_name='balancesheet_financeInfo',on_delete=models.CASCADE)
+  #financeInfo=models.ForeignKey(FinanceData,related_name='balancesheet_financeInfo',on_delete=models.CASCADE)
+  financeInfo = models.ForeignKey(FinanceData, on_delete=models.CASCADE)
+  symbol = models.ForeignKey(Symbol, null=True,on_delete=models.CASCADE)
   TreasurySharesNumber = models.FloatField(default=0.0, null=True)
   OrdinarySharesNumber = models.FloatField(default=0.0, null=True)
   ShareIssued = models.FloatField(default=0.0, null=True)
@@ -185,7 +189,9 @@ class CashFlow(models.Model):
   class Meta:
     app_label = 'financials'
 
-  financeInfo=models.ForeignKey(FinanceData,related_name='cashflow_financeInfo',on_delete=models.CASCADE)
+  #financeInfo=models.ForeignKey(FinanceData,related_name='cashflow_financeInfo',on_delete=models.CASCADE)
+  financeInfo = models.ForeignKey(FinanceData, on_delete=models.CASCADE)
+  symbol = models.ForeignKey(Symbol, null=True,on_delete=models.CASCADE)
   FreeCashFlow = models.FloatField(default=0.0,null=True)
   RepurchaseOfCapitalStock = models.FloatField(default=0.0,null=True)
   RepaymentOfDebt = models.FloatField(default=0.0,null=True)
@@ -240,38 +246,43 @@ class Ratio(models.Model):
   class Meta:
     app_label = 'financials'
 
-  financeInfo=models.ForeignKey(FinanceData,related_name='ratios_financeInfo',on_delete=models.CASCADE)
+  #financeInfo=models.ForeignKey(FinanceData,related_name='ratios_financeInfo',on_delete=models.CASCADE)
+  financeInfo = models.ForeignKey(FinanceData, on_delete=models.CASCADE)
+  symbol = models.ForeignKey(Symbol, null=True,on_delete=models.CASCADE)
 #START Derived from income statement
   # GrossProfit/OperatingRevenue(NetSales) or (TotalRevenue - CostOfRevenue)/TotalRevenue
   # FOR AAPL  GrossProfit/OperatingRevenue
-  GrossMargin = models.FloatField(default=0.0,null=True)
+  GrossProfitMargin = models.FloatField(default=0.0,null=True)
   # This metric needs to be gathered based on resarch
-  ProfitMargin= models.FloatField(default=0.0,null=True)
+  NetProfitMargin = models.FloatField(default=0.0,null=True)
 
 #END Derived from income statement
 #END Derived from income statement
   DEratio = models.FloatField(default=0.0,null=True)
-
+  TDTAratio = models.FloatField(default=0.0, null=True)
+  Currentratio = models.FloatField(default=0.0, null=True)
+  Quickratio = models.FloatField(default=0.0, null=True)
+  Cashratio = models.FloatField(default=0.0, null=True)
 
 class ValueCompanies(models.Model):
   class Meta:
     app_label = 'financials'
 
   rank=models.IntegerField()
-  symbol = models.ForeignKey(Symbol,related_name='vc_symbol',on_delete=models.CASCADE)
+  symbol = models.ForeignKey(Symbol,null=True,related_name='vc_symbol',on_delete=models.CASCADE)
 
 
 class GrowthCompanies(models.Model):
   class Meta:
     app_label = 'financials'
   rank = models.IntegerField()
-  symbol = models.ForeignKey(Symbol,related_name='gc_symbol', on_delete=models.CASCADE)
+  symbol = models.ForeignKey(Symbol,null=True,related_name='gc_symbol', on_delete=models.CASCADE)
 
 class DividendCompanies(models.Model):
   class Meta:
     app_label = 'financials'
   rank = models.IntegerField()
-  symbol = models.ForeignKey(Symbol,related_name='dc_symbol', on_delete=models.CASCADE)
+  symbol = models.ForeignKey(Symbol,null=True,related_name='dc_symbol', on_delete=models.CASCADE)
 
 class Portfolio(models.Model):
   class Meta:
@@ -295,7 +306,7 @@ class SymbolAnalysis(models.Model):
     ('BAD', 'bad'),
     ('OK', 'ok'),
   ]
-  symbol = models.ForeignKey(Symbol, on_delete=models.CASCADE, related_name='symbols_all')
+  symbol = models.ForeignKey(Symbol, null=True,on_delete=models.CASCADE, related_name='symbols_all')
   AnalysisStatus =  models.CharField(max_length=6, choices=ANALYSIS_STATUS)
   rank = models.IntegerField(default=0.0)
   max_rank = models.IntegerField(default=0.0)
@@ -318,13 +329,20 @@ class overallAnalysis(models.Model):
     ('NAVL', 'navl'),
   ]
   METRIC_NAMES = [
-    ('REVENUE','Revenue'),  #MAX-RANK - 10
-    ('GROSSMARGIN','GrossMargin'),#MAX-RANK - 10
-    ('DERATIO', 'DERatio'), #MAX-RANK - 5
+    ('Cashratio','Cashratio'),
+    ('Quickratio','Quickratio'),
+    ('Currentratio', 'Currentratio'),
+    ('TDTAratio', 'TDTAratio'),
+    ('DEratio', 'DEratio'),
+    ('NetProfitMargin', 'NetProfitMargin'),
+    ('GrossProfitMargin', 'GrossProfitMargin'),
+    ('RevenueGrowthConsecutive','RevenueGrowthConsecutive'),
+    ('RevenueVsCoR', 'RevenueVsCoR'),
+    ('Revenue', 'Revenue'),
      ]
-  symbol = models.ForeignKey(Symbol, on_delete=models.CASCADE, related_name='symbols_all_overall')
-  metric = models.CharField(max_length=20, choices=METRIC_NAMES)
+  symbol = models.ForeignKey(Symbol, null=True,on_delete=models.CASCADE, related_name='symbols_all_overall')
+  metric = models.CharField(max_length=40, choices=METRIC_NAMES)
   rank = models.IntegerField(default=0.0)
   max_rank = models.IntegerField(default=0.0)
   analysisResult = models.CharField(max_length=6, default='NAVL',choices=ANALYSIS_STATUS)
-  metricDisplay = models.CharField(max_length=6)
+  metricDisplay = models.CharField(max_length=36)

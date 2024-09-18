@@ -121,9 +121,10 @@ const PortfolioAnalysis = () => {
                 return{
                     'id':element.id,
                     'AnalysisStatus':element.AnalysisStatus,
-                    'Symbol':element.symbol.symbol,
+                    'Symbol':element.symbol.symbolName,
                     'sid':element.symbol.id,
-                    'CompanyName':element.symbol.companyName
+                    'CompanyName':element.symbol.companyName,
+                    'updatedAt':element.updated_date
                 };
 
             });

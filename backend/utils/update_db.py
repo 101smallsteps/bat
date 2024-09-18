@@ -34,26 +34,25 @@ parser.add_argument("-ip", "--input", action="store", dest="input")
 parser.add_argument("-r", "--register", action="store_true")
 
 
-def get_financial_data(a_dataType,a_dataStatus,a_symbol,a_dataFrequency,a_dataYear):
-    symbol_instance = Symbol.objects.get(symbolName=a_symbol)
+def get_financial_data(a_dataType,a_dataStatus,a_dataFrequency,a_dataYear):
+    #symbol_instance = Symbol.objects.get(symbolName=a_symbol)
     obj = FinanceData.objects.get(
         dataType=a_dataType,
         dataStatus=a_dataStatus,
-        symbol=symbol_instance,
         dataFrequency=a_dataFrequency,
         dataYear=a_dataYear,
     )
 
     return obj
 
-def register_financial_data(a_dataType,a_dataStatus,a_symbol,a_dataFrequency,a_dataYear):
-    symbol_instance = Symbol.objects.get(symbolName=a_symbol)
-    print(f"register_financial_data->{a_dataType} {a_dataStatus} {a_symbol} {a_dataFrequency} {a_dataYear}")
-    print(symbol_instance)
+def register_financial_data(a_dataType,a_dataStatus,a_dataFrequency,a_dataYear):
+    #symbol_instance = Symbol.objects.get(symbolName=a_symbol)
+    #print(f"register_financial_data->{a_dataType} {a_dataStatus} {a_symbol} {a_dataFrequency} {a_dataYear}")
+    #print(symbol_instance)
     obj = FinanceData.objects.create(
         dataType=a_dataType,
         dataStatus=a_dataStatus,
-        symbol=symbol_instance,
+     #   symbol=symbol_instance,
         dataFrequency=a_dataFrequency,
         dataYear=a_dataYear,
         datePub=timezone.now().date()
@@ -61,13 +60,13 @@ def register_financial_data(a_dataType,a_dataStatus,a_symbol,a_dataFrequency,a_d
 
     return obj
 
-def update_model_from_csv(fin_obj,model_name, csv_file_path):
+def update_model_from_csv(fin_obj,symbol_obj,model_name, csv_file_path):
     model = apps.get_model(app_label='financials', model_name=model_name)
     try:
         # Get the model class dynamically
-        obj = model.objects.get(financeInfo=fin_obj)
+        obj = model.objects.get(financeInfo=fin_obj,symbol=symbol_obj)
     except model.DoesNotExist:
-        obj = model.objects.create(financeInfo=fin_obj)
+        obj = model.objects.create(financeInfo=fin_obj,symbol=symbol_obj)
     # Open the CSV file and read its contents
     with open(csv_file_path, 'r') as file:
         reader = csv.DictReader(file)
@@ -76,7 +75,7 @@ def update_model_from_csv(fin_obj,model_name, csv_file_path):
             fvalue = row['Value']
             print(fname)
             try:
-                fvalue = float(fvalue)
+                fvalue = round(float(fvalue),2)
             except ValueError:
                 # Handle the error, e.g., set a default value, log the issue, etc.
                 fvalue = 0.0  # Or any appropriate default
@@ -110,7 +109,8 @@ if __name__ == "__main__":
 
     if args.register:
 
-        fin_obj=register_financial_data(arg_dataType,arg_dataStatus,arg_symbol,arg_dataFrequency,arg_dataYear)
+        fin_obj=register_financial_data(arg_dataType,arg_dataStatus,arg_dataFrequency,arg_dataYear)
     else:
-        fin_obj=get_financial_data(arg_dataType,arg_dataStatus,arg_symbol,arg_dataFrequency,arg_dataYear)
-        update_model_from_csv(fin_obj,arg_model_name, input_file)
+        fin_obj=get_financial_data(arg_dataType,arg_dataStatus,arg_dataFrequency,arg_dataYear)
+        symbol_obj = Symbol.objects.get(symbolName=arg_symbol)
+        update_model_from_csv(fin_obj,symbol_obj,arg_model_name, input_file)

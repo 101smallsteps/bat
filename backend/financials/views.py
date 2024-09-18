@@ -202,7 +202,7 @@ class RatioList(APIView):
         if rationame not in [field.name for field in Ratio._meta.get_fields()]:
             return Response({'error': 'Invalid field name'}, status=400)
 
-        data = Ratio.objects.filter(financeInfo__symbol=id).order_by('-financeInfo__datePub').values_list(rationame,'financeInfo__dataFrequency','financeInfo__dataYear')[:int(n)]
+        data = Ratio.objects.filter(symbol=id).order_by('-financeInfo__datePub').values_list(rationame,'financeInfo__dataFrequency','financeInfo__dataYear')[:int(n)]
         print(data)
         #serializer = IncomeStatementReadSerializer(data, many=True)
         #return Response(serializer.data,status=status.HTTP_200_OK)
@@ -211,7 +211,7 @@ class RatioList(APIView):
         if (len(ratio_list_of_dicts)>1):
             data_final={
                  'last_metric_value':ratio_list_of_dicts[0]['metricValue'],
-                 'percentChange':((ratio_list_of_dicts[0]['metricValue'] - ratio_list_of_dicts[1]['metricValue'])/ratio_list_of_dicts[1]['metricValue'])*100,
+                 'percentChange':round(((ratio_list_of_dicts[0]['metricValue'] - ratio_list_of_dicts[1]['metricValue'])/ratio_list_of_dicts[1]['metricValue'])*100,2),
                  'chartData':ratio_list_of_dicts
 
             }

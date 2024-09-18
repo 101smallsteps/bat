@@ -8,13 +8,13 @@ symbols=['AAPL']
 
 done=[]
 
-quarterly_in_action=[
+quarterly_in_action_1=[
                         {
                             'quarter':'Q_3',
                             'date':'2023-09-30',
                         }
                     ]
-quarterly_in_action_1=[
+quarterly_in_action=[
                         {
                             'quarter':'Q_3',
                             'date':'2023-09-30',
@@ -33,7 +33,7 @@ quarterly_in_action_1=[
                         },                        
                     ]
 
-load_dotenv('/home/aarth/bat/backend/utils/.env')
+load_dotenv('../../.env')
 for sym in symbols:
     for qtr in quarterly_in_action:
         yr=1111
@@ -45,7 +45,7 @@ for sym in symbols:
             yr = 2222
         print(qtr)
         #register finance data for the quarter
-        cmd_0=f"cd /home/aarth/bat/backend/utils;python3 update_db.py -r -dt Q -ds CREATE -sym {sym} -df {qtr['quarter']} -dy {yr} ;"
+        cmd_0=f"cd ../../;python3 update_db.py -r -dt Q -ds CREATE -sym {sym} -df {qtr['quarter']} -dy {yr} ;"
         print(f'executing {cmd_0}')
         os.system(cmd_0)
         #download data
@@ -65,28 +65,28 @@ for sym in symbols:
         print(f'executing {cmd_4}')
         os.system(cmd_4)
         #update DB
-        cmd_5_1=f"cd /home/aarth/bat/backend/utils;python3 update_db.py -s IncomeStatement  -dt Q -ds CREATE -sym {sym} -df {qtr['quarter']} -dy {yr} -ip ./data/{sym}/processed/quarterly_incomestmt_{sym}_{qtr['date']}.csv;"
+        cmd_5_1=f"cd ../../;python3 update_db.py -s IncomeStatement  -dt Q -ds CREATE -sym {sym} -df {qtr['quarter']} -dy {yr} -ip ./data/{sym}/processed/quarterly_incomestmt_{sym}_{qtr['date']}.csv;"
         print(f'executing {cmd_5_1}')
         os.system(cmd_5_1)
-        cmd_5_2=f"cd /home/aarth/bat/backend/utils;python3 update_db.py -s BalanceSheet  -dt Q -ds CREATE -sym {sym} -df {qtr['quarter']} -dy {yr} -ip ./data/{sym}/processed/quarterly_balance_{sym}_{qtr['date']}.csv;"
+        cmd_5_2=f"cd ../../;python3 update_db.py -s BalanceSheet  -dt Q -ds CREATE -sym {sym} -df {qtr['quarter']} -dy {yr} -ip ./data/{sym}/processed/quarterly_balance_{sym}_{qtr['date']}.csv;"
         print(f'executing {cmd_5_2}')
         os.system(cmd_5_2)
-        cmd_5_3=f"cd /home/aarth/bat/backend/utils;python3 update_db.py -s CashFlow  -dt Q -ds CREATE -sym {sym} -df {qtr['quarter']} -dy {yr} -ip ./data/{sym}/processed/quarterly_cash_{sym}_{qtr['date']}.csv;"
+        cmd_5_3=f"cd ../../;python3 update_db.py -s CashFlow  -dt Q -ds CREATE -sym {sym} -df {qtr['quarter']} -dy {yr} -ip ./data/{sym}/processed/quarterly_cash_{sym}_{qtr['date']}.csv;"
         print(f'executing {cmd_5_3}')
         os.system(cmd_5_3)
-        #perform analysis 
-        cmd_6=f"cd /home/aarth/bat/backend/utils;python3 perform_analysis.py;"
-        print(f'executing {cmd_6}')
-        os.system(cmd_6)
         #perform calculations
-        cmd_7_1=f"cd /home/aarth/bat/backend/utils;python3 calculate_metrics.py -s IncomeStatement  -dt Q -ds CREATE -sym {sym} -df {qtr['quarter']} -dy {yr} -ip ./data/{sym}/processed/quarterly_incomestmt_{sym}_{qtr['date']}.csv;"
-        print(f'executing {cmd_7_1}')
-        os.system(cmd_7_1)
-        cmd_7_2=f"cd /home/aarth/bat/backend/utils;python3 calculate_metrics.py -s BalanceSheet  -dt Q -ds CREATE -sym {sym} -df {qtr['quarter']} -dy {yr} -ip ./data/{sym}/processed/quarterly_balance_{sym}_{qtr['date']}.csv;"
-        print(f'executing {cmd_7_2}')
-        os.system(cmd_7_2)
-        cmd_7_3=f"cd /home/aarth/bat/backend/utils;python3 calculate_metrics.py -s CashFlow  -dt Q -ds CREATE -sym {sym} -df {qtr['quarter']} -dy {yr} -ip ./data/{sym}/processed/quarterly_cash_{sym}_{qtr['date']}.csv;"
-        print(f'executing {cmd_7_3}')
-        os.system(cmd_7_3)
+        cmd_6_1=f"cd ../../;python3 calculate_metrics.py -s IncomeStatement  -dt Q -ds CREATE -sym {sym} -df {qtr['quarter']} -dy {yr} -ip ./data/{sym}/processed/quarterly_incomestmt_{sym}_{qtr['date']}.csv;"
+        print(f'executing {cmd_6_1}')
+        os.system(cmd_6_1)
+        cmd_6_2=f"cd ../../;python3 calculate_metrics.py -s BalanceSheet  -dt Q -ds CREATE -sym {sym} -df {qtr['quarter']} -dy {yr} -ip ./data/{sym}/processed/quarterly_balance_{sym}_{qtr['date']}.csv;"
+        print(f'executing {cmd_6_2}')
+        os.system(cmd_6_2)
+        cmd_6_3=f"cd ../../;python3 calculate_metrics.py -s CashFlow  -dt Q -ds CREATE -sym {sym} -df {qtr['quarter']} -dy {yr} -ip ./data/{sym}/processed/quarterly_cash_{sym}_{qtr['date']}.csv;"
+        print(f'executing {cmd_6_3}')
+        os.system(cmd_6_3)
+        #perform analysis
+        cmd_7=f"cd ../../;python3 perform_analysis.py;"
+        print(f'executing {cmd_7}')
+        os.system(cmd_7)
 
 

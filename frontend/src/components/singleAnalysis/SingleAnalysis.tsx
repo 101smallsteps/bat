@@ -14,14 +14,30 @@ const SingleAnalysis = (props: Props) => {
             <OverAll {...props}/>
           </div>
           <div className="box box2">
-            <ChartBox {...props.revenue} />
+            <ChartBox {...props.revenue[0]} />
+          </div>
+          <div className="box box2">
+            <ChartBox {...props.grossprofitmargin} />
+          </div>
+          <div className="box box2">
+            <ChartBox {...props.netprofitmargin} />
           </div>
           <div className="box box2">
             <ChartBox {...props.deratio} />
           </div>
           <div className="box box2">
+            <ChartBox {...props.tdtaratio} />
+          </div>
+          <div className="box box2">
             <ChartBox {...props.currentratio} />
           </div>
+          <div className="box box2">
+            <ChartBox {...props.quickratio} />
+          </div>
+          <div className="box box2">
+            <ChartBox {...props.cashratio} />
+          </div>
+
         </div>
       );
 };

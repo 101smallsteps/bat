@@ -73,33 +73,35 @@ class CashFlowAdmin(admin.ModelAdmin):
     )
     list_display = (
         "financeInfo","FreeCashFlow","RepurchaseOfCapitalStock","RepaymentOfDebt","IssuanceOfDebt","CapitalExpenditure","InterestPaidSupplementalData","IncomeTaxPaidSupplementalData","EndCashPosition","BeginningCashPosition","ChangesInCash","FinancingCashFlow","CashFlowFromContinuingFinancingActivities","NetOtherFinancingCharges","CashDividendsPaid","CommonStockDividendPaid","NetCommonStockIssuance","CommonStockPayments","NetIssuancePaymentsOfDebt","NetShortTermDebtIssuance","ShortTermDebtPayments","NetLongTermDebtIssuance","LongTermDebtPayments","LongTermDebtIssuance","InvestingCashFlow","CashFlowFromContinuingInvestingActivities","NetOtherInvestingChanges","NetInvestmentPurchaseAndSale","SaleOfInvestment","PurchaseOfInvestment","NetPPEPurchaseAndSale","PurchaseOfPPE","OperatingCashFlow","CashFlowFromContinuingOperatingActivities","ChangeInWorkingCapital","ChangeInOtherWorkingCapital","ChangeInOtherCurrentLiabilities","ChangeInOtherCurrentAssets","ChangeInPayablesAndAccruedExpense","ChangeInPayable","ChangeInAccountPayable","ChangeInInventory","ChangeInReceivables","ChangesInAccountReceivables","OtherNonCashItems","StockBasedCompensation","DepreciationAmortizationDepletion","DepreciationAndAmortization","NetIncomeFromContinuingOperations"
+
     )
 
 @admin.register(Ratio)
 class RatioAdmin(admin.ModelAdmin):
     fields = (
-        "financeInfo","GrossMargin", "DEratio"
+        "financeInfo","GrossProfitMargin","NetProfitMargin","DEratio","TDTAratio","Currentratio","Quickratio","Cashratio"
     )
     list_display = (
-        "financeInfo","GrossMargin", "DEratio"
+        "financeInfo","GrossProfitMargin","NetProfitMargin","DEratio","TDTAratio","Currentratio","Quickratio","Cashratio"
     )
 
 @admin.register(FinanceData)
 class FinanceDataAdmin(admin.ModelAdmin):
     fields = (
-        "dataType", "dataStatus", "symbol", "dataFrequency", "dataYear","datePub"
+        "dataType", "dataStatus", "dataFrequency", "dataYear","datePub"
     )
     list_display = (
-        "dataType", "dataStatus", "symbol", "dataFrequency", "dataYear","datePub"
+        "dataType", "dataStatus", "dataFrequency", "dataYear","datePub"
     )
 
 @admin.register(overallAnalysis)
 class overallAnalysisAdmin(admin.ModelAdmin):
     fields = (
-        "symbol", "metric", "analysisResult", "metricDisplay",
+        "symbol", "metric", "rank","max_rank","analysisResult", "metricDisplay"
     )
     list_display = (
-        "symbol", "metric", "analysisResult", "metricDisplay",
+        "symbol", "metric", "rank","max_rank","analysisResult", "metricDisplay"
+
     )
 
 @admin.register(ValueCompanies)
