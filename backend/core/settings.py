@@ -223,8 +223,8 @@ ACCOUNT_MAX_EMAIL_ADDRESSES = 2
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
         "APP": {
-            "client_id": "<your google client id>",
-            "secret": "<your google secret>",
+            "client_id": "",
+            "secret": "",
             "key": "",  # leave empty
         },
         "SCOPE": [
