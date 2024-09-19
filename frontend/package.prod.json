@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build --mode development",
+    "build": "vite build --mode production",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
@@ -30,7 +30,8 @@
     "react-query": "^3.39.1",
     "dotenv": "",
     "@rollup/plugin-node-resolve": "",
-    "http-proxy-middleware": ""
+    "http-proxy-middleware": "",
+    "@react-oauth/google": ""
   },
   "devDependencies": {
     "@types/react": "^18.2.14",

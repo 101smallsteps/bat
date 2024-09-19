@@ -30,7 +30,8 @@
     "react-query": "^3.39.1",
     "dotenv": "",
     "@rollup/plugin-node-resolve": "",
-    "http-proxy-middleware": ""
+    "http-proxy-middleware": "",
+    "@react-oauth/google": ""
   },
   "devDependencies": {
     "@types/react": "^18.2.14",

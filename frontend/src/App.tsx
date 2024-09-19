@@ -1,3 +1,4 @@
+import { GoogleOAuthProvider,GoogleLogin  } from '@react-oauth/google';
 import React, { useState } from 'react';
 import Home from "./pages/home/Home";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
@@ -16,6 +17,7 @@ import 'bootswatch/dist/lumen/bootstrap.css'; // new
 import User from "./pages/user/User";
 import Product from "./pages/product/Product";
 import Analysis from "./pages/analysis/Analysis";
+import AuthCallback from "./pages/authcallback/authcallback";
 import axios from 'axios';
 import {
   QueryClient,
@@ -40,8 +42,8 @@ axios.defaults.xsrfHeaderName = 'X-CSRFToken'; // new
 
 const getToken = ()=> {
    var auth_token =window.localStorage.getItem("bat.auth");
-    var n_tok=auth_token.replace(/"/g, "");
-   return n_tok;
+   return auth_token ? auth_token.replace(/"/g, "") : null;
+
 };
 
 
@@ -100,6 +102,21 @@ function App() {
       }
     };
 
+    const googleLogin = async (credentialResponse) => {
+        const { credential } = credentialResponse;
+        try {
+            const backend_server = config.backend_server;
+            const url = `${backend_server}/api/auth/google-login/`; // Your backend endpoint
+            const response = await axios.post(url, { token: credential });
+            console.log('Google login called:')
+            window.localStorage.setItem('bat.auth', JSON.stringify(response.data.key));
+            setLoggedIn(true);
+            await getCurrentUser();
+        } catch (error) {
+            console.error('Google login failed:', error);
+        }
+    }
+
     const logout = async () => {
       const backend_server = config.backend_server;
       const url = `${backend_server}/api/auth/logout/`;
@@ -108,6 +125,7 @@ function App() {
 
          window.localStorage.removeItem('bat.auth');
          setLoggedIn(false);
+         setuserData({});
          console.log("logout done");
 
       }
@@ -160,8 +178,12 @@ function App() {
           element: <User
           profData={userData}
            />,
-        }
-
+        },
+      // Add the callback route
+      {
+        path: "/auth/callback",
+        element: <AuthCallback />,
+      },
       ],
     },
     {
@@ -179,43 +201,43 @@ function App() {
     }
   ]);
 
-  return  <RouterProvider router={router} />;
+//  WRK_1_START
+//  return  <RouterProvider router={router} />;
+//  WRK_1_STOP
 
-}
+  return (
+    <GoogleOAuthProvider clientId={config.google_client_id}>  {/* Client ID passed from config */}
+      <RouterProvider router={router} />
+      {!isLoggedIn && (
+        <GoogleLogin
+          onSuccess={googleLogin}
+          onFailure={(error) => console.error('Google login failed:', error)}
+        />
+      )}
+    </GoogleOAuthProvider>
+  );
+ }
 
+function Layout(props) {
+  const { isLoggedIn, userData, logout } = props;
 
-function Layout (props:Prop)  {
-   let menu_item;
-   console.log("==props==");
-    console.log(props);
-
-
-   if (props.isLoggedIn){
-        menu_item=<Menu />
-   }
-   else
-   {
-        menu_item=""
-   }
-
-    return (
+  return (
     <>
       <div className="main">
-        <Navbar UserName={props.userData.username} isLoggedIn={props.isLoggedIn} logOutCallback={props.logout}/>
+        <Navbar UserName={userData.username} isLoggedIn={isLoggedIn} logOutCallback={logout} />
         <div className="container">
           <div className="menuContainer">
-            {menu_item}
+            {isLoggedIn && <Menu />}
           </div>
           <div className="contentContainer">
-
-              <Outlet />
-
+            <Outlet />
           </div>
         </div>
         <Footer />
       </div>
-      </>
-    );
-  }
+    </>
+  );
+}
+
 
 export default App;
