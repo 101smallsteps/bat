@@ -19,20 +19,22 @@ const Landing = (props) => {
 
   return (
     <div className='middle-center'>
-      <h1 className='landing logo'>BAT - Business Analytics</h1>
+      <h1 className='landing logo'>Re-defining business analysis </h1>
         {
         props.isLoggedIn ? (
           <Navigate to='/home' />
         ) : (
-          <ButtonGroup>
-            <LinkContainer to='/signup'>
-              <Button data-cy="signUp">Sign up</Button>
-            </LinkContainer>
-            <LinkContainer to='/login'>
-              <Button data-cy="logIn">Log in</Button>
-            </LinkContainer>
-          </ButtonGroup>
-        )
+          // Enable the below block of code if google sign has problems and you need to triage
+          //<ButtonGroup>
+          //  <LinkContainer to='/signup'>
+          //    <Button data-cy="signUp">Sign up</Button>
+          //  </LinkContainer>
+          //  <LinkContainer to='/login'>
+          //    <Button data-cy="logIn">Log in</Button>
+          //  </LinkContainer>
+          // </ButtonGroup>
+            <h1 className='landing logo'></h1>
+            )
       }
     </div>
   );

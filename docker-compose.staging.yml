@@ -10,7 +10,7 @@ services:
       dockerfile: Dockerfile.prod
     env_file:
       - ./.env.staging
-      - ./.env.staging.1
+#      - ./.env.staging.1
 #    expose:
 #      - 8000
     ports:
@@ -31,7 +31,7 @@ services:
       dockerfile: Dockerfile.prod
     env_file:
       - ./.env.staging
-      - ./.env.staging.2
+#      - ./.env.staging.2
 #    expose:
 #      - 8000
     ports:

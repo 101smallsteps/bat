@@ -13,9 +13,11 @@ const AuthCallback = () => {
     const code = query.get('code');
     const token = query.get('access_token');
 
+    console.log("Authorization Code:", code);
+
     if (code) {
       // Exchange code for tokens on the backend
-      axios.post(`${config.backend_server}/api/auth/google-login/`, { code })
+      axios.post(`${config.backend_server}/api/auth/google-login/`, {code})
         .then(response => {
           window.localStorage.setItem('bat.auth', JSON.stringify(response.data.key));
           navigate('/home');

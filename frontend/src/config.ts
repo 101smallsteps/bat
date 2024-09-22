@@ -9,6 +9,7 @@ const config = {
     backend_server: `${baseURL}` ,// Set your default API URL here,
     //google_client_id: process.env.GOOGLE_CLIENT_ID
     google_client_id:''
+
 };
 
 

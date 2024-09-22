@@ -104,6 +104,7 @@ function App() {
 
     const googleLogin = async (credentialResponse) => {
         const { credential } = credentialResponse;
+        //console.log('Received Google credential:', credential);
         try {
             const backend_server = config.backend_server;
             const url = `${backend_server}/api/auth/google-login/`; // Your backend endpoint
@@ -188,11 +189,7 @@ function App() {
     },
     {
       path: "/login",
-      element:
-      <Login
-        isLoggedIn={isLoggedIn}
-        logIn={logIn}
-      />,
+      element: <Login googleLogin={googleLogin} isLoggedIn={isLoggedIn}/>,
     },
     {
       path: "/signup",
@@ -210,8 +207,14 @@ function App() {
       <RouterProvider router={router} />
       {!isLoggedIn && (
         <GoogleLogin
+          type="standard"
+           theme="outline"
+            size="large"
+            text="signin_with"
+            shape="rectangular"
+            clientId=""
           onSuccess={googleLogin}
-          onFailure={(error) => console.error('Google login failed:', error)}
+          onError={(error) => console.error("Google Login Error:", error)}
         />
       )}
     </GoogleOAuthProvider>

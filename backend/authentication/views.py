@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from allauth.socialaccount.providers.oauth2.client import OAuth2Error
@@ -88,28 +89,47 @@ def google_login(request):
 
 class OAuthCallbackView(APIView):
     def post(self, request):
-        code = request.data.get('code')
-        if code:
-            # Exchange code for tokens
-            response = post(
-                'https://oauth2.googleapis.com/token',
-                data={
-                    'code': code,
-                    'client_id': '',
-                    'client_secret': '',
-#                    'redirect_uri': 'http://localhost:5173/auth/callback',
-                    'redirect_uri': 'https://bat4all.com/auth/callback',
-                    'grant_type': 'authorization_code'
+        token = request.data.get('token')
+        if not token:
+            return Response({"error": "No token provided"}, status=status.HTTP_400_BAD_REQUEST)
+
+        #code = request.data.get('code')
+        #if not code:
+        #    return Response({'error': 'No code provided'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Verify the token using Google's tokeninfo endpoint
+        response = requests.get(f'https://oauth2.googleapis.com/tokeninfo?id_token={token}')
+        if response.status_code != 200:
+            return Response({'error': 'Failed to fetch tokens from Google'}, status=status.HTTP_400_BAD_REQUEST)
+
+        token_info = response.json()
+
+        # Extract user information from token
+        email = token_info.get('email')
+        if email:
+            first_name = token_info.get('given_name', '')
+            last_name = token_info.get('family_name', '')
+
+            user, created = User.objects.get_or_create(
+                email=email,
+                defaults={
+                    'username': email.split('@')[0],  # You can generate a more complex username if needed
+                    'first_name': first_name,
+                    'last_name': last_name,
+                    # Add other fields as necessary
                 }
             )
-            if response.status_code == 200:
-                tokens = response.json()
-                # Handle tokens and login user
-                return Response(tokens, status=status.HTTP_200_OK)
-            else:
-                return Response({'error': 'Failed to obtain tokens'}, status=status.HTTP_400_BAD_REQUEST)
-        return Response({'error': 'No code provided'}, status=status.HTTP_400_BAD_REQUEST)
 
+            try:
+                # Generate and return token
+                from rest_framework.authtoken.models import Token
+                token, _ = Token.objects.get_or_create(user=user)
+                return Response({'key': token.key}, status=status.HTTP_200_OK)
+            except ValueError as e:
+                # Invalid token
+                return Response({'error': 'Invalid token'}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({"error": "Email not found in token"}, status=status.HTTP_400_BAD_REQUEST)
 
 ## To BE REMOVED
 class GoogleLogin(SocialLoginView):
