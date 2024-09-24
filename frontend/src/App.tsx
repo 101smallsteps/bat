@@ -212,7 +212,7 @@ function App() {
             size="large"
             text="signin_with"
             shape="rectangular"
-            clientId=""
+             ux_mode="redirect"  {/* Change to redirect mode */}
           onSuccess={googleLogin}
           onError={(error) => console.error("Google Login Error:", error)}
         />
