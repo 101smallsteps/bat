@@ -122,18 +122,16 @@ function App() {
     const googleLogin = async (credentialResponse) => {
         const { credential } = credentialResponse;
         // Call the detectTrackingPrevention function inside useEffect
-        useEffect(() => {
-            if (isSafari()) {
-                detectTrackingPrevention();
-            }
-        }, []); // Empty dependency array means this runs only once on mount
         //console.log('Received Google credential:', credential);
         try {
             const backend_server = config.backend_server;
             const url = `${backend_server}/api/auth/google-login/`; // Your backend endpoint
             const response = await axios.post(url, { token: credential });
+            if (isSafari()) {
+                    detectTrackingPrevention();
+            }
 
-            console.log('Google login called:')
+            //console.log('Google login called:')
             if (response.data.redirectUrl) {
                history.push(response.data.redirectUrl);
             } else {
