@@ -24,16 +24,21 @@ const Landing = (props) => {
         props.isLoggedIn ? (
           <Navigate to='/home' />
         ) : (
-          // Enable the below block of code if google sign has problems and you need to triage
-          //<ButtonGroup>
-          //  <LinkContainer to='/signup'>
-          //    <Button data-cy="signUp">Sign up</Button>
-          //  </LinkContainer>
-          //  <LinkContainer to='/login'>
-          //    <Button data-cy="logIn">Log in</Button>
-          //  </LinkContainer>
-          // </ButtonGroup>
+        <>
+        { process.env.NODE_ENV === 'development' && (
+              // Enable the below block of code if google sign has problems and you need to triage
+              <ButtonGroup>
+                <LinkContainer to='/signup'>
+                  <Button data-cy="signUp">Sign up</Button>
+                </LinkContainer>
+                <LinkContainer to='/login'>
+                  <Button data-cy="logIn">Log in</Button>
+                </LinkContainer>
+               </ButtonGroup>
+          )}
             <h1 className='landing logo'></h1>
+          </>
+
             )
       }
     </div>

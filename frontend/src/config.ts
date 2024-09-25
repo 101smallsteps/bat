@@ -8,7 +8,8 @@ const baseURL = process.env.NODE_ENV === 'production' ? 'https://bat4all.com' : 
 const config = {
     backend_server: `${baseURL}` ,// Set your default API URL here,
     //google_client_id: process.env.GOOGLE_CLIENT_ID
-    google_client_id:''
+    google_client_id:'',
+    backend_auth_callback:"`${baseURL}`/auth/callback"
 
 };
 

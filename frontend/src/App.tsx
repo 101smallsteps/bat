@@ -11,6 +11,7 @@ import Footer from "./components/footer/Footer";
 import Menu from "./components/menu/Menu";
 import Landing from "./pages/landing/landing";
 import Login from "./pages/login/Login";
+import Login_dev from "./pages/login_dev/Login_dev";
 import Signup from "./pages/signup/Signup";
 import "./styles/global.scss";
 import 'bootswatch/dist/lumen/bootstrap.css'; // new
@@ -81,6 +82,22 @@ function App() {
         }
     }
 
+    // Define the function that detects cross-site tracking prevention
+    const detectTrackingPrevention = () => {
+        try {
+            localStorage.setItem('test', 'testValue');
+            localStorage.removeItem('test');
+            console.log('Cross-Site Tracking is likely disabled.');
+        } catch (e) {
+            console.log('Cross-Site Tracking is likely enabled, or storage is blocked.');
+            alert('To use Google Sign-In, please disable "Prevent Cross-Site Tracking" in your Safari settings.');
+        }
+    };
+
+    // Utility to detect if the browser is Safari
+    const isSafari = () => {
+        return navigator.userAgent.includes('Safari') && !navigator.userAgent.includes('Chrome');
+    };
     // changed
     const logIn = async (username, password) => {
       const backend_server = config.backend_server;
@@ -104,17 +121,32 @@ function App() {
 
     const googleLogin = async (credentialResponse) => {
         const { credential } = credentialResponse;
+        // Call the detectTrackingPrevention function inside useEffect
+        useEffect(() => {
+            if (isSafari()) {
+                detectTrackingPrevention();
+            }
+        }, []); // Empty dependency array means this runs only once on mount
         //console.log('Received Google credential:', credential);
         try {
             const backend_server = config.backend_server;
             const url = `${backend_server}/api/auth/google-login/`; // Your backend endpoint
             const response = await axios.post(url, { token: credential });
+
             console.log('Google login called:')
-            window.localStorage.setItem('bat.auth', JSON.stringify(response.data.key));
-            setLoggedIn(true);
-            await getCurrentUser();
+            if (response.data.redirectUrl) {
+               history.push(response.data.redirectUrl);
+            } else {
+                 window.localStorage.setItem('bat.auth', JSON.stringify(response.data.key));
+                  setLoggedIn(true);
+                  await getCurrentUser(); // Assuming you have this function defined
+            }
         } catch (error) {
-            console.error('Google login failed:', error);
+            if (error.message.includes('Cross-Site Tracking')) {
+                alert('To use Google Sign-In, please disable "Prevent Cross-Site Tracking" or use a different browser ');
+            } else {
+                console.error('Google login failed:', error);
+            }
         }
     }
 
@@ -187,10 +219,22 @@ function App() {
       },
       ],
     },
-    {
-      path: "/login",
-      element: <Login googleLogin={googleLogin} isLoggedIn={isLoggedIn}/>,
-    },
+...(process.env.NODE_ENV === 'production'
+    ? [
+        {
+          path: "/login",
+          element: <Login googleLogin={googleLogin} isLoggedIn={isLoggedIn} />,
+        },
+      ]
+    : []),
+...(process.env.NODE_ENV === 'development'
+    ? [
+        {
+          path: "/login",
+          element: <Login_dev logIn={logIn} isLoggedIn={isLoggedIn} />,
+        },
+      ]
+    : []),
     {
       path: "/signup",
       element: <Signup />,
@@ -198,27 +242,31 @@ function App() {
     }
   ]);
 
-//  WRK_1_START
-//  return  <RouterProvider router={router} />;
-//  WRK_1_STOP
+        if (process.env.NODE_ENV === 'development') {
+            return  <RouterProvider router={router} />;
+        }
+        else {
+          return (
+            <GoogleOAuthProvider clientId={config.google_client_id}>  {/* Client ID passed from config */}
+              <RouterProvider router={router} />
+              {!isLoggedIn && (
+                <GoogleLogin
+                  type="standard"
+                   theme="outline"
+                    size="large"
+                    text="signin_with"
+                    shape="rectangular"
+                    clientId={config.google_client_id}
+                     uxMode="redirect"
+                    redirectUri={config.backend_auth_callback}
+                    onSuccess={googleLogin}
+                  onError={(error) => console.error("Google Login Error:", error)}
+                />
+              )}
+            </GoogleOAuthProvider>
+          );
+        }
 
-  return (
-    <GoogleOAuthProvider clientId={config.google_client_id}>  {/* Client ID passed from config */}
-      <RouterProvider router={router} />
-      {!isLoggedIn && (
-        <GoogleLogin
-          type="standard"
-           theme="outline"
-            size="large"
-            text="signin_with"
-            shape="rectangular"
-             ux_mode="redirect"  
-          onSuccess={googleLogin}
-          onError={(error) => console.error("Google Login Error:", error)}
-        />
-      )}
-    </GoogleOAuthProvider>
-  );
  }
 
 function Layout(props) {
