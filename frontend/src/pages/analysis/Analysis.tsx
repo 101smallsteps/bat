@@ -57,7 +57,7 @@ const retrieveIncomeStatementTotalRevenue = async (id:number) => {
                 console.log("token->"+tok);
                 const backend_server = config.backend_server;
                 const response = await axios.get(
-                    `${backend_server}/api/fin/api/incstmt/TotalRevenue/${id}/10/`,
+                    `${backend_server}/api/fin/api/incstmt/TotalRevenue/${id}/4/`,
                     {
                         'headers':{
                             "Content-Type": "application/json",

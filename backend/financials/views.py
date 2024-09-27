@@ -135,7 +135,7 @@ class IncomeStatementList(APIView):
         if metricname not in [field.name for field in IncomeStatement._meta.get_fields()]:
             return Response({'error': 'Invalid field name'}, status=400)
 
-        data = IncomeStatement.objects.filter(financeInfo__symbol=id).order_by('-financeInfo__datePub').values_list(metricname,'financeInfo__dataFrequency','financeInfo__dataYear')[:int(n)]
+        data = IncomeStatement.objects.filter(symbol=id).order_by('-financeInfo__datePub').values_list(metricname,'financeInfo__dataFrequency','financeInfo__dataYear')[:int(n)]
         print(data)
         #serializer = IncomeStatementReadSerializer(data, many=True)
         #return Response(serializer.data,status=status.HTTP_200_OK)
@@ -143,8 +143,8 @@ class IncomeStatementList(APIView):
 
         if (len(incstmt_list_of_dicts)>1):
             data_final={
-                 'last_metric_value':incstmt_list_of_dicts[0]['metricValue'],
-                 'percentChange':((incstmt_list_of_dicts[0]['metricValue'] - incstmt_list_of_dicts[1]['metricValue'])/incstmt_list_of_dicts[1]['metricValue'])*100,
+                 'last_metric_value':incstmt_list_of_dicts[0]['metricValue']/1000000,
+                 'percentChange':round(((incstmt_list_of_dicts[0]['metricValue'] - incstmt_list_of_dicts[1]['metricValue'])/incstmt_list_of_dicts[1]['metricValue'])*100,2),
                  'chartData':incstmt_list_of_dicts
 
             }

@@ -14,7 +14,7 @@ const SingleAnalysis = (props: Props) => {
             <OverAll {...props}/>
           </div>
           <div className="box box2">
-            <ChartBox {...props.revenue[0]} />
+            <ChartBox {...props.revenue} />
           </div>
           <div className="box box2">
             <ChartBox {...props.grossprofitmargin} />

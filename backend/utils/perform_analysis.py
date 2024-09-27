@@ -46,7 +46,7 @@ def analyse_revenue(sym,sym_obj,last_2_fin_obj):
     print(last_2_revenues)
 
     try:
-        change_percent = round((last_2_revenues[1] - last_2_revenues[0]) / last_4_revenues[0], 2) * 100
+        change_percent = round((last_2_revenues[1] - last_2_revenues[0]) / last_2_revenues[0], 2) * 100
         if change_percent >= -1 and change_percent <= 1:
             analysis_status="OK"
         elif change_percent >= 5 and change_percent <10 :
@@ -116,10 +116,14 @@ def analyse_revenue_vs_costOfRevenue(sym,sym_obj,last_4_fin_obj):
 
     # If posiitive change in revenue is proportional is change in cost of ownership then Good
 
-    if last_4_revenues_changes[3] >= last_4_CostOfRevenues_changes[3]:
+    if last_4_revenues_changes[3] > last_4_CostOfRevenues_changes[3]:
         analysis_status = "VGOOD"
-    else:
+    elif last_4_revenues_changes[3] == last_4_CostOfRevenues_changes[3]:
+        analysis_status = "GOOD"
+    elif last_4_revenues_changes[3] < last_4_CostOfRevenues_changes[3]:
         analysis_status = "BAD"
+    else:
+        analysis_status = "OK"
 
     data={
         'rank':1,
@@ -196,24 +200,33 @@ def analyse_consecutive_revenue_growth(sym,sym_obj,last_4_fin_obj):
 
     return obj
 
-def analyse_GrossProfitMargin(sym,sym_obj,last_4_fin_obj):
+def analyse_GrossProfitMargin(sym,sym_obj,last_2_fin_obj):
     analysis_status="BAD"
     last_2_GrossProfitMargin=[]
     change=0
-    last_4_revenues=[]
-    for fin_obj in last_4_fin_obj:
+    for fin_obj in last_2_fin_obj:
         #Get the available revenue metrics and check whether last 4 quarter revenues have increased/same
         obj=Ratio.objects.get(financeInfo=fin_obj)
-        last_4_revenues.append(obj.GrossProfitMargin)
-    print(last_4_revenues)
-    number_of_revenues=len(last_4_revenues)
+        last_2_GrossProfitMargin.append(obj.GrossProfitMargin)
+    print(last_2_GrossProfitMargin)
+    number_of_GrossProfitMargin=len(last_2_GrossProfitMargin)
 
-    if number_of_revenues > 1:
-        change = round(((last_4_revenues[0] - last_4_revenues[1]) / last_4_revenues[1]) * 100,2)
+    if number_of_GrossProfitMargin > 1:
+        change = round(((last_2_GrossProfitMargin[0] - last_2_GrossProfitMargin[1]) / last_2_GrossProfitMargin[1]) * 100,2)
     else:
         change = 0
 
-    change=10
+    if change < 0:
+        analysis_status="BAD"
+    elif change >= 0 and  change<1:
+        analysis_status="OK"
+    elif change>1 and change<10:
+        analysis_status = "OK"
+    elif change>10 and change<20:
+        analysis_status = "GOOD"
+    elif change>30:
+        analysis_status = "VGOOD"
+
     data={
         'rank':change,
         'analysisResult':analysis_status,
@@ -229,9 +242,34 @@ def analyse_GrossProfitMargin(sym,sym_obj,last_4_fin_obj):
 
     return obj
 
-def analyse_NetProfitMargin(sym,sym_obj,last_1_fin_obj):
+def analyse_NetProfitMargin(sym,sym_obj,last_2_fin_obj):
     analysis_status="BAD"
     change=10
+    last_2_NetProfitMargin=[]
+    change=0
+    for fin_obj in last_2_fin_obj:
+        #Get the available revenue metrics and check whether last 4 quarter revenues have increased/same
+        obj=Ratio.objects.get(financeInfo=fin_obj)
+        last_2_NetProfitMargin.append(obj.NetProfitMargin)
+    print(last_2_NetProfitMargin)
+    number_of_NetProfitMargin=len(last_2_NetProfitMargin)
+
+    if number_of_NetProfitMargin > 1:
+        change = round(((last_2_NetProfitMargin[0] - last_2_NetProfitMargin[1]) / last_2_NetProfitMargin[1]) * 100,2)
+    else:
+        change = 0
+
+    if change < 0:
+        analysis_status="BAD"
+    elif change >= 0 and  change<1:
+        analysis_status="OK"
+    elif change>1 and change<10:
+        analysis_status = "OK"
+    elif change>10 and change<20:
+        analysis_status = "GOOD"
+    elif change>30:
+        analysis_status = "VGOOD"
+
     data={
         'rank':change,
         'analysisResult':analysis_status,
@@ -336,12 +374,14 @@ def analyse_Currentratio(sym,sym_obj,last_1_fin_obj):
     # a high currentratio indicates inefficient use of assets
     # a low current ratio indicates liquidity problem
     if obj.Currentratio > 2.5:
-        analysis_status = "OK"
+        analysis_status = "BAD"
     elif obj.Currentratio > 2 and obj.Currentratio < 2.5:
         analysis_status = "VGOOD"
     elif obj.Currentratio > 1.5 and obj.Currentratio < 2:
         analysis_status = "GOOD"
-    elif obj.Currentratio < 1.5:
+    elif obj.Currentratio < 1.5 and obj.Currentratio > 0.75:
+        analysis_status = "OK"
+    elif obj.Currentratio  < 0.75:
         analysis_status = "BAD"
     data={
         'rank':change,
@@ -500,8 +540,8 @@ def perform_overall_analysis(sym,sym_obj,last_4_fin_obj_filter):
     analyse_revenue(sym,sym_obj,last_2_fin_obj)
     analyse_revenue_vs_costOfRevenue(sym,sym_obj,last_4_fin_obj)
     analyse_consecutive_revenue_growth(sym,sym_obj,last_4_fin_obj)
-    analyse_GrossProfitMargin(sym,sym_obj,last_4_fin_obj)
-    analyse_NetProfitMargin(sym,sym_obj,last_4_fin_obj)
+    analyse_GrossProfitMargin(sym,sym_obj,last_2_fin_obj)
+    analyse_NetProfitMargin(sym,sym_obj,last_2_fin_obj)
     analyse_DEratio(sym,sym_obj,last_1_fin_obj)
     analyse_TDTAratio(sym,sym_obj,last_1_fin_obj)
     analyse_Quickratio(sym,sym_obj,last_1_fin_obj)
