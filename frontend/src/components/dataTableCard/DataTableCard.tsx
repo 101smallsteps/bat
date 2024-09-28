@@ -3,7 +3,7 @@ import {
   GridColDef,
   GridToolbar,
 } from "@mui/x-data-grid";
-import "./dataTable.scss";
+import "./dataTableCard.scss";
 import { Link } from "react-router-dom";
 // import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect,useState } from "react";
@@ -21,9 +21,10 @@ type Props = {
   columns: GridColDef[];
   rows: object[];
   slug: string;
+  clickaction: string;
 };
 
-const DataTable = (props: Props) => {
+const DataTableCard = (props: Props) => {
 
   // TEST THE API
 
@@ -68,27 +69,23 @@ const DataTable = (props: Props) => {
 
   };
 
-  const actionColumn2: GridColDef = {
-    field: "actionDelete",
+  const actionColumn: GridColDef = {
+    field: "action",
     headerName: "Action",
     width: 200,
     renderCell: (params) => {
+        if (props.clickaction == "no")
+        {
           return (
             <div className="action">
               <div className="delete" onClick={() => handleDelete(params.row.id)}>
                 <img src="/delete.svg" alt="" />
               </div>
             </div>
-
           );
-    },
-  };
-
-  const actionColumn1: GridColDef = {
-    field: "actionAnalysis",
-    headerName: "Analysis",
-    width: 200,
-    renderCell: (params) => {
+        }
+        else
+        {
           return (
             <div className="action">
               <Link to={`/${props.slug}/${params.row.id}`}>
@@ -96,7 +93,7 @@ const DataTable = (props: Props) => {
               </Link>
             </div>
           );
-
+        }
     },
   };
 
@@ -105,7 +102,7 @@ const DataTable = (props: Props) => {
       <DataGrid
         className="dataGrid"
         rows={props.rows}
-        columns={[...props.columns, actionColumn1,actionColumn2]}
+        columns={[...props.columns, actionColumn]}
         initialState={{
           pagination: {
             paginationModel: {
@@ -131,4 +128,4 @@ const DataTable = (props: Props) => {
   );
 };
 
-export default DataTable;
+export default DataTableCard;

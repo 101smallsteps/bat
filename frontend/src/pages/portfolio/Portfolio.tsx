@@ -12,7 +12,7 @@ import axios from "axios";
 const columns: GridColDef[] = [
   { field: "id", headerName: "ID", width: 90 },
   {
-    field: "SymbolName",
+    field: "Symbol",
     type: "string",
     headerName: "Symbol",
     width: 250,
@@ -22,7 +22,14 @@ const columns: GridColDef[] = [
     type: "string",
     headerName: "CompanyName",
     width: 150,
-  }
+  },
+  {
+    field: "updatedAt",
+    headerName: "Updated At",
+    width: 200,
+    type: "string",
+  },
+
 ];
 
 const getToken = ()=> {
@@ -54,6 +61,30 @@ const retrieveSymbols = async () => {
     }
 };
 
+const retrieveAnalysis = async () => {
+    try {
+        var tok="Token "+getToken();
+        const backend_server = config.backend_server;
+        //let tok_str='Token a8a31d16b64a1fa1e02de3401d2a78a1738977cd';
+        console.log("token->"+tok);
+        const response = await axios.get(
+             `${backend_server}/api/fin/api/symanalysis/`,
+            {
+                'headers':{
+                    "Content-Type": "application/json",
+                    "Authorization": `${tok}`
+                }
+            }
+        );
+        console.log(response);
+        return {response,isError:false};
+    }
+    catch (error) {
+        console.log(error);
+        return {error,isError:true};
+    }
+};
+
 const retrievePortfolio = async () => {
     try {
         var tok="Token "+getToken();
@@ -80,9 +111,63 @@ const retrievePortfolio = async () => {
 
 const Portfolio = () => {
   const [portfolioData,setPortfolioData] = useState([]);
+  const [analysisData,setAnalysisData] = useState([]);
+  const [mergedData, setMergedData] = useState([]);
   const [symbolData,setSymbolData] = useState([]);
   const [open, setOpen] = useState(false);
 
+  useEffect(() => {
+    const fetchAnalysisData = async () => {
+      const {  response, isError } = await retrieveAnalysis();
+      if (isError) {
+        console.log('error occured');
+        setAnalysisData([]);
+        if (response.response) {
+            return <div>An error occurred: {response.response.status}</div>;
+        }
+        else if (response.request) {
+            return <div>An error occurred:Network error: {response.request}</div>;
+        }
+        else {
+            return <div>An error occurred: {response.message}</div>;
+        }
+
+      } else {
+        if (response) {
+            console.log(response.data);
+
+
+            const extracted_data=response.data.map((element) => {
+                return{
+                    'AnalysisStatus':element.AnalysisStatus,
+                    'Symbol':element.symbol.symbolName,
+                    'CompanyName':element.symbol.companyName,
+                    'updatedAt':element.updated_date
+                };
+
+            });
+            console.log(analysisData);
+            console.log(extracted_data);
+            if (extracted_data.length > 0)
+            {
+                setAnalysisData(extracted_data);
+            }
+            else{
+                const dummy_data=[
+                    {
+                    'AnalysisStatus':"",
+                    'Symbol':"",
+                    'sid':'',
+                    'CompanyName':""
+                    }
+                ];
+                setAnalysisData(dummy_data);
+            }
+        };
+      }
+    };
+    fetchAnalysisData();
+  }, []);
 
   // TEST THE API
   useEffect(() => {
@@ -171,6 +256,30 @@ const Portfolio = () => {
     fetchSymbols();
   }, []);
 
+  // Merge AnalysisData and PortfolioData by Symbol
+  useEffect(() => {
+    const mergeData = () => {
+      const merged = analysisData.map((analysisItem) => {
+        const portfolioItem = portfolioData.find(
+          (portfolio) => portfolio.SymbolName === analysisItem.Symbol
+        );
+
+        return {
+          ...analysisItem,
+          id: portfolioItem ? portfolioItem.id : null,
+          PortfolioCompanyName: portfolioItem ? portfolioItem.CompanyName : null,
+        };
+      });
+      console.log(merged)
+      setMergedData(merged);
+    };
+
+    if (analysisData.length > 0 && portfolioData.length > 0) {
+      mergeData();
+    }
+  }, [analysisData, portfolioData]);
+
+
 const initialDetails = [
   {
     id: 1,
@@ -194,9 +303,10 @@ const initialDetails = [
         <h1>My Portfolio</h1>
 
       </div>
-      <DataTable slug="portfolio" columns={columns} rows={portfolioData}  clickaction="no"/>
-
       <Search details={symbolData} />
+      <DataTable slug="portfolioAnalysis" columns={columns} rows={mergedData}  />
+      {open && <Add slug="product" columns={columns} setOpen={setOpen} />}
+
     </div>
   );
 };

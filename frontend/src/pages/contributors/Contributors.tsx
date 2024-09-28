@@ -17,15 +17,15 @@ import {
   growthCompanies,
   dividendCompanies
 } from "../../data_bat";
-import "./home.scss";
+import "./Contributors.scss";
 
 
-const Courses = (props) => {
+const Contributors = (props) => {
 
- console.log("Home");
+ console.log("Contributors");
   return (
-        <div className="Courses">
-            Welcome ! Please check the portfolio menu
+        <div className="contributors">
+            Welcome ! Work in progress
         </div>
       );
 
@@ -43,5 +43,4 @@ const Courses = (props) => {
 //      );
 };
 
-export default Courses
-;
+export default Contributors;

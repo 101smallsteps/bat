@@ -1,3 +1,4 @@
+@import "../../styles/variables.scss"; // Adjust the path if necessary
 @import "../../styles/responsive.scss";
 
 .navbar {
@@ -6,21 +7,33 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background-color: $primary-color; // Add background color
 
   .logo {
     display: flex;
     align-items: center;
     font-weight: bold;
     gap: 10px;
+    font-size: 24px; // Adjust logo font size
+    color: white;    // Logo color
   }
+
   .icons {
     display: flex;
     align-items: center;
     gap: 20px;
 
-    .icon{
-      @include sm{
-        display: none;
+    .icon {
+      cursor: pointer;
+      color: white; // Icon color
+      font-size: 18px;
+
+      &:hover {
+        color: lighten($primary-color, 20%); // Lighter color on hover
+      }
+
+      @include sm {
+        display: none; // Hide icons on small screens
       }
     }
 
@@ -47,13 +60,41 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      color: white; // User text color
 
       img {
-        width: 26px;
-        height: 26px;
+        width: 30px; // Slightly larger image
+        height: 30px;
         border-radius: 50%;
         object-fit: cover;
       }
+
+      .username {
+        font-size: 14px; // Username font size
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;  // Stack navbar items vertically
+    align-items: flex-start;
+  }
+
+  .icons {
+    margin-top: 10px;  // Add spacing between logo and icons
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+    font-size: 18px; // Adjust font size for mobile screens
+  }
+
+  .icons {
+    .user {
+      gap: 5px; // Reduce gap between user icon and name
     }
   }
 }

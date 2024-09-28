@@ -29,10 +29,28 @@ export const menu = [
       },
       {
         id: 2,
-        title: "PortfolioAnalysis",
-        url: "/portfolioAnalysis",
+        title: "Courses",
+        url: "/courses",
         icon: "order.svg",
       },
+      {
+        id: 3,
+        title: "Certification",
+        url: "/certification",
+        icon: "order.svg",
+      },
+      {
+        id: 4,
+        title: "Contributors",
+        url: "/contributors",
+        icon: "order.svg",
+      },
+//      {
+//        id: 2,
+//        title: "PortfolioAnalysis",
+//        url: "/portfolioAnalysis",
+//        icon: "order.svg",
+//     },
     ],
   },
 ];

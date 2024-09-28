@@ -1,7 +1,8 @@
 import { useEffect,useState } from "react";
 import "./portfolioAnalysis.scss";
-import DataTable from "../../components/dataTable/DataTable";
+import DataTableCard from "../../components/dataTableCard/DataTableCard";
 import Add from "../../components/add/Add";
+import Search from "../../components/search/Search";
 import { GridColDef } from "@mui/x-data-grid";
 import { symbolAnalysis } from "../../data_bat";
 import axios from "axios";
@@ -65,6 +66,31 @@ const getToken = ()=> {
     var n_tok=auth_token.replace(/"/g, "");
    return n_tok;
 };
+
+const retrieveSymbols = async () => {
+    try {
+        var tok="Token "+getToken();
+        //let tok_str='Token a8a31d16b64a1fa1e02de3401d2a78a1738977cd';
+        console.log("token->"+tok);
+        const backend_server = config.backend_server;
+        const response = await axios.get(
+            `${backend_server}/api/fin/api/symbols/`,
+            {
+                'headers':{
+                    "Content-Type": "application/json",
+                    "Authorization": `${tok}`
+                }
+            }
+        );
+        console.log(response);
+        return {response,isError:false};
+    }
+    catch (error){
+        return {error,isError:true};
+    }
+};
+
+
 //"Authorization": 'Token a8a31d16b64a1fa1e02de3401d2a78a1738977cd'
 const retrieveAnalysis = async () => {
     try {
@@ -92,6 +118,7 @@ const retrieveAnalysis = async () => {
 
 const PortfolioAnalysis = () => {
   const [analysisData,setAnalysisData] = useState([]);
+  const [symbolData,setSymbolData] = useState([]);
   const [open, setOpen] = useState(false);
 
 
@@ -152,14 +179,59 @@ const PortfolioAnalysis = () => {
     fetchAnalysisData();
   }, []);
 
+  useEffect(() => {
+    const fetchSymbols = async () => {
+      const { response, isError } = await retrieveSymbols();
+      if (isError) {
+        setSymbolData([]);
+        if (response.response) {
+            return <div>An error occurred: {response.response.status}</div>;
+        }
+        else if (response.request) {
+            return <div>An error occurred:Network error: {response.request}</div>;
+        }
+        else {
+            return <div>An error occurred: {response.message}</div>;
+        }
+
+      } else {
+        console.log(response);
+        if (response) {
+            console.log("Symbol Dataaaaa");
+            console.log(response.data);
+
+            const extracted_data=response.data.map((element) => {
+                return{
+                    'id':element.id,
+                    'symbolName':element.symbolName,
+                    'companyName':element.companyName
+                };
+
+            });
+            console.log(extracted_data);
+            console.log("extracted_data-2= "+extracted_data);
+            setSymbolData(extracted_data);
+
+        }
+        else{
+            console.log("no response");
+        }
+        ;
+      }
+    };
+    fetchSymbols();
+  }, []);
+
+//        <button onClick={() => setOpen(true)}>Add New Products</button>
+
   return (
     <div className="portfolioAnalysis">
       <div className="info">
-        <h1>Analysis</h1>
-        <button onClick={() => setOpen(true)}>Add New Products</button>
+        <h1>Symbol Analysis</h1>
       </div>
+      <Search details={symbolData} />
 
-      <DataTable slug="portfolioAnalysis"  columns={columns} rows={analysisData} clickaction="yes"/>
+      <DataTableCard slug="portfolioAnalysis"  columns={columns} rows={analysisData} clickaction="yes"/>
 
       {open && <Add slug="product" columns={columns} setOpen={setOpen} />}
     </div>

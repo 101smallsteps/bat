@@ -17,15 +17,15 @@ import {
   growthCompanies,
   dividendCompanies
 } from "../../data_bat";
-import "./home.scss";
+import "./Courses.scss";
 
 
 const Courses = (props) => {
 
  console.log("Home");
   return (
-        <div className="Courses">
-            Welcome ! Please check the portfolio menu
+        <div className="courses">
+            Welcome ! Work in progress
         </div>
       );
 
@@ -43,5 +43,4 @@ const Courses = (props) => {
 //      );
 };
 
-export default Courses
-;
+export default Courses;

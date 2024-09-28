@@ -10,6 +10,10 @@ import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
 import Menu from "./components/menu/Menu";
 import Landing from "./pages/landing/landing";
+import Courses from "./pages/courses/Courses";
+import Certification from "./pages/certification/Certification";
+import Contributors from "./pages/contributors/Contributors";
+
 import Login from "./pages/login/Login";
 import Login_dev from "./pages/login_dev/Login_dev";
 import Signup from "./pages/signup/Signup";
@@ -203,6 +207,18 @@ function App() {
         {
           path: "/portfolioAnalysis/:id",
           element: <Analysis />,
+        },
+        {
+          path: "/courses",
+          element: <Courses />,
+        },
+        {
+          path: "/certification",
+          element: <Certification />,
+        },
+        {
+          path: "/contributors",
+          element: <Contributors />,
         },
         {
           path: "/users/:id",
