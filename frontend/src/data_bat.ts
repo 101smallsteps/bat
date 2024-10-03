@@ -1,8 +1,4 @@
 export const menu = [
-  {
-    id: 1,
-    title: "main",
-    listItems: [
       {
         id: 1,
         title: "Homepage",
@@ -15,50 +11,36 @@ export const menu = [
         url: "/users/1",
         icon: "user.svg",
       },
-    ],
-  },
-  {
-    id: 2,
-    title: "lists",
-    listItems: [
       {
-        id: 1,
+        id: 3,
         title: "Portfolio",
         url: "/portfolio",
         icon: "order.svg",
       },
       {
-        id: 2,
+        id: 4,
         title: "Courses",
         url: "/courses",
         icon: "order.svg",
       },
       {
-        id: 3,
+        id: 5,
         title: "Certification",
         url: "/quizlist",
         icon: "order.svg",
       },
       {
-        id: 4,
+        id: 6,
         title: "Certificates",
         url: "/certificates",
         icon: "order.svg",
       },
       {
-        id: 5,
-        title: "Contributors",
-        url: "/contributors",
+        id: 7,
+        title: "History",
+        url: "/history",
         icon: "order.svg",
       },
-//      {
-//        id: 2,
-//        title: "PortfolioAnalysis",
-//        url: "/portfolioAnalysis",
-//        icon: "order.svg",
-//     },
-    ],
-  },
 ];
 
 export const valueCompanies = [

@@ -10,8 +10,10 @@ import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
 import Menu from "./components/menu/Menu";
 import UserAttempts from "./components/userAttempts/UserAttempts";
+import UserCertificates from "./components/userCertificates/UserCertificates";
 import Landing from "./pages/landing/landing";
 import Courses from "./pages/courses/Courses";
+import CourseDetail from "./pages/courseDetail/CourseDetail";
 import Contributors from "./pages/contributors/Contributors";
 
 import Login from "./pages/login/Login";
@@ -215,6 +217,10 @@ function App() {
           element: <Courses />,
         },
         {
+          path: "/courses/:courseId",
+          element: <CourseDetail />,
+        },
+        {
             path: "/quizlist",
             element: <QuizListPage />,
         },
@@ -224,11 +230,11 @@ function App() {
         },
         {
           path: "/certificates",
-          element: <UserAttempts />,
+          element: <UserCertificates />,
         },
         {
-          path: "/contributors",
-          element: <Contributors />,
+          path: "/history",
+          element: <UserAttempts />,
         },
         {
           path: "/users/:id",

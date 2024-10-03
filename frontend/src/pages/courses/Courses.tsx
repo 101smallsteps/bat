@@ -1,46 +1,28 @@
-import BarChartBox from "../../components/barChartBox/BarChartBox";
-import BigChartBox from "../../components/bigChartBox/BigChartBox";
-import ChartBox from "../../components/chartBox/ChartBox";
-import PieChartBox from "../../components/pieCartBox/PieChartBox";
-import Top10 from "../../components/top10/Top10";
-import { Navigate } from 'react-router-dom';
-
-import {
-  barChartBoxUsers,
-  barChartBoxVisit,
-  chartBoxConversion,
-  chartBoxProduct,
-  chartBoxRevenue,
-  chartBoxUser,
-  barChartBoxRevenue,
-  valueCompanies,
-  growthCompanies,
-  dividendCompanies
-} from "../../data_bat";
+import { Link } from "react-router-dom";
 import "./Courses.scss";
+import { data_courses } from "../../data_courses";
+import CourseCard from '../../components/courseCard/CourseCard'; // Import your CourseCard component
 
+interface Courses {
+  id: number;
+  title: string;
+  description: string;
+  youtubeLinks: string[];
+}
 
 const Courses = (props) => {
 
- console.log("Home");
   return (
-        <div className="courses">
-            Welcome ! Work in progress
-        </div>
-      );
-
-//  return (
-//        <div className="home">
-//          <div className="box box1">
-//          </div>
-//          <div className="box box1">
-//            <Top10 data={growthCompanies} head={"growth Companies"}/>
-//          </div>
-//          <div className="box box1">
-//            <Top10 data={dividendCompanies} head={"dividend Companies"}/>
-//          </div>
-//        </div>
-//      );
+    <div className="courses">
+      <h1>Courses</h1>
+      <div className="courses-container"> {/* Added container for styling */}
+        {data_courses.map((course) => (
+          <CourseCard key={course.id} {...course} />
+        ))}
+      </div>
+    </div>
+  );
 };
+
 
 export default Courses;

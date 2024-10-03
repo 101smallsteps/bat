@@ -43,7 +43,7 @@ class UserAttempt(models.Model):
     completed = models.BooleanField(default=False)
     started_at = models.DateTimeField(auto_now_add=True)  # New field
     completed_at = models.DateTimeField(null=True, blank=True)  # New field
-
+    certification_granted = models.BooleanField(default=False)
 class SubmittedAnswer(models.Model):
     attempt = models.ForeignKey(UserAttempt, on_delete=models.CASCADE, related_name='submitted_answers')
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
@@ -56,3 +56,4 @@ class Certificate(models.Model):
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
     score = models.FloatField()
     generated_on = models.DateTimeField(auto_now_add=True)
+    attempt = models.OneToOneField(UserAttempt, on_delete=models.CASCADE)  # New field

@@ -13,6 +13,10 @@ from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 from django.core.files.base import ContentFile
 import os
+from django.utils import timezone
+from django.http import HttpResponse
+
+
 
 from django.http import FileResponse
 
@@ -21,7 +25,26 @@ def download_certificate(request, file_name):
     file_path = os.path.join('/usr/src/app/cert_gen/', file_name)
     return FileResponse(open(file_path, 'rb'), as_attachment=True)
 
+class CertificateDownloadView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
 
+    def get(self, request, certificate_id):
+        certificate = get_object_or_404(Certificate, id=certificate_id, user=request.user)
+
+        # Create PDF using ReportLab
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename="certificate_{certificate_id}.pdf"'
+
+        p = canvas.Canvas(response)
+        p.drawString(100, 800, f"Certificate of Completion")
+        p.drawString(100, 750, f"User: {certificate.user.username}")
+        p.drawString(100, 700, f"Quiz: {certificate.quiz.title}")
+        p.drawString(100, 650, f"Score: {certificate.score}")
+        p.drawString(100, 600, f"Date: {certificate.generated_on.strftime('%Y-%m-%d')}")
+        p.showPage()
+        p.save()
+
+        return response
 class GenerateCertificateView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
@@ -143,6 +166,70 @@ class SubmitAnswerView(APIView):
     def post(self, request, quiz_id, question_id):
         user = request.user
         quiz = get_object_or_404(Quiz, id=quiz_id)
+
+        # Fetch the ongoing attempt for this quiz
+        attempt = UserAttempt.objects.filter(user=user, quiz=quiz, completed=False).first()
+        question = get_object_or_404(Question, id=question_id)
+
+        submitted_answer_id = request.data.get('answer_id')
+        submitted_answer = get_object_or_404(Answer, id=submitted_answer_id)
+
+        # Save the submitted answer
+        SubmittedAnswer.objects.create(attempt=attempt, question=question, answer=submitted_answer)
+
+        # Update score if the answer is correct
+        if submitted_answer.is_correct:
+            attempt.score += 1
+
+        # Get the next question
+        remaining_questions = quiz.questions.exclude(id__in=attempt.submitted_answers.values_list('question_id', flat=True)).order_by('id')
+        next_question = remaining_questions.first()
+
+        # Update progress: number of answered questions
+        answered_questions_count = SubmittedAnswer.objects.filter(attempt=attempt).count()
+
+        if next_question:
+            attempt.current_question = next_question
+            attempt.save()
+
+            question_serializer = QuestionSerializer(next_question)
+            return Response({
+                'next_question': question_serializer.data,
+                'progress': f"{answered_questions_count + 1} of {quiz.questions.count()}",
+                'score': attempt.score
+            })
+        else:
+            # Quiz is completed
+            attempt.completed = True
+            attempt.completed_at = timezone.now()
+
+            # Check if certificate should be granted
+            passing_score = 0.8 * quiz.questions.count()
+            certification_granted = attempt.score >= passing_score
+            attempt.certification_granted = certification_granted
+            attempt.save()
+
+            # Create certificate if passed and link it to the UserAttempt
+            if certification_granted:
+                Certificate.objects.create(
+                    user=user,
+                    quiz=quiz,
+                    score=attempt.score,
+                    attempt=attempt  # Link the certificate to this attempt
+                )
+
+            return Response({
+                'message': 'Quiz completed',
+                'final_score': attempt.score,
+                'certificate_generated': certification_granted
+            }, status=status.HTTP_200_OK)
+
+class SubmitAnswerView_old(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request, quiz_id, question_id):
+        user = request.user
+        quiz = get_object_or_404(Quiz, id=quiz_id)
         #attempt = get_object_or_404(UserAttempt, user=user, quiz=quiz, completed=False)
         attempt = UserAttempt.objects.filter(user=user, quiz=quiz, completed=False).first()
         question = get_object_or_404(Question, id=question_id)
@@ -238,3 +325,11 @@ class UserAttemptsView(APIView):
         return Response(serializer.data)
 
 
+class UserCertificatesView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        certificates = Certificate.objects.filter(user=user)
+        serializer = CertificateSerializer(certificates, many=True)
+        return Response(serializer.data)

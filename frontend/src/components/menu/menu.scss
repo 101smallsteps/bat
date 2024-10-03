@@ -2,39 +2,28 @@
 @import "../../styles/responsive.scss";
 
 .menu {
-  .item {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
 
-    .title {
-      font-size: 12px;
-      font-weight: 200;
-      color: $soft-color;
-      text-transform: uppercase;
+.item {
+  margin: 5px 0;
+}
 
-      @include lg{
-        display: none;
-      }
-    }
+.listItem {
+  display: flex;
+  align-items: center;
+  text-decoration: none; /* Remove underline */
+  color: black; /* Set text color */
+}
 
-    .listItem {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px;
-      border-radius: 5px;
+.icon {
+  width: 24px; /* Adjust icon size */
+  height: 24px; /* Adjust icon size */
+  margin-right: 10px; /* Space between icon and text */
+}
 
-      &:hover {
-        background-color: $soft-bg;
-      }
-
-      .listItemTitle{
-        @include lg{
-          display: none;
-        }
-      }
-    }
-  }
+.listItem:hover {
+  background-color: #f0f0f0; /* Highlight on hover */
 }
