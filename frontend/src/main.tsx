@@ -11,5 +11,5 @@ const rootElement = document.getElementById('root');
 //  </React.StrictMode>,
 //)
 
-const root = ReactDOMClient.createRoot(rootElement); // ✅
+const root = ReactDOMClient.createRoot(rootElement as HTMLElement); // ✅
 root.render(<App />);

@@ -9,9 +9,9 @@ import PortfolioAnalysis from "./pages/portfolioanalysis/PortfolioAnalysis";
 import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
 import Menu from "./components/menu/Menu";
+import UserAttempts from "./components/userAttempts/UserAttempts";
 import Landing from "./pages/landing/landing";
 import Courses from "./pages/courses/Courses";
-import Certification from "./pages/certification/Certification";
 import Contributors from "./pages/contributors/Contributors";
 
 import Login from "./pages/login/Login";
@@ -23,6 +23,8 @@ import User from "./pages/user/User";
 import Product from "./pages/product/Product";
 import Analysis from "./pages/analysis/Analysis";
 import AuthCallback from "./pages/authcallback/authcallback";
+import QuizListPage from './pages/quizlist/quizlist';
+import QuizPage from './pages/quiz/quiz';
 import axios from 'axios';
 import {
   QueryClient,
@@ -213,8 +215,16 @@ function App() {
           element: <Courses />,
         },
         {
-          path: "/certification",
-          element: <Certification />,
+            path: "/quizlist",
+            element: <QuizListPage />,
+        },
+        {
+            path: "/quiz/:quizId",
+            element: <QuizPage />,
+        },
+        {
+          path: "/certificates",
+          element: <UserAttempts />,
         },
         {
           path: "/contributors",

@@ -36,11 +36,17 @@ export const menu = [
       {
         id: 3,
         title: "Certification",
-        url: "/certification",
+        url: "/quizlist",
         icon: "order.svg",
       },
       {
         id: 4,
+        title: "Certificates",
+        url: "/certificates",
+        icon: "order.svg",
+      },
+      {
+        id: 5,
         title: "Contributors",
         url: "/contributors",
         icon: "order.svg",

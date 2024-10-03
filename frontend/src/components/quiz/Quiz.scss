@@ -1,0 +1,60 @@
+/* Styling for the quiz card container */
+.quiz-card {
+    background-color: white;  /* Set background color to white */
+    color: black;  /* Set text color to black */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    width: 80%;
+    max-width: 600px;
+}
+
+/* Styling for the question card */
+.question-card {
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: white;  /* Ensure the question card background is white */
+    color: black;  /* Set text color to black */
+}
+
+/* Styling for each answer option */
+.answer-option {
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    color: black;  /* Set text color for answer options to black */
+}
+
+/* Adjust radio input styling */
+.answer-option input {
+    margin-right: 10px;
+}
+
+/* Styling for the submit button */
+.submit-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Disabled button styling */
+.submit-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Make sure the page itself also has a white background and black text */
+body {
+    background-color: white;  /* Set background to white */
+    color: black;  /* Set text color to black */
+}

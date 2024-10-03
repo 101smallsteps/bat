@@ -23,6 +23,8 @@ urlpatterns = [
     path("api/auth/", include("authentication.urls")),
     path("admin/", admin.site.urls),
     path("api/fin/", include("financials.urls")),
+    path("api/cert/", include("certification.urls")),
+
 ]
 
 if bool(settings.DEBUG):

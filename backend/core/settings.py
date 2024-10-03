@@ -95,7 +95,8 @@ INSTALLED_APPS = [
     "corsheaders",
     "authentication.apps.AuthenticationConfig",
     "financials.apps.FinancialsConfig",
-    "storages"
+    "storages",
+    "certification.apps.CertificationConfig"
 ]
 
 MIDDLEWARE = [
