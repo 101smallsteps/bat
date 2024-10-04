@@ -315,6 +315,30 @@ class QuizStatusView(APIView):
 
         return Response(attempts_data)
 
+class ListUserAttemptsView(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request):
+        user = request.user
+
+        # Fetching attempts with certification granted and not granted
+        attempts_with_certification = UserAttempt.objects.filter(user=user, certification_granted=True)
+        attempts_without_certification = UserAttempt.objects.filter(user=user, certification_granted=False)
+
+        # Serialize attempts
+        granted_serializer = UserAttemptSerializer(attempts_with_certification, many=True)
+        not_granted_serializer = UserAttemptSerializer(attempts_without_certification, many=True)
+
+        if not attempts_with_certification.exists() and not attempts_without_certification.exists():
+            return Response({
+                'message': 'No quiz attempts found.'
+            }, status=200)
+
+        return Response({
+            'certification_granted': granted_serializer.data,
+            'certification_not_granted': not_granted_serializer.data
+        })
+
 class UserAttemptsView(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
@@ -323,6 +347,7 @@ class UserAttemptsView(APIView):
         attempts = UserAttempt.objects.filter(user=user).select_related('quiz')
         serializer = UserAttemptSerializer(attempts, many=True)
         return Response(serializer.data)
+
 
 
 class UserCertificatesView(APIView):

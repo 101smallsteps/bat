@@ -29,7 +29,7 @@ class UserAttemptSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserAttempt
-        fields = ['id', 'quiz_title', 'score', 'completed', 'completed_at']
+        fields = ['id', 'quiz_title', 'score', 'completed_at', 'certification_granted']
 
 class CertificateSerializer(serializers.ModelSerializer):
     quiz_title = serializers.CharField(source='quiz.title', read_only=True)

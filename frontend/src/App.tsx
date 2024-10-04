@@ -11,6 +11,8 @@ import Footer from "./components/footer/Footer";
 import Menu from "./components/menu/Menu";
 import UserAttempts from "./components/userAttempts/UserAttempts";
 import UserCertificates from "./components/userCertificates/UserCertificates";
+import History from "./components/history/History";
+
 import Landing from "./pages/landing/landing";
 import Courses from "./pages/courses/Courses";
 import CourseDetail from "./pages/courseDetail/CourseDetail";
@@ -234,7 +236,7 @@ function App() {
         },
         {
           path: "/history",
-          element: <UserAttempts />,
+          element: <History />,
         },
         {
           path: "/users/:id",
