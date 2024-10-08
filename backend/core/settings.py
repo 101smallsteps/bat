@@ -96,7 +96,8 @@ INSTALLED_APPS = [
     "authentication.apps.AuthenticationConfig",
     "financials.apps.FinancialsConfig",
     "storages",
-    "certification.apps.CertificationConfig"
+    "certification.apps.CertificationConfig",
+    "teamtasks.apps.TeamtasksConfig"
 ]
 
 MIDDLEWARE = [

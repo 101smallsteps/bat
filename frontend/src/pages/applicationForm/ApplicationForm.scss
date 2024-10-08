@@ -1,0 +1,45 @@
+.application-form {
+  max-height: 70vh;  // Limit the height to make it scrollable
+  overflow-y: auto;  // Enable vertical scrolling
+  padding: 20px;
+  margin: 20px auto;
+  width: 100%;
+  max-width: 500px;  // Set a maximum width for the form
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+
+  h2 {
+    text-align: center;
+    color: #333;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+
+    input {
+      margin: 10px 0;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 10px;
+      margin-top: 15px;
+      font-size: 16px;
+      color: #fff;
+      background-color: #3498db;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+
+      &:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+    }
+  }
+}

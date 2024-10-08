@@ -17,7 +17,7 @@ import Landing from "./pages/landing/landing";
 import Courses from "./pages/courses/Courses";
 import CourseDetail from "./pages/courseDetail/CourseDetail";
 import Contributors from "./pages/contributors/Contributors";
-
+import SuperUserApproval from "./pages/superUserApproval/SuperUserApproval"
 import Login from "./pages/login/Login";
 import Login_dev from "./pages/login_dev/Login_dev";
 import Signup from "./pages/signup/Signup";
@@ -29,6 +29,7 @@ import Analysis from "./pages/analysis/Analysis";
 import AuthCallback from "./pages/authcallback/authcallback";
 import QuizListPage from './pages/quizlist/quizlist';
 import QuizPage from './pages/quiz/quiz';
+import VolunteerJobs from "./pages/volunteerjobs/VolunteerJobs";
 import axios from 'axios';
 import {
   QueryClient,
@@ -38,13 +39,19 @@ import { LinkContainer } from 'react-router-bootstrap';
 import ReactDOM from "react-dom";
 import { Navigate } from 'react-router-dom';
 import config from './config';
+import ReactDOMClient from 'react-dom/client';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+//const rootElement = document.getElementById('root');
+//const root = ReactDOMClient.createRoot(rootElement as HTMLElement);
+//root.render(
+//    <App />
+//);
+//ReactDOM.render(
+//  <React.StrictMode>
+//    <App />
+//  </React.StrictMode>,
+//  document.getElementById('root')
+//    );
 
 
 
@@ -73,7 +80,7 @@ function App() {
         try {
             const backend_server = config.backend_server;
             const response = await axios.get(
-                `https://${backend_server}/api/auth/user/`,
+                `${backend_server}/api/auth/user/`,
                 {
                     'headers':{
                         "Content-Type": "application/json",
@@ -83,7 +90,12 @@ function App() {
             );
             console.log("UserData");
             console.log(response);
-            setuserData({'id':response.data.pk,'username':response.data.username,'email':response.data.email});
+            setuserData({
+                'id':response.data.pk,
+                'username':response.data.username,
+                'email':response.data.email,
+                'isSuperUser': response.data.is_superuser,
+            });
             console.log(userData);
             return {response,isError:false};
         }
@@ -244,6 +256,19 @@ function App() {
           profData={userData}
            />,
         },
+      {
+        element: userData.isSuperUser ? <Outlet /> : <Navigate to="/" />, // Render children only for superuser
+        children: [
+          {
+            path: "/newstaff",
+            element: <SuperUserApproval />,
+          },
+        ],
+      },
+        {
+          path: "/volunteer-jobs",
+          element: <VolunteerJobs />,
+        },
       // Add the callback route
       {
         path: "/auth/callback",
@@ -274,6 +299,7 @@ function App() {
     }
   ]);
 
+console.log(userData.isSuperUser);
         if (process.env.NODE_ENV === 'development') {
             return  <RouterProvider router={router} />;
         }
@@ -310,7 +336,7 @@ function Layout(props) {
         <Navbar UserName={userData.username} isLoggedIn={isLoggedIn} logOutCallback={logout} />
         <div className="container">
           <div className="menuContainer">
-            {isLoggedIn && <Menu />}
+            {isLoggedIn && <Menu userData={userData} />}
           </div>
           <div className="contentContainer">
             <Outlet />
@@ -321,6 +347,7 @@ function Layout(props) {
     </>
   );
 }
+
 
 
 export default App;

@@ -1,0 +1,13 @@
+.volunteer-jobs-page {
+  padding: 20px;
+
+  h1 {
+    text-align: center;
+  }
+
+  .job-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+}

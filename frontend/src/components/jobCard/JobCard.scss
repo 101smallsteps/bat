@@ -1,0 +1,53 @@
+.job-card {
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+  h3 {
+    color: #2c3e50;
+    font-size: 1.5em;
+  }
+
+  p {
+    color: #34495e;  // Darker color for readability
+  }
+
+  .prerequisites {
+    margin-top: 10px;
+
+    strong {
+      color: #2c3e50;
+    }
+
+    ul {
+      list-style-type: disc;
+      padding-left: 20px;
+      color: #34495e; // Text color for list items
+    }
+  }
+
+  .submit-btn {
+    padding: 10px 15px;
+    margin-top: 10px;
+    cursor: pointer;
+    color: white; // Button text color for visibility
+
+    &.not-eligible {
+      background-color: #ccc;
+      color: #666; // Grey text color for disabled button
+      cursor: not-allowed;
+    }
+
+    &.eligible {
+      background-color: #3498db;
+      color: white;
+    }
+
+    &:hover {
+      background-color: darken(#3498db, 10%); // Darken the color on hover
+    }
+  }
+}

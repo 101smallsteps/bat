@@ -3,7 +3,7 @@ from dj_rest_auth.registration.views import RegisterView, ResendEmailVerificatio
 from dj_rest_auth.views import LoginView, LogoutView, PasswordResetConfirmView, PasswordResetView, UserDetailsView
 from django.urls import path
 
-from authentication.views import email_confirm_redirect, password_reset_confirm_redirect, google_login,OAuthCallbackView
+from authentication.views import UserViewSet,email_confirm_redirect, password_reset_confirm_redirect, google_login,OAuthCallbackView
 
 urlpatterns = [
     path("register/", RegisterView.as_view(), name="rest_register"),
@@ -20,7 +20,8 @@ urlpatterns = [
 #    path("password/reset/confirm/", PasswordResetConfirmView.as_view(), name="password_reset_confirm"),
     path("login/", LoginView.as_view(), name="rest_login"),
     path("logout/", LogoutView.as_view(), name="rest_logout"),
-    path("user/", UserDetailsView.as_view(), name="rest_user_details"),
+#    path("user/", UserDetailsView.as_view(), name="rest_user_details"),
+    path("user/", UserViewSet.as_view({'get': 'retrieve'}), name="rest_user_details"),
     path("signup/", signup, name="socialaccount_signup"),
     #path("google-login/", google_login, name="google_login"),
     path("google-login/",OAuthCallbackView.as_view(),name='google-login'),

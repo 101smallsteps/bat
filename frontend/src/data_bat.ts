@@ -41,6 +41,12 @@ export const menu = [
         url: "/history",
         icon: "order.svg",
       },
+      {
+        id: 8,
+        title: "Volunteer Jobs",  // New entry
+        url: "/volunteer-jobs",
+        icon: "order.svg",  // Replace with appropriate icon
+      },
 ];
 
 export const valueCompanies = [

@@ -3,13 +3,21 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
-
+import uuid  # For generating a unique ID
 class Course(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
 
+class CertificateType(models.Model):
+    id = models.AutoField(primary_key=True)  # Auto-generated ID
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
 class Quiz(models.Model):
     course = models.ForeignKey(Course, related_name="quizzes", on_delete=models.CASCADE)
+    certificate_type = models.ForeignKey(CertificateType, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     description = models.TextField(default="Default description")
     total_questions = models.IntegerField()
@@ -57,3 +65,6 @@ class Certificate(models.Model):
     score = models.FloatField()
     generated_on = models.DateTimeField(auto_now_add=True)
     attempt = models.OneToOneField(UserAttempt, on_delete=models.CASCADE)  # New field
+    file_path = models.CharField(max_length=255)
+
+
