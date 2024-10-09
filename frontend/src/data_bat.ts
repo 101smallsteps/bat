@@ -47,6 +47,13 @@ export const menu = [
         url: "/volunteer-jobs",
         icon: "order.svg",  // Replace with appropriate icon
       },
+      {
+        id: 9,
+        title: "New Applications",  // New entry
+        url: "/newstaff",
+        icon: "order.svg",  // Replace with appropriate icon
+      },
+
 ];
 
 export const valueCompanies = [

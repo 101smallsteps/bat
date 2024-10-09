@@ -5,6 +5,9 @@
   background-color: #f4f4f9;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  color: #333; /* Dark gray font color */
+  font-family: Arial, sans-serif; /* Choose a visible font */
+
 }
 
 .application-card {
@@ -14,4 +17,22 @@
   margin-bottom: 15px;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  color: #333; /* Dark gray font color */
+  font-family: Arial, sans-serif; /* Choose a visible font */
+
+}
+
+.superuser-approval h1, .application-card h2, .application-card p {
+  color: #333; /* Darker color for text */
+}
+
+.button-group {
+  display: flex;
+  gap: 10px; /* Space between buttons */
+  margin-top: 10px;
+}
+
+.button-group button {
+  padding: 5px 10px;
+  cursor: pointer;
 }

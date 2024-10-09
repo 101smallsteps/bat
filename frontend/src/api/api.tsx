@@ -100,6 +100,34 @@ export const getStaffApplications = async () => {
   }
 };
 
+// API call to fetch UnassignedSymbol
+export const getUnassignedSymbols = async () => {
+  try {
+    var tok="Token "+getToken();
+    //let tok_str='Token a8a31d16b64a1fa1e02de3401d2a78a1738977cd';
+    console.log("token->"+tok);
+    const backend_server = config.backend_server;
+
+    const response = await axios.get(
+            `${backend_server}/api/team/unassigned-symbols/`,
+            {
+                'headers':{
+                    "Content-Type": "application/json",
+                    "Authorization": `${tok}`
+                }
+            }
+    );
+    return response.data.results;  // This should return the list of volunteer jobs
+  } catch (error) {
+    if (error.response) {
+      console.error("Detailed backend error response:", error.response.data);  // Log exact error details
+    }
+
+    console.error("Error fetching staff-applications", error);
+    throw error;
+  }
+};
+
 
 // API call to fetch volunteer jobs
 export const postStaffApplications = async (applicationData: any) => {
@@ -107,7 +135,7 @@ export const postStaffApplications = async (applicationData: any) => {
     var tok="Token "+getToken();
     //let tok_str='Token a8a31d16b64a1fa1e02de3401d2a78a1738977cd';
     console.log("token->"+tok);
-    console.log("postStaffApplications"+applicationData);
+    console.log("postStaffApplications "+applicationData);
     const backend_server = config.backend_server;
 
     const response = await axios.post(
@@ -131,5 +159,65 @@ export const postStaffApplications = async (applicationData: any) => {
   }
 };
 
+
+// API call to fetch volunteer jobs
+export const postApproveStaffApplications = async (applicationData: any) => {
+  try {
+    var tok="Token "+getToken();
+    //let tok_str='Token a8a31d16b64a1fa1e02de3401d2a78a1738977cd';
+    console.log("token->"+tok);
+    console.log("postApproveStaffApplications "+applicationData);
+    const backend_server = config.backend_server;
+    const { applId, symbol_id } = applicationData;
+    const response = await axios.post(
+            `${backend_server}/api/team/staff-applications/${applId}/approve/`,
+            {symbol_id},
+            {
+                'headers':{
+                    "Content-Type": "application/json",
+                    "Authorization": `${tok}`
+                }
+            }
+    );
+    return response;  // This should return the list of volunteer jobs
+  } catch (error) {
+    if (error.response) {
+      console.error("Detailed backend error response:", error.response);  // Log exact error details
+    }
+
+    console.error("Error fetching staff-applications", error);
+    throw error;
+  }
+};
+
+
+// API call to fetch volunteer jobs
+export const postDisApproveStaffApplications = async (applicationId: number) => {
+  try {
+    var tok="Token "+getToken();
+    //let tok_str='Token a8a31d16b64a1fa1e02de3401d2a78a1738977cd';
+    console.log("token->"+tok);
+    console.log("postDisApproveStaffApplications "+applicationId);
+    const backend_server = config.backend_server;
+    const response = await axios.post(
+            `${backend_server}/api/team/staff-applications/${applicationId}/disapprove/`,
+            null,
+            {
+                'headers':{
+                    "Content-Type": "application/json",
+                    "Authorization": `${tok}`
+                }
+            }
+    );
+    return response;  // This should return the list of volunteer jobs
+  } catch (error) {
+    if (error.response) {
+      console.error("Detailed backend error response:", error.response);  // Log exact error details
+    }
+
+    console.error("Error fetching staff-applications", error);
+    throw error;
+  }
+};
 
 

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Project, Job, StaffApplication, UserDetails, Task, TaskComment, Contribution
+from .models import Project, Job, StaffApplication, UserDetails, Task, TaskComment, Contribution,DesignationHistory
 from certification.models import CertificateType  # Assuming CertificateType is in the certification app
 
 # Serializer for Project
@@ -24,7 +24,7 @@ class JobSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Job
-        fields = ['id', 'title', 'description', 'responsibilities', 'prerequisites', 'project']
+        fields = ['id', 'title', 'description', 'responsibilities', 'prerequisites', 'project','designation','designation_level']
 
 # Serializer for StaffApplication
 class StaffApplicationSerializer(serializers.ModelSerializer):
@@ -49,6 +49,14 @@ class UserDetailsSerializer(serializers.ModelSerializer):
         model = UserDetails
         fields = ['id', 'user', 'symbol', 'home_address', 'institution_address']
 
+class DesignationHistorySerializer(serializers.ModelSerializer):
+    user = serializers.StringRelatedField()  # Or use `PrimaryKeyRelatedField` for user ID
+
+    class Meta:
+        model = DesignationHistory
+        fields = ['id', 'user', 'designation', 'designation_level', 'designation_started', 'designation_ended']
+        read_only_fields = ['designation_started']  # Assuming designation start date is set automatically
+2.
 class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
@@ -68,6 +76,7 @@ class TaskCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = TaskComment
         fields = ['id', 'task', 'user', 'comment', 'created_at']
+
 
 # Serializer for Contribution
 class ContributionSerializer(serializers.ModelSerializer):

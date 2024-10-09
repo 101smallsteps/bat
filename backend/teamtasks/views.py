@@ -2,14 +2,26 @@ from rest_framework import viewsets, permissions, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from .serializers import JobSerializer, StaffApplicationSerializer, UserDetailsSerializer, TaskSerializer, TaskCommentSerializer
-from .models import Job,StaffApplication, UserDetails, Task, TaskComment
+from .models import Job,StaffApplication, UserDetails, Task, TaskComment,DesignationHistory
 from financials.models import Symbol  # Import the Symbol model
+from financials.serializers import SymbolSerializer
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.conf import settings  # Import settings for email configuration
 from django.utils import timezone  # Import timezone for date handling
 # from .tasks import send_disapproval_email  # Uncomment if using Celery for email tasks
 from rest_framework import generics
+
+
+class UnassignedSymbolListView(generics.ListAPIView):
+    serializer_class = SymbolSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        # Retrieve symbols that are not assigned to any user in UserDetails
+        assigned_symbols = UserDetails.objects.values_list('symbol', flat=True)
+        return Symbol.objects.exclude(id__in=assigned_symbols)
+
 
 # List view for all jobs
 class JobsListView(generics.ListAPIView):
@@ -18,7 +30,7 @@ class JobsListView(generics.ListAPIView):
 class StaffApplicationViewSet(viewsets.ModelViewSet):
     queryset = StaffApplication.objects.all()
     serializer_class = StaffApplicationSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated]
 
     def perform_create(self, serializer):
         if serializer.is_valid():
@@ -29,12 +41,20 @@ class StaffApplicationViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['post'], permission_classes=[permissions.IsAdminUser])  # Only superusers can approve
     def approve(self, request, pk=None):
+        print(f"User: {request.user}, Is SuperUser: {request.user.is_superuser}")
+
         application = self.get_object()
+
+        if not request.user.is_superuser:
+            return Response({'detail': 'Only superusers can approve applications.'}, status=status.HTTP_403_FORBIDDEN)
+
         if application.approved:
             return Response({'detail': 'Application already approved.'}, status=status.HTTP_400_BAD_REQUEST)
 
         # Ensure the symbol ID is passed in the request data
         symbol_id = request.data.get('symbol_id')
+        job_id =  application.job_id  # Get job ID from the request data
+
         if not symbol_id:
             return Response({'detail': 'Symbol ID is required.'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -43,18 +63,46 @@ class StaffApplicationViewSet(viewsets.ModelViewSet):
         except Symbol.DoesNotExist:
             return Response({'detail': 'Invalid Symbol ID.'}, status=status.HTTP_400_BAD_REQUEST)
 
+        try:
+            job = Job.objects.get(id=job_id)  # Get the job by job ID
+            designation = job.designation  # Fetch designation from Job
+            designation_level = job.designation_level  # Fetch designation level from Job
+        except Job.DoesNotExist:
+            return Response({'detail': 'Invalid Job ID.'}, status=status.HTTP_400_BAD_REQUEST)
+
         # Approve the application and assign the selected symbol
         application.approved = True
         application.save()
 
-        # Create UserDetails with the assigned symbol and other details
-        UserDetails.objects.create(
-            user=application.user,
-            symbol=symbol,
-            home_address=application.home_address,
-            school_address=application.school_address
-        )
+        # Mark the user as staff
+        user = application.user
+        user.is_staff = True
+        user.save()
 
+        # Update or create UserDetails
+        UserDetails.objects.update_or_create(
+            user=application.user,
+            defaults={
+                'symbol': symbol,
+                'institution_name': application.institution_name,
+                'home_address': application.home_address,
+                'home_state': application.home_state,
+                'home_county': application.home_county,
+                'home_country': application.home_country,
+                'home_zipcode': application.home_zipcode,
+                'institution_address': application.institution_address,
+                'institution_state': application.institution_state,
+                'institution_county': application.institution_county,
+                'institution_country': application.institution_country,
+                'institution_zipcode': application.institution_zipcode,
+                'email': application.email,
+                'phone': application.phone,
+                'current_designation': designation,
+                'current_designation_level': designation_level,
+                'approved_at': timezone.now(),
+            }
+        )
+        self.update_designation_history(application.user,designation,designation_level)
         return Response({'detail': 'Application approved and symbol assigned.'})
 
     @action(detail=True, methods=['post'], permission_classes=[permissions.IsAdminUser])  # Only superusers can disapprove
@@ -73,6 +121,28 @@ class StaffApplicationViewSet(viewsets.ModelViewSet):
         application.delete()
         return Response({'detail': 'Application disapproved and email sent.'})
 
+    def update_designation_history(self,user, new_designation, new_level):
+
+        # End the current designation in history, if it exists
+        current_history = DesignationHistory.objects.filter(user=user, designation_ended__isnull=True).first()
+        if current_history:
+            current_history.designation_ended = timezone.now().date()
+            current_history.save()
+
+        # Add a new designation history entry
+        DesignationHistory.objects.create(
+            user=user,
+            designation=new_designation,
+            designation_level=new_level,
+            designation_started=timezone.now().date()
+        )
+
+        # Update UserDetails to reflect the current designation
+        user_details = UserDetails.objects.get(user=user)
+        user_details.current_designation = new_designation
+        user_details.current_designation_level = new_level
+        user_details.designation_started = timezone.now().date()
+        user_details.save()
 class UserDetailsViewSet(viewsets.ModelViewSet):
     queryset = UserDetails.objects.all()
     serializer_class = UserDetailsSerializer
