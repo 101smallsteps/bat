@@ -13,44 +13,56 @@ export const menu = [
       },
       {
         id: 3,
+        title: "My Tasks",
+        url: "/Mytasks",
+        icon: "order.svg",
+      },
+      {
+        id: 4,
         title: "Portfolio",
         url: "/portfolio",
         icon: "order.svg",
       },
       {
-        id: 4,
+        id: 5,
         title: "Courses",
         url: "/courses",
         icon: "order.svg",
       },
       {
-        id: 5,
+        id: 6,
         title: "Certification",
         url: "/quizlist",
         icon: "order.svg",
       },
       {
-        id: 6,
+        id: 7,
         title: "Certificates",
         url: "/certificates",
         icon: "order.svg",
       },
       {
-        id: 7,
+        id: 8,
         title: "History",
         url: "/history",
         icon: "order.svg",
       },
       {
-        id: 8,
+        id: 9,
         title: "Volunteer Jobs",  // New entry
         url: "/volunteer-jobs",
         icon: "order.svg",  // Replace with appropriate icon
       },
       {
-        id: 9,
+        id: 10,
         title: "New Applications",  // New entry
         url: "/newstaff",
+        icon: "order.svg",  // Replace with appropriate icon
+      },
+     {
+        id: 11,
+        title: "Team Admin Dashboard",  // New entry
+        url: "/teamAdminDashboard",
         icon: "order.svg",  // Replace with appropriate icon
       },
 

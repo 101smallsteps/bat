@@ -1,0 +1,183 @@
+.task-tabs-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  background-color: #1c2732; // Darker background to improve contrast with tabs
+
+  .tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #333; // Bottom border for separation
+
+    .tab {
+      padding: 12px 20px;
+      font-weight: bold;
+      font-size: 1rem;
+      color: #fff; // White font color for inactive tabs
+      background-color: transparent;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: background-color 0.3s, color 0.3s;
+
+      &:hover {
+        color: #ffcc00; // Brighten on hover
+        background-color: rgba(255, 255, 255, 0.1); // Slight hover effect
+      }
+
+      &.active {
+        color: #1c2732; // Dark text color for contrast with light background
+        background-color: #ffcc00; // Bright background for active tab
+        border: 1px solid #ffcc00;
+        border-radius: 4px 4px 0 0; // Rounded top corners for a tab effect
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); // Slight shadow for depth
+      }
+    }
+  }
+}
+
+// Style the content area below the tabs
+.task-tabs-content {
+  width: 100%;
+  padding: 20px;
+  background-color: #f8f9fa; // Light background for content area
+  border: 1px solid #ddd;
+  border-radius: 0 0 8px 8px; // Rounded bottom corners to match tabs
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); // Soft shadow
+  text-align: center;
+
+  .empty-message {
+    font-size: 1.2rem;
+    color: #333;
+  }
+
+  .task-card {
+    border: 1px solid #ccc; // More prominent border
+    padding: 20px;
+    margin-bottom: 15px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+
+    h3 {
+      font-size: 1.3rem;
+      color: #222; // Darker color for task title
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1rem;
+      color: #555; // Darker shade for text for readability
+      margin-bottom: 12px;
+    }
+
+    button {
+      margin-top: 12px;
+      padding: 10px 15px;
+      font-size: 0.95rem;
+      background-color: #0069d9;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: #0053a4;
+      }
+    }
+  }
+
+  .comments {
+    margin-top: 20px;
+    text-align: left;
+
+    h4 {
+      color: #333;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .comment {
+      margin: 8px 0;
+      padding: 10px;
+      background-color: #e9ecef;
+      border-radius: 5px;
+      color: #444;
+      font-size: 0.95rem;
+
+      p {
+        margin: 0 0 4px 0;
+      }
+
+      span {
+        font-size: 0.85rem;
+        color: #777;
+      }
+    }
+  }
+
+  .dialog-content-scrollable {
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 8px; // Extra padding to prevent scrollbar overlap
+  }
+}
+
+// Add styling for scrollable comments or content
+.dialog-content-scrollable {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.task-cards-readonly {
+  padding: 20px;
+  background-color: #f8f9fa;
+
+  .empty-message {
+    font-size: 1.2rem;
+    color: #333; // Darker color for better readability
+    padding: 20px;
+    text-align: center;
+  }
+
+  .task-cards {
+    border: 1px solid #ccc; // Defined border for clearer card outline
+    padding: 20px;
+    margin-bottom: 15px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+
+    h3 {
+      font-size: 1.3rem;
+      color: #222; // Darker color for title text
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1rem;
+      color: #555; // Darker shade for general text
+      margin-bottom: 12px;
+    }
+
+    button {
+      margin-top: 12px;
+      padding: 10px 15px;
+      font-size: 0.95rem;
+      background-color: #0069d9;
+      color: #fff; // White color for button text
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: #0053a4;
+      }
+    }
+  }
+}

@@ -17,7 +17,10 @@ import Landing from "./pages/landing/landing";
 import Courses from "./pages/courses/Courses";
 import CourseDetail from "./pages/courseDetail/CourseDetail";
 import Contributors from "./pages/contributors/Contributors";
-import SuperUserApproval from "./pages/superUserApproval/SuperUserApproval"
+import SuperUserApproval from "./pages/superUserApproval/SuperUserApproval";
+import TeamAdminDashboard from "./pages/teamAdminDashboard/TeamAdminDashboard";
+import TaskTabs from "./pages/taskTabs/TaskTabs";
+
 import Login from "./pages/login/Login";
 import Login_dev from "./pages/login_dev/Login_dev";
 import Signup from "./pages/signup/Signup";
@@ -100,6 +103,7 @@ function App() {
                 username: response.data.username,
                 email: response.data.email,
                 isSuperUser: response.data.is_superuser,
+                isStaff: response.data.is_staff
             };
 
             // Save to localStorage and state
@@ -275,6 +279,10 @@ function App() {
           element: <History />,
         },
         {
+          path: "/Mytasks",
+          element: <TaskTabs  userData={userData} />,
+        },
+        {
           path: "/users/:id",
           element: <User profData={userData}  />,
         },
@@ -285,6 +293,11 @@ function App() {
                 path: "/newstaff",
                 element: <SuperUserApproval />,
               },
+              {
+                path: "/teamAdminDashboard",
+                element: <TeamAdminDashboard />,
+              },
+
             ],
         },
         {

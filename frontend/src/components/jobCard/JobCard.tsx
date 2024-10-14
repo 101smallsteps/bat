@@ -17,7 +17,7 @@ const JobCard: React.FC<JobCardProps> = ({ job, userCertificates = [], hasApplie
   const hasAllPrerequisites = job.prerequisites.every(prerequisite => userCertificateIds.includes(prerequisite.id));
 
   // Determine button label and disable status
-  let buttonText = "Submit Application";
+  let buttonText = "Eligible to Submit Application";
   let buttonDisabled = false;
 
   if (!hasAllPrerequisites) {

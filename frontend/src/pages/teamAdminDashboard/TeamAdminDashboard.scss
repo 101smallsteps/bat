@@ -1,0 +1,35 @@
+.dashboard-container {
+  padding: 20px;
+  background-color: #f4f4f9;
+  color: #333;  // Set font color to dark gray or black
+}
+
+.tab-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  color: #333;  // Ensures the font color in the header is also dark
+}
+
+.projects-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  color: #333;  // Applies dark color to text in the projects tab
+
+  .projects-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    color: #333;  // Ensures search bar and button text is visible
+  }
+
+  .project-list {
+    max-width: 600px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    color: #333;  // Ensures list item text is dark
+  }
+}

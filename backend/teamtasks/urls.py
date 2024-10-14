@@ -1,7 +1,11 @@
 from django.urls import path, include
-from .views import JobsListView
+from .views import JobsListView, UnassignedSymbolListView
 from rest_framework.routers import DefaultRouter
-from .views import StaffApplicationViewSet, UserDetailsViewSet, TaskViewSet, TaskCommentViewSet,UnassignedSymbolListView
+
+from .views import (
+    TeamViewSet, RegisteredInstitutionViewSet,ProjectViewSet,StaffApplicationViewSet, UserDetailsViewSet,
+    TaskViewSet, TaskCommentViewSet, TaskListViewSet, ContributionViewSet,TaskCompleteViewSet,TaskOwnershipHistoryViewSet
+)
 
 # Create a router and register the viewsets
 router = DefaultRouter()
@@ -9,7 +13,13 @@ router.register(r'staff-applications', StaffApplicationViewSet, basename='staff-
 router.register(r'user-details', UserDetailsViewSet, basename='user-detail')
 router.register(r'tasks', TaskViewSet, basename='task')
 router.register(r'task-comments', TaskCommentViewSet, basename='task-comment')
-
+router.register(r'task-lists', TaskListViewSet, basename='task-list')  # TaskList viewset
+router.register(r'contributions', ContributionViewSet, basename='contribution')  # Contribution viewset
+router.register(r'projects',ProjectViewSet, basename='project')
+router.register(r'teams', TeamViewSet, basename='team')
+router.register(r'institutions', RegisteredInstitutionViewSet, basename='institution')
+router.register(r'task-complete', TaskCompleteViewSet, basename='task-complete')
+router.register(r'task-ownership-history', TaskOwnershipHistoryViewSet, basename='task-ownership-history')
 
 #Example URLs Generated:
 #StaffApplication URLs:#
