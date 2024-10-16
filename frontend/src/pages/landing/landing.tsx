@@ -1,7 +1,5 @@
-// client/src/components/Landing.tsx
-
 import React, { useState, useEffect } from 'react';
-import { Button, ButtonGroup, Card, Col, Row } from 'react-bootstrap'; // Added Card, Col, Row
+import { Button, ButtonGroup, Card, Col, Row } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Navigate } from 'react-router-dom';
 
@@ -13,12 +11,11 @@ const Landing = (props) => {
       setRedirect(true);
     }, 10000); // Redirect after 10 seconds
 
-    return () => clearTimeout(timer); // Cleanup the timer on component unmount
+    return () => clearTimeout(timer);
   }, []);
 
   return (
     <div className='middle-center'>
-      <h1 className='landing logo'>Re-defining Business Analysis (open source)</h1>
 
       {props.isLoggedIn ? (
         <Navigate to='/home' />
@@ -34,53 +31,98 @@ const Landing = (props) => {
               </LinkContainer>
             </ButtonGroup>
           )}
-    <Row className='mt-5'>
-      <Col md={4}>
-        <Card className='text-center' style={{ backgroundColor: '#f0f0f0' }}>
-          <Card.Body>
-            <Card.Title>What is Our Goal</Card.Title>
-            <Card.Text>
-              Our goal is to empower small investors and small businesses around the world with data-driven insights using open-source based tools driven by machine learning that helps to safeguard the capital and the business.
-            </Card.Text>
-          </Card.Body>
-        </Card>
-      </Col>
 
-      <Col md={4}>
-        <Card className='text-center' style={{ backgroundColor: '#f0f0f0' }}>
-          <Card.Body>
-            <Card.Title>What We Do</Card.Title>
-            <Card.Text>
-              We are sponsored by a non-profit company www.101smallsteps.com, we are planning to build financial tools by the students and for the students.
-              We provide opportunities to volunteer, contribute and research  for high school, undergraduates, graduates.
-            </Card.Text>
-          </Card.Body>
-        </Card>
-      </Col>
+          {/* Row 1: Full-Width Image Banner */}
+          <Row className="my-5">
+            <Col>
+              <img
+                src="/financial_literacy.webp?url" // Replace with the actual path to your banner image
+                alt="Financial Literacy Banner"
+                className="img-fluid w-100"
+                style={{
+                  borderRadius: '8px',
+                  maxHeight: '220px', // Adjust for desired banner height
+                  objectFit: 'cover',
+                }}
+              />
+            </Col>
+          </Row>
 
-      <Col md={4}>
-        <Card className='text-center' style={{ backgroundColor: '#f0f0f0' }}>
-          <Card.Body>
-            <Card.Title>How to Contribute</Card.Title>
-            <Card.Text>
-              <li>Join our program to create financial clubs in high school.</li>
-              <li>Contribute as a developer to create the best tools, machine learning and distributed computing.</li>
-              <li>Contribute in our research towards applied mathematics(finance), machine learning , economics.</li>
-              <li>Join us in our mission to educate and uplift communities..</li>
-            </Card.Text>
-          </Card.Body>
-        </Card>
-      </Col>
-    </Row>
+          {/* Row 2: First set of responsive cards */}
+          <Row className='mb-4'>
+            <Col md={4}>
+                <Card  style={{ backgroundColor: '#c8d7d7', color: 'black', padding: '10px' }}>
+                  <Card.Body>
+                    <Card.Title className='text-center'>Our Mission</Card.Title>
+                    <Card.Text>
+                      <ul style={{  marginLeft: '0', paddingLeft: '0px', lineHeight: '1.8' }}>
+                        <li>Open source</li>
+                        <li>Empower individuals, small investors, small businesses with knowledge and tools</li>
+                        <li>AI-based financial recommendations for everyone</li>
+                        <li>Prevent small business failures</li>
+                      </ul>
+                    </Card.Text>
+                  </Card.Body>
+                </Card>
+            </Col>
 
-          <div className='notice-board mt-5'>
-            <h2>Recent Happenings</h2>
-            <ul>
-              <li>New features launched in tracking fundamentals of stock symbols </li>
-              <li>Join our high school club program</li>
-              <li>Research activities in machine learning and financial fraud detection </li>
-            </ul>
-          </div>
+            <Col md={4}>
+                <Card  style={{ backgroundColor: '#c8d7d7', color: 'black', padding: '10px' }}>
+                  <Card.Body>
+                    <Card.Title className='text-center'>Our Vision</Card.Title>
+                    <Card.Text>
+                      <ul style={{  marginLeft: '0', paddingLeft: '0px', lineHeight: '1.8' }}>
+                        <li>Improve financial literacy among students community</li>
+                        <li>Perform research on business failures and share to all</li>
+                        <li>Build tools that save business </li>
+                        <li>AI-based financial advice for small business</li>
+                      </ul>
+                    </Card.Text>
+                  </Card.Body>
+                </Card>
+            </Col>
+
+            <Col md={4}>
+                <Card  style={{ backgroundColor: '#c8d7d7', color: 'black', padding: '10px' }}>
+                  <Card.Body>
+                    <Card.Title className='text-center'>Research and development</Card.Title>
+                    <Card.Text>
+                      <ul style={{  marginLeft: '0', paddingLeft: '0px', lineHeight: '1.8' }}>
+                        <li>Current Research planned</li>
+                          <ul style={{  marginLeft: '10', paddingLeft: '10px', lineHeight: '1.8' }}>
+                            <li>Business failures and indicators</li>
+                            <li>Business failures and applied mathematics</li>
+                            <li>Business failures and economics</li>
+                            <li>Business failures and mitigations</li>
+                            <li>click to apply</li>
+                          </ul>
+                      </ul>
+                    </Card.Text>
+                  </Card.Body>
+                </Card>
+            </Col>
+          </Row>
+          {/* Row 4: Full-width notice board card */}
+          <Row className='mb-5'>
+            <Col>
+                <Card  style={{ backgroundColor: '#c8d7d7', color: 'black', padding: '10px' }}>
+                  <Card.Body>
+                    <Card.Title className='text-center'>High school program</Card.Title>
+                    <Card.Text>
+                      <ul style={{  marginLeft: '0', paddingLeft: '0px', lineHeight: '1.8' }}>
+                        <li>Leadership program  </li>
+                          <ul style={{  marginLeft: '10', paddingLeft: '10px', lineHeight: '1.8' }}>
+                            <li>Get trained on business metrics and fundamental analysis</li>
+                            <li>Prove your leadership skill by conducting a one day bootcamp event in your school</li>
+                            <li>Get certified for your leadership skill from www.101smallsteps.com</li>
+                            <li>click to apply</li>
+                          </ul>
+                      </ul>
+                    </Card.Text>
+                  </Card.Body>
+                </Card>
+            </Col>
+          </Row>
         </>
       )}
     </div>

@@ -48,37 +48,40 @@
     grid-template-columns: repeat(1, 1fr); // 1 column on medium screens
   }
 
-  .box {
-    background-color: $soft-bg; // Ensure $soft-bg is defined
-    padding: 20px; // Inner padding for each box
-    border-radius: 10px; // Rounded corners
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); // Subtle shadow for depth
-    display: flex; // Flexbox for content alignment
-    flex-direction: column; // Stack children vertically
-    justify-content: center; // Center content vertically
-    align-items: center; // Center content horizontally
-    text-align: center; // Center text in the box
-    border: 1px solid $border-color; // Ensure $border-color is defined
+.box {
+  background-color: $soft-bg; // Ensure $soft-bg is defined
+  padding: 20px; // Inner padding for each box
+  border-radius: 10px; // Rounded corners
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); // Subtle shadow for depth
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  text-align: left;
+  border: 1px solid $border-color; // Ensure $border-color is defined
 
-    // Image inside the card
-    .card-img {
-      width: 100%; // Full width image
-      height: 180px; // Fixed height
-      object-fit: cover; // Cover aspect ratio
-      border-radius: 8px; // Rounded corners for image
-      margin-bottom: 15px; // Space below the image
-    }
+  h3 {
+    font-size: 24px;
+    color: $primary-color;
+    margin-bottom: 15px;
+    text-align: center; // Center align the title
+    width: 100%; // Ensure title is centered in the box
+  }
 
-    h3 {
-      font-size: 24px; // Title size
-      color: $primary-color; // Title color
-      margin-bottom: 15px; // Space below the title
-    }
+  .card-text {
+    font-size: 16px;
+    color: $text-color;
+    margin: 0;
+    padding-left: 0;
+    list-style: none; // Remove bullet points from list
 
-    p {
-      font-size: 16px; // Description size
-      color: $text-color; // Description color
+    li {
+      margin-bottom: 10px; // Add spacing between lines
     }
+  }
+  }
+  }
+
   }
 }
 
@@ -105,6 +108,7 @@
       font-size: 18px; // Size for each list item
       color: $text-color; // Color for list items
       margin-bottom: 10px; // Space below each item
+
     }
   }
 }
@@ -126,4 +130,21 @@
   .notice-board {
     padding: 20px; // Adjust padding for smaller screens
   }
+}
+
+
+// Card and Image Styling for Responsive Containment
+.poster-card {
+  max-width: 100%; // Make the card responsive to screen width
+  max-height: 400px; // Limit the card's height
+  overflow: hidden;
+  border: 3px solid #28a745;
+  border-radius: 8px;
+  margin: 0 auto;
+}
+
+.poster-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; // Maintain aspect ratio and cover the space without expanding
 }

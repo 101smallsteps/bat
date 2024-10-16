@@ -41,7 +41,7 @@ const Navbar = (props:Props) => {
     console.log('At home but logged out');
       return (
         <div className='middle-center'>
-          <h1 className='landing logo'>BAT - Business Analytics</h1>
+          <h1 className='landing logo'>BAT - Business AnalyTics for everyone</h1>
             {
             (
               <Navigate to='/' />
