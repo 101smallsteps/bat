@@ -1,4 +1,4 @@
-import SingleAnalysis from "../../components/singleAnalysis/SingleAnalysis"
+import SingleAnalysis from "../../components/singleAnalysis/SingleAnalysis";
 //import { singleAnalysisProduct } from "../../data_bat"
 import "./analysis.scss"
 import axios from "axios";
