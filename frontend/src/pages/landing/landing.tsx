@@ -57,9 +57,9 @@ const Landing = (props) => {
                     <Card.Text>
                       <ul style={{  marginLeft: '0', paddingLeft: '0px', lineHeight: '1.8' }}>
                         <li>Open source</li>
-                        <li>Empower individuals, small investors, small businesses with knowledge and tools</li>
-                        <li>AI-based financial recommendations for everyone</li>
-                        <li>Prevent small business failures</li>
+                        <li>Provide AI-based financial recommendations and advice</li>
+                        <li>Conduct research on business failures and spread findings</li>
+                        <li>Build analytical tools that can save small businesses</li>
                       </ul>
                     </Card.Text>
                   </Card.Body>
@@ -72,10 +72,9 @@ const Landing = (props) => {
                     <Card.Title className='text-center'>Our Vision</Card.Title>
                     <Card.Text>
                       <ul style={{  marginLeft: '0', paddingLeft: '0px', lineHeight: '1.8' }}>
-                        <li>Improve financial literacy among students community</li>
-                        <li>Perform research on business failures and share to all</li>
-                        <li>Build tools that save business </li>
-                        <li>AI-based financial advice for small business</li>
+                        <li>Empower individuals, small investors, and small businesses with analytical knowledge and tools</li>
+                        <li>Improve financial literacy among the student community</li>
+                        <li>Strive towards zero-tolerance of small businesses failing across the world</li>
                       </ul>
                     </Card.Text>
                   </Card.Body>
@@ -85,15 +84,15 @@ const Landing = (props) => {
             <Col md={4}>
                 <Card  style={{ backgroundColor: '#c8d7d7', color: 'black', padding: '10px' }}>
                   <Card.Body>
-                    <Card.Title className='text-center'>Research and development</Card.Title>
+                    <Card.Title className='text-center'>Research & Development</Card.Title>
                     <Card.Text>
                       <ul style={{  marginLeft: '0', paddingLeft: '0px', lineHeight: '1.8' }}>
                         <li>Current Research planned</li>
                           <ul style={{  marginLeft: '10', paddingLeft: '10px', lineHeight: '1.8' }}>
-                            <li>Business failures and indicators</li>
-                            <li>Business failures and applied mathematics</li>
-                            <li>Business failures and economics</li>
-                            <li>Business failures and mitigations</li>
+                            <li>The Indicators of Business Failures</li>
+                            <li>The Applied Mathematics of Business Failures</li>
+                            <li>The Economics of Business Failures</li>
+                            <li>Business Failures and Mitigations</li>
                             <li>click to apply</li>
                           </ul>
                       </ul>
@@ -107,10 +106,10 @@ const Landing = (props) => {
             <Col>
                 <Card  style={{ backgroundColor: '#c8d7d7', color: 'black', padding: '10px' }}>
                   <Card.Body>
-                    <Card.Title className='text-center'>High school program</Card.Title>
+                    <Card.Title className='text-center'>High School Program</Card.Title>
                     <Card.Text>
                       <ul style={{  marginLeft: '0', paddingLeft: '0px', lineHeight: '1.8' }}>
-                        <li>Leadership program  </li>
+                        <li>Leadership Program  </li>
                           <ul style={{  marginLeft: '10', paddingLeft: '10px', lineHeight: '1.8' }}>
                             <li>Get trained on business metrics and fundamental analysis</li>
                             <li>Prove your leadership skill by conducting a one day bootcamp event in your school</li>

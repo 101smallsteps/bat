@@ -32,11 +32,11 @@ const Home = (props) => {
             <Col md={4}>
                 <Card  style={{ backgroundColor: '#c8d7d7', color: 'black', padding: '10px' }}>
                   <Card.Body>
-                    <Card.Title className='text-center'>Certification Exams available</Card.Title>
+                    <Card.Title className='text-center'>Certification Exams Available</Card.Title>
                     <Card.Text>
                       <ul style={{  marginLeft: '0', paddingLeft: '0px', lineHeight: '1.8' }}>
-                        <li>Personal finance</li>
-                        <li>Basic business fundamental analysis </li>
+                        <li>Personal Finance</li>
+                        <li>Basic Business Fundamental Analysis </li>
                       </ul>
                     </Card.Text>
                   </Card.Body>
@@ -49,7 +49,8 @@ const Home = (props) => {
                     <Card.Title className='text-center'>Notice Board</Card.Title>
                     <Card.Text>
                       <ul style={{  marginLeft: '0', paddingLeft: '0px', lineHeight: '1.8' }}>
-                        <li>2024 -2025 High school boot camp leadership program </li>
+                        <li>2024-2025 High School Bootcamp Leadership Program</li>
+                        <li>click to apply</li>
                       </ul>
                     </Card.Text>
                   </Card.Body>
@@ -59,22 +60,22 @@ const Home = (props) => {
             <Col md={4}>
                 <Card  style={{ backgroundColor: '#c8d7d7', color: 'black', padding: '10px' }}>
                   <Card.Body>
-                    <Card.Title className='text-center'>Research and white papers to read</Card.Title>
+                    <Card.Title className='text-center'>Research and White Papers to Conduct</Card.Title>
                     <Card.Text>
                       <ul style={{  marginLeft: '0', paddingLeft: '0px', lineHeight: '1.8' }}>
                         <li>Work in progress</li>
                           <ul style={{  marginLeft: '10', paddingLeft: '10px', lineHeight: '1.8' }}>
-                            <li>Business failures and indicators</li>
+                            <li>The Indicators of Business Failures</li>
                           </ul>
                         <li>Completed</li>
                           <ul style={{  marginLeft: '10', paddingLeft: '10px', lineHeight: '1.8' }}>
                             <li>To be published</li>
                           </ul>
-                        <li>In Pipeline</li>
+                        <li>Planned</li>
                           <ul style={{  marginLeft: '10', paddingLeft: '10px', lineHeight: '1.8' }}>
-                            <li>Business failures and applied mathematics</li>
-                            <li>Business failures and economics</li>
-                            <li>Business failures and mitigations</li>
+                            <li>The Applied Mathematics of Business Failures</li>
+                            <li>The Economics of Business Failures</li>
+                            <li>Business Failures and Mitigations</li>
                           </ul>
                       </ul>
                     </Card.Text>
